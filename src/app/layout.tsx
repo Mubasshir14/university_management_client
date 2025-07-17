@@ -1,15 +1,39 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Arima, Lobster, Oleo_Script, Sansita } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
+
+const sansita = Sansita({
+  variable: "--font-sansita",
+  subsets: ["latin"],
+  weight: ["400", "700", "800", "900"],
+});
+
+const arima = Arima({
+  variable: "--font-arima",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const oleo_script = Oleo_Script({
+  variable: "--font-oleo_script",
   subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const lobster = Lobster({
+  variable: "--font-lobster",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -25,8 +49,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+         className={`${sansita.variable} ${arima.variable} ${oleo_script.variable} ${lobster.variable} antialiased`}
       >
+        <Toaster richColors position="top-center" />
         {children}
       </body>
     </html>
