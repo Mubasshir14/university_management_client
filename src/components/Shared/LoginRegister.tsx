@@ -366,7 +366,7 @@ export const LoginRegister = () => {
   const password = registerForm.watch("password");
   const passwordConfirm = registerForm.watch("passwordConfirm");
 
-  // Handle login form submission
+  // login
   const onLoginSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const errors: any = {};
@@ -399,7 +399,7 @@ export const LoginRegister = () => {
     }
   };
 
-  // Handle register form submission
+  // register
   const onRegisterSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       setIsLoading(true);

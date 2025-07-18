@@ -4,19 +4,18 @@ import EventCarousel from "@/components/Shared/EventCarousel";
 import FeatureCards from "@/components/Shared/FeatureCards";
 import Gallery from "@/components/Shared/Gallery";
 import HeroSection from "@/components/Shared/HeroSection";
-import LoginRegister from "@/components/Shared/LoginRegister";
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <div className="font-sans ">
+    <div>
       <HeroSection />
       <FeatureCards />
       <EventCarousel />
       <AcademicPrograms />
       <AdmissionsAid />
       <Gallery />
-      <LoginRegister />
-
     </div>
   );
-}
+};
+
+export default HomePage;
