@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Arima, Lobster, Oleo_Script, Sansita } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Providers from "@/components/lib/providers/Providers";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -49,10 +50,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-         className={`${sansita.variable} ${arima.variable} ${oleo_script.variable} ${lobster.variable} antialiased`}
+        className={`${sansita.variable} ${arima.variable} ${oleo_script.variable} ${lobster.variable} antialiased`}
       >
-        <Toaster richColors position="top-center" />
-        {children}
+        <Providers>
+          <Toaster richColors position="top-center" />
+          {children}
+        </Providers>
       </body>
     </html>
   );
