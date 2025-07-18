@@ -87,11 +87,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: ShoppingCart,
           },
           {
-            title: "Add Faculty",
-            url: "/admin/dashboard/add-faculty",
-            icon: Settings,
-          },
-          {
             title: "Add Semester",
             url: "/admin/dashboard/add-semester",
             icon: Settings,
@@ -114,6 +109,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Manage Department",
             url: "/admin/dashboard/manage-department",
+            icon: Settings,
+          },
+          {
+            title: "Manage Advisor",
+            url: "/admin/dashboard/manage-advisor",
             icon: Settings,
           },
         ]
@@ -140,7 +140,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <div className="font-bold text-sm text-center">
                     <Link
                       href="/"
-                      className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-xl font-bold"
+                      className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-xl font-bold font-sansita"
                     >
                       UNIVERSITY MANAGEMENT
                     </Link>

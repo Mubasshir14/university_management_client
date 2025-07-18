@@ -3,15 +3,15 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const getAllFaculty = async () => {
+export const getAllCourse = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/faculty`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course`, {
       method: "GET",
       headers: {
         Authorization: (await cookies()).get("accessToken")!.value,
       },
       next: {
-        tags: ["FACULTY"],
+        tags: ["COURSE"],
       },
     });
     const data = await res.json();
@@ -21,19 +21,20 @@ export const getAllFaculty = async () => {
   }
 };
 
-export const addFaculty = async (deptData: FormData): Promise<any> => {
+export const addCourse = async (courseData: any): Promise<any> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/faculty/create-faculty`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/course/create-course`,
       {
         method: "POST",
-        body: deptData,
+        body: JSON.stringify(courseData),
         headers: {
+          "Content-Type": "application/json",
           Authorization: (await cookies()).get("accessToken")!.value,
         },
       }
     );
-    revalidateTag("FACULTY");
+    revalidateTag("COURSE");
     return res.json();
   } catch (error: any) {
     return Error(error);
