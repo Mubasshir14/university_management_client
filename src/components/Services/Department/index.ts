@@ -4,10 +4,10 @@
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getAllSemester = async () => {
+export const getAllDepartment = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/academic-semester`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/department`,
       {
         method: "GET",
         headers: {
@@ -25,15 +25,15 @@ export const getAllSemester = async () => {
   }
 };
 
-export const addSemester = async (semesterData: any): Promise<any> => {
+
+export const addDepartment = async (deptData: FormData): Promise<any> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/academic-semester/create-academic-semester`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/department/create-academic-department`,
       {
         method: "POST",
-        body: JSON.stringify(semesterData),
+        body: deptData,
         headers: {
-          "Content-Type": "application/json",
           Authorization: (await cookies()).get("accessToken")!.value,
         },
       }

@@ -83,7 +83,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Add Department",
-            url: "/admin/dashboard/add-cdepartment",
+            url: "/admin/dashboard/add-department",
             icon: ShoppingCart,
           },
           {
@@ -99,6 +99,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Manage Student",
             url: "/admin/dashboard/manage-student",
+            icon: Settings,
+          },
+          {
+            title: "Manage Semester",
+            url: "/admin/dashboard/manage-semester",
+            icon: Settings,
+          },
+          {
+            title: "Manage Course",
+            url: "/admin/dashboard/manage-course",
+            icon: Settings,
+          },
+          {
+            title: "Manage Department",
+            url: "/admin/dashboard/manage-department",
             icon: Settings,
           },
         ]
