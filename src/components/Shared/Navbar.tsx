@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { logout } from "../Services/AuthService";
 import { useUser } from "../context/UserContext";
 import Image from "next/image";
+import { protectedRoutes } from "../constant";
 
 const navItems = [
   { name: "Department", href: "/department" },
@@ -38,9 +39,9 @@ export default function Navbar() {
       toast.success("Signed out successfully");
       router.push("/");
       setIsLoading(true);
-      //   if (protectedRoutes.some((route) => pathname.match(route))) {
-      //     router.push("/");
-      //   }
+        if (protectedRoutes.some((route) => pathname.match(route))) {
+          router.push("/");
+        }
     } catch (err: any) {
       toast.error(err.message || "Failed to sign out");
     }

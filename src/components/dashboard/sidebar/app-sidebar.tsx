@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import {
-  Bot,
   Settings,
   SquareTerminal,
   ShoppingCart,
@@ -30,38 +29,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ? [
           {
             title: "Dashboard",
-            url: "/mealProvider/dashboard",
+            url: "/user/dashboard",
             icon: SquareTerminal,
             isActive: true,
-          },
-          {
-            title: "Meal",
-            url: "/mealProvider/dashboard/food/foods/manage-food",
-            icon: Bot,
-            items: [
-              {
-                title: "Manage Meal",
-                url: "/mealProvider/dashboard/food/foods/manage-food",
-              },
-              {
-                title: "Add Meal",
-                url: "/mealProvider/dashboard/food/foods/add-food",
-              },
-              {
-                title: "Manage Order",
-                url: "/mealProvider/dashboard/food/foods/manage-order",
-              },
-              // {
-              //   title: "Update Food",
-              //   url: "/mealProvider/dashboard/food/foods/update-food/:foodId",
-              // },
-            ],
-          },
-          {
-            title: "Profile",
-            url: "/profile",
-            icon: Settings,
-          },
+          }
         ]
       : user?.role === "admin"
       ? [
@@ -121,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ? [
           {
             title: "Dashboard",
-            url: "/admin/dashboard",
+            url: "/student/dashboard",
             icon: SquareTerminal,
             isActive: true,
           },

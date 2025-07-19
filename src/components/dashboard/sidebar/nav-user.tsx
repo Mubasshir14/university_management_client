@@ -17,6 +17,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/components/context/UserContext";
 import { logout } from "@/components/Services/AuthService";
+import { protectedRoutes } from "@/components/constant";
 // import { protectedRoutes } from "@/components/constant";
 
 export function NavUser() {
@@ -30,9 +31,9 @@ export function NavUser() {
     logout();
     setIsLoading(true);
 
-    // if (protectedRoutes.some((route) => pathname.match(route))) {
-    //   router.push("/");
-    // }
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
 
   return (
