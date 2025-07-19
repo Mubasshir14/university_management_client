@@ -24,7 +24,7 @@ import { protectedRoutes } from "../constant";
 const navItems = [
   { name: "Department", href: "/department" },
   { name: "Faculty", href: "/faculty" },
-  { name: "Get Admitted", href: "/get-admitted" },
+  { name: "Get Admitted", href: "/get-admit" },
 ];
 
 export default function Navbar() {
@@ -39,13 +39,23 @@ export default function Navbar() {
       toast.success("Signed out successfully");
       router.push("/");
       setIsLoading(true);
-        if (protectedRoutes.some((route) => pathname.match(route))) {
-          router.push("/");
-        }
+      if (protectedRoutes.some((route) => pathname.match(route))) {
+        router.push("/");
+      }
     } catch (err: any) {
       toast.error(err.message || "Failed to sign out");
     }
   };
+
+  const showGetAdmitted = !(
+    user?.role === "student" ||
+    user?.role === "advisor" ||
+    user?.role === "admin"
+  );
+
+  const filteredNavItems = navItems.filter(
+    (item) => item.name !== "Get Admitted" || showGetAdmitted
+  );
 
   return (
     <nav className="bg-white/10 backdrop-blur-sm border-b border-gray-200/20 py-4 font-sansita fixed w-full top-0 z-50">
@@ -71,7 +81,22 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          {navItems.map((item, index) => (
+          {/* {navItems.map((item, index) => (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              <Link
+                href={item.href}
+                className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-colors duration-200 "
+              >
+                {item.name}
+              </Link>
+            </motion.div>
+          ))} */}
+          {filteredNavItems.map((item, index) => (
             <motion.div
               key={item.name}
               initial={{ opacity: 0, y: -10 }}
@@ -86,6 +111,7 @@ export default function Navbar() {
               </Link>
             </motion.div>
           ))}
+
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -167,7 +193,23 @@ export default function Navbar() {
               className=" backdrop-blur-sm border-gray-600 w-[250px]"
             >
               <div className="px-3 flex flex-col gap-4 mt-4">
-                {navItems.map((item, index) => (
+                {/* {navItems.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <Link
+                      href={item.href}
+                      className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-colors duration-200 hover:border-b-2 hover:border-b-pink-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))} */}
+                {filteredNavItems.map((item, index) => (
                   <motion.div
                     key={item.name}
                     initial={{ opacity: 0, x: 20 }}
@@ -183,6 +225,7 @@ export default function Navbar() {
                     </Link>
                   </motion.div>
                 ))}
+
                 {user ? (
                   <div className=" px-3 flex items-center gap-2">
                     <Avatar className="h-8 w-8">

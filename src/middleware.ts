@@ -22,7 +22,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `http://localhost:5000/login?redirectPath=${pathname}`,
+          `http://localhost:3000/login?redirectPath=${pathname}`,
           request.url
         )
       );
@@ -43,6 +43,7 @@ export const config = {
   matcher: [
     "/login",
     "/user",
+    // "/get-admit",
     "/student",
     "/admin",
     "/user/:path*",

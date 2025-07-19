@@ -32,7 +32,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/user/dashboard",
             icon: SquareTerminal,
             isActive: true,
-          }
+          },
         ]
       : user?.role === "admin"
       ? [
@@ -93,6 +93,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Dashboard",
             url: "/student/dashboard",
+            icon: SquareTerminal,
+            isActive: true,
+          },
+          {
+            title: "My Information",
+            url: "/student/dashboard/my-information",
             icon: SquareTerminal,
             isActive: true,
           },
