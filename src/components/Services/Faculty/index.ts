@@ -7,13 +7,33 @@ export const getAllFaculty = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/faculty`, {
       method: "GET",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
+      // headers: {
+      //   Authorization: (await cookies()).get("accessToken")!.value,
+      // },
       next: {
         tags: ["FACULTY"],
       },
     });
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getSingleFaculty = async (facultyId: string) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/faculty/${facultyId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["FACULTY"],
+        },
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {

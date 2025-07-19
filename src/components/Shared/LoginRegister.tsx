@@ -545,7 +545,7 @@ export const LoginRegister = () => {
                                   <Input
                                     type="email"
                                     placeholder="you@example.com"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />

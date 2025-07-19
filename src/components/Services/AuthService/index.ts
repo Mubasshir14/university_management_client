@@ -7,13 +7,16 @@ import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
     const result = await res.json();
 
     if (result.success) {
@@ -62,10 +65,9 @@ export const getCurrentUser = async () => {
   }
 };
 
-
-
 export const logout = async () => {
   (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
 };
 
 export const getNewToken = async () => {
