@@ -68,6 +68,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
+            title: "Waiting Approval",
+            url: "/admin/dashboard/waiting-approval",
+            icon: Settings,
+          },
+          // {
+          //   title: "Cancel Approval",
+          //   url: "/admin/dashboard/cancel-approval",
+          //   icon: Settings,
+          // },
+          {
             title: "Manage Semester",
             url: "/admin/dashboard/manage-semester",
             icon: Settings,

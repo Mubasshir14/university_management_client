@@ -21,17 +21,41 @@ export const getAAllStudent = async () => {
   }
 };
 
+export const makeApproval = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/make-approval/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["STUDENT"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 export const getNotApprovedStudent = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/not-approved-student`, {
-      method: "GET",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
-      next: {
-        tags: ["STUDENT"],
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/not-approved-student`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["STUDENT"],
+        },
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -41,15 +65,18 @@ export const getNotApprovedStudent = async () => {
 
 export const getApprovedStudent = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/approved-student`, {
-      method: "GET",
-      headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
-      },
-      next: {
-        tags: ["STUDENT"],
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/approved-student`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["STUDENT"],
+        },
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -59,7 +86,8 @@ export const getApprovedStudent = async () => {
 
 export const getSinglStudent = async (studentId: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/${studentId}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/${studentId}`,
       {
         method: "GET",
         headers: {
@@ -79,7 +107,8 @@ export const getSinglStudent = async (studentId: string) => {
 
 export const getMeAsStudentData = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/get-me-as-a-student`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/get-me-as-a-student`,
       {
         method: "GET",
         headers: {

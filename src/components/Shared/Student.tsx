@@ -21,6 +21,7 @@ import { BloodGroup, Gender } from "../Types/student";
 import Image from "next/image";
 import { useUser } from "../context/UserContext";
 import { logout } from "../Services/AuthService";
+import { useRouter } from "next/navigation";
 
 export interface Department {
   _id: string;
@@ -40,6 +41,7 @@ export interface AcademicSemester {
 
 export default function Student() {
   const { user } = useUser();
+  const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
   const [loading, setLoading] = useState(true);
@@ -186,7 +188,8 @@ export default function Student() {
           isApproved: false,
         });
         setImagePreview(null);
-        logout()
+        logout();
+        router.push("/");
       } else {
         toast.error(res.message || "Failed to add student", { id: toastId });
       }
@@ -488,7 +491,12 @@ export default function Student() {
                       {loading ? "Submitting..." : "Add Student"}
                     </motion.button>
                   </Button>
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"> <small>Please Login Agin After Submitted SUccessfully</small> </span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                    {" "}
+                    <small>
+                      Please Login Agin After Submitted SUccessfully
+                    </small>{" "}
+                  </span>
                 </motion.div>
               </form>
             )}
