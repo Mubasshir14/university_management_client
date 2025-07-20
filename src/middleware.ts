@@ -7,7 +7,7 @@ const authRoutes = ["/login", "/register"];
 
 const roleBasedPrivateRoutes = {
   admin: [/^\/admin(\/|$)/],
-  user: [/^\/user(\/|$)/],
+   user: [/^\/user(\/|$)/, /^\/get-admit(\/|$)/],
   student: [/^\/student(\/|$)/],
   advisor: [/^\/advisor(\/|$)/],
 };
@@ -43,7 +43,7 @@ export const config = {
   matcher: [
     "/login",
     "/user",
-    // "/get-admit",
+    "/get-admit",
     "/student",
     "/admin",
     "/user/:path*",

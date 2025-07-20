@@ -7,7 +7,7 @@ const DepartmentDetailsPage = async ({
 }: {
   params: { id: string };
 }) => {
-  const { id } = params;
+  const { id } = await params;
   const { data: department } = await getSingleDepartment(id);
 
   return (

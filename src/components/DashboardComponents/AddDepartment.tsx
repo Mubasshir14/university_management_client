@@ -34,7 +34,7 @@ export default function AddDepartment() {
     defaultValues: {
       name: "",
       shortName: "",
-      faculty: [] as string[],
+      // faculty: [] as string[],
     },
   });
 
@@ -152,7 +152,7 @@ export default function AddDepartment() {
                 />
               </div>
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="faculty"
                 render={({ field }) => (
@@ -179,7 +179,7 @@ export default function AddDepartment() {
                     <FormMessage className="text-red-400 text-sm" />
                   </FormItem>
                 )}
-              />
+              /> */}
 
               {/* Image Upload */}
               <FormItem>
