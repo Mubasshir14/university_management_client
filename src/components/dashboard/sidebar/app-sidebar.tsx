@@ -68,15 +68,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
-            title: "Waiting Approval",
+            title: "Pending Approval",
             url: "/admin/dashboard/waiting-approval",
             icon: Settings,
           },
-          // {
-          //   title: "Cancel Approval",
-          //   url: "/admin/dashboard/cancel-approval",
-          //   icon: Settings,
-          // },
           {
             title: "Manage Semester",
             url: "/admin/dashboard/manage-semester",
@@ -97,6 +92,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/admin/dashboard/manage-advisor",
             icon: Settings,
           },
+          {
+            title: "Filter By Department",
+            url: "/admin/dashboard/filter-department",
+            icon: Settings,
+          },
+          {
+            title: "Filter By Semester",
+            url: "/admin/dashboard/filter-semester",
+            icon: Settings,
+          },
+          {
+            title: "Filter By Course",
+            url: "/admin/dashboard/filter-course",
+            icon: Settings,
+          },
         ]
       : user?.role === "student"
       ? [
@@ -109,6 +119,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "My Information",
             url: "/student/dashboard/my-information",
+            icon: SquareTerminal,
+            isActive: true,
+          },
+          {
+            title: "Make Registration",
+            url: "/student/dashboard/registration",
+            icon: SquareTerminal,
+            isActive: true,
+          },
+          {
+            title: "Registration Info",
+            url: "/student/dashboard/registration-information",
             icon: SquareTerminal,
             isActive: true,
           },
