@@ -20,6 +20,42 @@ export const getAAllStudent = async () => {
     return Error(error.message);
   }
 };
+export const dashboradDepBasedStudent = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/db`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["STUDENT"],
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const dashboradSemBasedStudent = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/sem`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["STUDENT"],
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 
 export const getStudentByDepartment = async (id: string) => {
   try {

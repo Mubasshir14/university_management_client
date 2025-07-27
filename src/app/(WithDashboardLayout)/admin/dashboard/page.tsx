@@ -1,11 +1,12 @@
+import AdminDashboard from "@/components/DashboardComponents/AdminDashboard";
 import React from "react";
 
-const AdminDashboard = () => {
+const AdminDashboardPage = () => {
   return (
     <div className="font-sansita bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-      <h1>This is Admin Dashboard</h1>
+      <AdminDashboard />
     </div>
   );
 };
 
-export default AdminDashboard;
+export default AdminDashboardPage;
