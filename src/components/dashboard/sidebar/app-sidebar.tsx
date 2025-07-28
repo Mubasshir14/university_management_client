@@ -73,6 +73,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
+            title: "Pending Registration",
+            url: "/admin/dashboard/pending-registration",
+            icon: Settings,
+          },
+          {
+            title: "Approved Registration",
+            url: "/admin/dashboard/approve-registration",
+            icon: Settings,
+          },
+          {
             title: "Manage Semester",
             url: "/admin/dashboard/manage-semester",
             icon: Settings,

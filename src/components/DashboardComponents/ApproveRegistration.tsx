@@ -12,10 +12,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { getApprovedStudent } from "../Services/Student";
-import { Eye } from "lucide-react";
+import { getApprovedRegisteredStudent } from "../Services/Registration";
 
-const ManageStudent = () => {
+const ApproveRegistration = () => {
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -25,7 +24,7 @@ const ManageStudent = () => {
     const fetchStudents = async () => {
       try {
         setLoading(true);
-        const data = await getApprovedStudent();
+        const data = await getApprovedRegisteredStudent();
         if (data.data) {
           setStudents(data.data);
         } else {
@@ -129,7 +128,7 @@ const ManageStudent = () => {
         >
           <div className="border-2 border-gray-200/20 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-              Manage Students
+              Approved Registration
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
             </h1>
             <div className="overflow-x-auto">
@@ -145,7 +144,8 @@ const ManageStudent = () => {
                     <TableHead>Department</TableHead>
                     <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Total Credit</TableHead>
+                    {/* <TableHead>Actions</TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -157,20 +157,18 @@ const ManageStudent = () => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 transition-colors duration-200 border-b border-gray-600/50"
                     >
-                      <TableCell>{student.id}</TableCell>
-                      <TableCell>{student.name}</TableCell>
-                      <TableCell>{student.email}</TableCell>
-                      <TableCell>{student.contactNo}</TableCell>
-                      <TableCell className="capitalize">
-                        {student.gender}
-                      </TableCell>
-                      <TableCell>{student.bloodGroup}</TableCell>
+                      <TableCell>{student.student.id}</TableCell>
+                      <TableCell>{student.student.name}</TableCell>
+                      <TableCell>{student.student.email}</TableCell>
+                      <TableCell>{student.student.contactNo}</TableCell>
+                      <TableCell className="capitalize">{student.student.gender}</TableCell>
+                      <TableCell>{student.student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
                       <TableCell>
-                        {student.image ? (
+                        {student.student.image ? (
                           <motion.img
-                            src={student.image}
+                            src={student.student.image}
                             alt={student.name}
                             className="h-16 w-16 object-cover rounded-lg border-2 border-gray-200/20"
                             whileHover={{ scale: 1.1 }}
@@ -180,14 +178,15 @@ const ManageStudent = () => {
                           <span className="text-gray-400">No image</span>
                         )}
                       </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outline"
-                          className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
+                      <TableCell>{student.totalCredit}</TableCell>
+                      {/* <TableCell>
+                        <div
+                          
+                          className=" text-purple-600  hover:text-purple-700 hover:scale-105 transition-all transform "
                         >
                           <Eye />
-                        </Button>
-                      </TableCell>
+                        </div>
+                      </TableCell> */}
                     </motion.tr>
                   ))}
                 </TableBody>
@@ -221,4 +220,4 @@ const ManageStudent = () => {
   );
 };
 
-export default ManageStudent;
+export default ApproveRegistration;

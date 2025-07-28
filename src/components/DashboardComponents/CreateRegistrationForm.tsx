@@ -11,6 +11,7 @@ import { getAllCourse } from "../Services/Course";
 import { createRegistration } from "../Services/Registration";
 import { getMeAsStudentData } from "../Services/Student";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Course {
   _id: string;
@@ -38,6 +39,7 @@ interface StudentData {
 }
 
 const CreateRegistrationForm = () => {
+  const router = useRouter()
   const [courses, setCourses] = useState<Course[]>([]);
   const [studentData, setStudentData] = useState<StudentData | null>(null);
 
@@ -119,6 +121,7 @@ const CreateRegistrationForm = () => {
         toast.success("Registration created successfully");
         setSelectedCourses([]);
         setTotalCredit(0);
+        router.push('/student/dashboard/registration-information')
       } else {
         toast.error(res.message || "Failed to create registration");
       }

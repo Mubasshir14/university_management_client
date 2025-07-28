@@ -77,7 +77,7 @@ export const getStudentByCourse = async (id: string) => {
         },
         body: JSON.stringify({ id }),
         next: {
-          tags: ["STUDENT"],
+          tags: ["REGISTRATION"],
         },
       }
     );
@@ -92,14 +92,14 @@ export const getStudentByCourse = async (id: string) => {
 export const getNotApprovedRegisteredStudent = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/registration/not-approved-student`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/not-approved-registration`,
       {
         method: "GET",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         next: {
-          tags: ["STUDENT"],
+          tags: ["REGISTRATION"],
         },
       }
     );
@@ -113,14 +113,14 @@ export const getNotApprovedRegisteredStudent = async () => {
 export const getApprovedRegisteredStudent = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/registration/approved-student`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/approved-registration`,
       {
         method: "GET",
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         next: {
-          tags: ["STUDENT"],
+          tags: ["REGISTRATION"],
         },
       }
     );
@@ -130,3 +130,25 @@ export const getApprovedRegisteredStudent = async () => {
     return Error(error.message);
   }
 };
+
+export const makeRegistrationApproval = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/make-approval/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["REGISTRATION"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
