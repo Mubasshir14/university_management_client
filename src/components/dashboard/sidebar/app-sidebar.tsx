@@ -144,6 +144,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: SquareTerminal,
             isActive: true,
           },
+          {
+            title: "Update Registration Info",
+            url: "/student/dashboard/update-registration-information",
+            icon: SquareTerminal,
+            isActive: true,
+          },
         ]
       : [];
 

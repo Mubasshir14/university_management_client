@@ -41,6 +41,32 @@ export const createRegistration = async (regData: any): Promise<any> => {
   }
 };
 
+export const updateAndDropCourseByStudent = async (regData: {
+  studentId: string;
+  academicSemesterId: string;
+  academicDepartmentId: string;
+  courseIdsToDrop: string[];
+}): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/drop-and-update-course-by-student`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(regData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("REGISTRATION");
+    return res.json();
+  } catch (error: any) {
+    console.log(error.message);
+    return Error(error.message);
+  }
+};
+
 export const getMyRegistrationInfo = async (id: string) => {
   try {
     const res = await fetch(
@@ -151,4 +177,3 @@ export const makeRegistrationApproval = async (id: string) => {
     return Error(error.message);
   }
 };
-
