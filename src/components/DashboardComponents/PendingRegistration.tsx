@@ -17,15 +17,12 @@ import {
   getNotApprovedRegisteredStudent,
   makeRegistrationApproval,
 } from "../Services/Registration";
-import UpdateIndividualCourseByAdmin from "./UpdateIndividualCourseByAdmin";
+import Link from "next/link";
 
 const PendingRegistration = () => {
   const router = useRouter();
   const [students, setStudents] = useState<any[]>([]);
-  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(
-    null
-  );
-  const [showModal, setShowModal] = useState(false);
+
 
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -220,22 +217,14 @@ const PendingRegistration = () => {
                         >
                           Approve
                         </Button>
+                        <Link href={`/admin/dashboard/course-drop-individual-registration/${student._id}`}>
                         <Button
-                          onClick={() => {
-                            setSelectedStudentId(student._id);
-                            setShowModal(true);
-                          }}
                           variant="outline"
                           className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
                         >
                           View
                         </Button>
-                        {showModal && selectedStudentId && (
-                          <UpdateIndividualCourseByAdmin
-                            studentId={selectedStudentId}
-                            onClose={() => setShowModal(false)}
-                          />
-                        )}
+                        </Link>
                       </TableCell>
                     </motion.tr>
                   ))}

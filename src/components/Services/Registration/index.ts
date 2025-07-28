@@ -68,14 +68,14 @@ export const updateAndDropCourseByStudent = async (regData: {
 };
 
 export const updateAndDropCourseByAdmin = async (regData: {
-  id: string;
+  studentId: string;
   academicSemesterId: string;
   academicDepartmentId: string;
   courseIdsToDrop: string[];
 }): Promise<any> => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/registration/drop-and-update-course-by-admin/${regData.id}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/drop-and-update-course-by-admin`,
       {
         method: "PATCH",
         body: JSON.stringify(regData),

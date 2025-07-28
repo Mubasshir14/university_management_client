@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
-import {
-  getSingleRegistration,
-  updateAndDropCourseByAdmin,
-} from "../Services/Registration";
+import { updateAndDropCourseByAdmin } from "../Services/Registration";
 import {
   Book,
   Building,
@@ -55,12 +53,10 @@ interface RegistrationData {
   student_id: string;
   totalCredit: number;
   isApproved: boolean;
-  academicDepartment?: AcademicDepartment;
-  academicSemester?: AcademicSemester;
+  academicDepartment: AcademicDepartment;
+  academicSemester: AcademicSemester;
   courses: Course[];
-  student?: Student;
-  createdAt?: string;
-  updatedAt?: string;
+  student: Student;
 }
 
 interface Props {
@@ -68,43 +64,18 @@ interface Props {
   onClose: () => void;
 }
 
-const UpdateIndividualCourseByAdmin = ({ studentId, onClose }: Props) => {
-  const [registration, setRegistration] = useState<RegistrationData | null>(
-    null
-  );
-  console.log("ssssssss", registration);
+const UpdateIndividualCourseByAdmin = ({
+  registration,
+}: {
+  registration: RegistrationData;
+}) => {
+  console.log(registration);
   const [selectedCoursesToDrop, setSelectedCoursesToDrop] = useState<string[]>(
     []
   );
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchRegistrationInfo = async () => {
-      try {
-        setLoading(true);
-        const regRes = await getSingleRegistration(studentId);
-        // console.table(regRes.data);
-        // console.log('Student:', regRes.data?.student);
-        // console.log('Academic Department:', regRes.data?.academicDepartment);
-        // console.log('Academic Semester:', regRes.data?.academicSemester);
-        // console.log('Courses:', regRes.data?.courses);
-        if (!regRes?.success) {
-          toast.error(regRes.message || "Registration not found");
-          return;
-        }
-
-        setRegistration(regRes.data);
-      } catch (error: any) {
-        toast.error(error.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRegistrationInfo();
-  }, [studentId]);
 
   const handleCourseToggle = (courseId: string) => {
     setSelectedCoursesToDrop((prev) =>
@@ -137,19 +108,17 @@ const UpdateIndividualCourseByAdmin = ({ studentId, onClose }: Props) => {
     try {
       setIsSubmitting(true);
       const regData = {
-        id: registration._id,
+        studentId: registration.student._id,
         academicSemesterId: registration.academicSemester?._id,
         academicDepartmentId: registration.academicDepartment?._id,
         courseIdsToDrop: selectedCoursesToDrop,
       };
+      console.log('redData', regData);
 
       const response = await updateAndDropCourseByAdmin(regData);
 
       if (response.success) {
         toast.success("Courses dropped successfully!");
-        setRegistration(response.data);
-        setSelectedCoursesToDrop([]);
-        onClose();
         router.push("/admin/dashboard/pending-registration");
       } else {
         toast.error(response.message || "Failed to drop courses");
@@ -163,14 +132,6 @@ const UpdateIndividualCourseByAdmin = ({ studentId, onClose }: Props) => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-        <span className="ml-2 text-gray-600">Loading registration info...</span>
-      </div>
-    );
-  }
 
   if (!registration) {
     return (
