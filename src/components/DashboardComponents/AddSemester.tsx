@@ -136,6 +136,20 @@ export default function AddSemester() {
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
               {/* <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-pink-600 to-teal-600 rounded-full" /> */}
             </h1>
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-2 text-xs mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-2xl rounded-lg mx-auto px-3">
+              <ul className="flex flex-col ">
+                <li>Semester Name: Autumn</li>
+                <li>Semester Code: 01</li>
+              </ul>
+              <ul className="flex flex-col ">
+                <li>Semester Name: Summer</li>
+                <li>Semester Code: 02</li>
+              </ul>
+              <ul className="flex flex-col ">
+                <li>Semester Name: Fall</li>
+                <li>Semester Code: 03</li>
+              </ul>
+            </div>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}

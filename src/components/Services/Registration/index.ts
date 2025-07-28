@@ -67,6 +67,32 @@ export const updateAndDropCourseByStudent = async (regData: {
   }
 };
 
+export const updateAndDropCourseByAdmin = async (regData: {
+  id: string;
+  academicSemesterId: string;
+  academicDepartmentId: string;
+  courseIdsToDrop: string[];
+}): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/drop-and-update-course-by-admin/${regData.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(regData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("REGISTRATION");
+    return res.json();
+  } catch (error: any) {
+    console.log(error.message);
+    return Error(error.message);
+  }
+};
+
 export const getMyRegistrationInfo = async (id: string) => {
   try {
     const res = await fetch(
@@ -78,6 +104,30 @@ export const getMyRegistrationInfo = async (id: string) => {
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         body: JSON.stringify({ id }),
+        next: {
+          tags: ["REGISTRATION"],
+        },
+      }
+    );
+
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const getSingleRegistration = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/${id}`,
+      {
+        method: "GET",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        // body: JSON.stringify({ id }),
         next: {
           tags: ["REGISTRATION"],
         },

@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getMeAsStudentData } from "../Services/Student";
-import {
-  getMyRegistrationInfo,
-  updateAndDropCourseByStudent,
-} from "../Services/Registration";
 import { toast } from "sonner";
 import {
-  Loader2,
-  User,
+  getSingleRegistration,
+  updateAndDropCourseByAdmin,
+} from "../Services/Registration";
+import {
   Book,
+  Building,
   CheckCircle,
   Clock,
-  Building,
+  Loader2,
   Trash2,
+  User,
 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -30,47 +28,74 @@ interface Course {
   courseCode: string;
 }
 
+interface AcademicDepartment {
+  _id: string;
+  name: string;
+  shortName?: string;
+}
+
+interface AcademicSemester {
+  _id: string;
+  name: string;
+  year: string;
+  code?: string;
+  startMonth?: string;
+}
+
+interface Student {
+  _id: string;
+  id: string;
+  firstName: string;
+  lastName?: string;
+  image?: string;
+}
+
 interface RegistrationData {
-  student: string;
+  _id: string;
   student_id: string;
   totalCredit: number;
   isApproved: boolean;
-  academicDepartment: any;
-  academicSemester: any;
+  academicDepartment?: AcademicDepartment;
+  academicSemester?: AcademicSemester;
   courses: Course[];
+  student?: Student;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-const UpdateRegistrationInformation = () => {
-  const router = useRouter();
+interface Props {
+  studentId: string;
+  onClose: () => void;
+}
+
+const UpdateIndividualCourseByAdmin = ({ studentId, onClose }: Props) => {
   const [registration, setRegistration] = useState<RegistrationData | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
+  console.log("ssssssss", registration);
   const [selectedCoursesToDrop, setSelectedCoursesToDrop] = useState<string[]>(
     []
   );
+  const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRegistrationInfo = async () => {
       try {
         setLoading(true);
-
-        const studentRes = await getMeAsStudentData();
-        if (!studentRes.success) {
-          toast.error(studentRes.message || "Failed to get student data");
+        const regRes = await getSingleRegistration(studentId);
+        // console.table(regRes.data);
+        // console.log('Student:', regRes.data?.student);
+        // console.log('Academic Department:', regRes.data?.academicDepartment);
+        // console.log('Academic Semester:', regRes.data?.academicSemester);
+        // console.log('Courses:', regRes.data?.courses);
+        if (!regRes?.success) {
+          toast.error(regRes.message || "Registration not found");
           return;
         }
 
-        const studentId = studentRes.data._id;
-        const registrationRes = await getMyRegistrationInfo(studentId);
-
-        if (registrationRes?.success === false) {
-          toast.error(registrationRes.message || "Registration not found");
-          return;
-        }
-
-        setRegistration(registrationRes.data);
+        setRegistration(regRes.data);
       } catch (error: any) {
         toast.error(error.message || "Something went wrong");
       } finally {
@@ -79,7 +104,7 @@ const UpdateRegistrationInformation = () => {
     };
 
     fetchRegistrationInfo();
-  }, []);
+  }, [studentId]);
 
   const handleCourseToggle = (courseId: string) => {
     setSelectedCoursesToDrop((prev) =>
@@ -95,29 +120,43 @@ const UpdateRegistrationInformation = () => {
       return;
     }
 
+    // Calculate credits to drop
+    const creditsToDrop = registration.courses
+      .filter((course) => selectedCoursesToDrop.includes(course._id))
+      .reduce((sum, course) => sum + course.credits, 0);
+    const remainingCredit = registration.totalCredit - creditsToDrop;
+
+    // Validate credit range (9–15)
+    if (remainingCredit < 9 || remainingCredit > 15) {
+      toast.error(
+        `Remaining credit (${remainingCredit}) must be between 9 and 15`
+      );
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       const regData = {
-        studentId: registration.student,
-        academicSemesterId: registration.academicSemester,
-        academicDepartmentId: registration.academicDepartment,
+        id: registration._id,
+        academicSemesterId: registration.academicSemester?._id,
+        academicDepartmentId: registration.academicDepartment?._id,
         courseIdsToDrop: selectedCoursesToDrop,
       };
 
-      const response = await updateAndDropCourseByStudent(regData);
+      const response = await updateAndDropCourseByAdmin(regData);
+
       if (response.success) {
         toast.success("Courses dropped successfully!");
         setRegistration(response.data);
         setSelectedCoursesToDrop([]);
-        router.push("/student/dashboard/registration-information");
+        onClose();
+        router.push("/admin/dashboard/pending-registration");
       } else {
-        toast.error(
-          "Failed to drop courses || Remaining credit must be between 9 and 15"
-        );
+        toast.error(response.message || "Failed to drop courses");
       }
     } catch (error: any) {
       toast.error(
-        "Something went wrong while dropping courses || Remaining credit must be between 9 and 15"
+        error.message || "Something went wrong while dropping courses"
       );
     } finally {
       setIsSubmitting(false);
@@ -170,18 +209,19 @@ const UpdateRegistrationInformation = () => {
               Student Details
             </h3>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Student ID:
               </span>{" "}
-              {registration.student_id}
+              {registration?.student_id}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Total Credit:
               </span>{" "}
-              {registration.totalCredit}
+              {registration?.totalCredit}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
@@ -203,19 +243,19 @@ const UpdateRegistrationInformation = () => {
               Academic Details
             </h3>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Department:
               </span>{" "}
-              {registration.academicDepartment?.name || "N/A"}
+              {registration?.academicDepartment?.name}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Semester:
               </span>{" "}
-              {registration.academicSemester?.name} -{" "}
-              {registration.academicSemester?.year}
+              {`${registration?.academicSemester?.name} - ${registration?.academicSemester?.year}`}
             </p>
           </div>
         </div>
@@ -231,7 +271,7 @@ const UpdateRegistrationInformation = () => {
           {registration.courses?.length > 0 ? (
             <>
               <ul className="space-y-3">
-                {registration.courses.map((course, idx) => (
+                {registration.courses.map((course: Course, idx: number) => (
                   <li
                     key={idx}
                     className="flex items-center gap-3 text-gray-700 dark:text-gray-300 p-3 bg-white/50 dark:bg-gray-900/50 rounded-lg hover:bg-white/70 dark:hover:bg-gray-900/70 transition-colors"
@@ -255,17 +295,12 @@ const UpdateRegistrationInformation = () => {
                 ))}
               </ul>
               {registration.totalCredit <= 9 ? (
-                <>
-                  <p className="flex items-center justify-center">
-                    <small className="capitalize italic text-xs text-center my-2 text-red-600">
-                      You Can Not Be able to drop course if you have credit less
-                      than or egual 9
-                    </small>
-                  </p>{" "}
-                </>
-              ) : (
-                ""
-              )}
+                <p className="flex items-center justify-center">
+                  <small className="capitalize italic text-xs text-center my-2 text-red-600">
+                    You cannot drop courses if you have 9 or fewer credits
+                  </small>
+                </p>
+              ) : null}
               <Button
                 onClick={handleDropCourses}
                 disabled={
@@ -294,4 +329,4 @@ const UpdateRegistrationInformation = () => {
   );
 };
 
-export default UpdateRegistrationInformation;
+export default UpdateIndividualCourseByAdmin;

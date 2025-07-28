@@ -83,6 +83,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
+            title: "Update Individual Registration",
+            url: "/admin/dashboard/course-drop-individual-registration",
+            icon: SquareTerminal,
+            isActive: true,
+          },
+          {
             title: "Manage Semester",
             url: "/admin/dashboard/manage-semester",
             icon: Settings,

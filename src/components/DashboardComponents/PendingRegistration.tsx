@@ -17,10 +17,16 @@ import {
   getNotApprovedRegisteredStudent,
   makeRegistrationApproval,
 } from "../Services/Registration";
+import UpdateIndividualCourseByAdmin from "./UpdateIndividualCourseByAdmin";
 
 const PendingRegistration = () => {
   const router = useRouter();
   const [students, setStudents] = useState<any[]>([]);
+  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(
+    null
+  );
+  const [showModal, setShowModal] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
@@ -133,7 +139,7 @@ const PendingRegistration = () => {
         >
           <div className="border-2 border-gray-200/20 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-             Pending Registration
+              Pending Registration
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
             </h1>
             <div className="overflow-x-auto">
@@ -156,7 +162,7 @@ const PendingRegistration = () => {
                 <TableBody>
                   {paginatedStudents.map((student, index) => (
                     <motion.tr
-                      key={student._id["$oid"]}
+                      key={student._id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -186,7 +192,7 @@ const PendingRegistration = () => {
                         )}
                       </TableCell>
                       <TableCell>{student.totalCredit}</TableCell>
-                      <TableCell>
+                      <TableCell className="flex flex-col gap-2">
                         <Button
                           variant="outline"
                           className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
@@ -196,9 +202,11 @@ const PendingRegistration = () => {
                                 student._id
                               );
                               if (res.success) {
-                                toast.success("Registration approved successfully!");
+                                toast.success(
+                                  "Registration approved successfully!"
+                                );
                                 router.push(
-                                  "/admin/dashboard/approve-registartion"
+                                  "/admin/dashboard/approve-registration"
                                 );
                               } else {
                                 toast.error(res.message || "Approval failed.");
@@ -212,6 +220,22 @@ const PendingRegistration = () => {
                         >
                           Approve
                         </Button>
+                        <Button
+                          onClick={() => {
+                            setSelectedStudentId(student._id);
+                            setShowModal(true);
+                          }}
+                          variant="outline"
+                          className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
+                        >
+                          View
+                        </Button>
+                        {showModal && selectedStudentId && (
+                          <UpdateIndividualCourseByAdmin
+                            studentId={selectedStudentId}
+                            onClose={() => setShowModal(false)}
+                          />
+                        )}
                       </TableCell>
                     </motion.tr>
                   ))}
