@@ -2,7 +2,6 @@
 "use server";
 import { cookies } from "next/headers";
 
-
 type CourseMarks = {
   courseId: string;
   midTerm1: number;
@@ -18,6 +17,30 @@ type StudentResult = {
   averageMarks: number;
   avgGrade: string;
   avgGradePoints: number;
+};
+
+export const getMyResult = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/result/my-result`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        body: JSON.stringify({ id }),
+        next: {
+          tags: ["RESULT"],
+        },
+      }
+    );
+
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
 };
 
 export const generateStudentResult = async (
@@ -39,6 +62,9 @@ export const generateStudentResult = async (
           Authorization: `${accessToken}`,
         },
         body: JSON.stringify(coursesMarks),
+        next: {
+          tags: ["RESULT"],
+        },
       }
     );
 

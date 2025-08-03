@@ -109,6 +109,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
+            title: "Generate Result",
+            url: "/admin/dashboard/generate-result",
+            icon: Settings,
+          },
+          {
+            title: "Student Result",
+            url: "/admin/dashboard/student-result",
+            icon: Settings,
+          },
+          {
             title: "Filter By Department",
             url: "/admin/dashboard/filter-department",
             icon: Settings,
@@ -153,6 +163,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Update Registration Info",
             url: "/student/dashboard/update-registration-information",
+            icon: SquareTerminal,
+            isActive: true,
+          },
+          {
+            title: "My Result",
+            url: "/student/dashboard/my-result",
             icon: SquareTerminal,
             isActive: true,
           },

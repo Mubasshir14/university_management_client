@@ -228,8 +228,8 @@ export default function GenerateResultForm() {
   };
 
   return (
-    <Card className="w-full max-w-5xl mx-auto mt-10 shadow-2xl rounded-2xl bg-white">
-      <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-2xl">
+    <Card className="w-full max-w-5xl mx-auto mt-10 shadow-2xl rounded-2xl bg-white font-sansita">
+      <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-t-2xl">
         <CardTitle className="text-2xl font-bold">
           Generate Student Result
         </CardTitle>
@@ -238,7 +238,7 @@ export default function GenerateResultForm() {
       <CardContent className="space-y-8 p-6">
         {/* Select Registration */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
             Select Registration
           </label>
           <Select onValueChange={handleSelectRegistration} disabled={loading}>
@@ -259,7 +259,7 @@ export default function GenerateResultForm() {
         {courseMarks.length > 0 && (
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="w-full text-sm text-center bg-white">
-              <thead className="bg-gray-100 text-gray-700 font-semibold">
+              <thead className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600  font-semibold">
                 <tr>
                   <th className="p-3">Course</th>
                   <th className="p-3">MidTerm 1 (Max 20)</th>
@@ -360,19 +360,19 @@ export default function GenerateResultForm() {
         {courseMarks.length > 0 && (
           <div className="flex flex-col sm:flex-row justify-between items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="space-y-1 mb-4 sm:mb-0">
-              <p className="font-semibold text-gray-700">
+              <p className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                 Average Marks:{" "}
-                <span className="text-blue-600">{averageMarks.toFixed(2)}</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{averageMarks.toFixed(2)}</span>
               </p>
-              <p className="font-semibold text-gray-700">
-                Grade: <span className="text-blue-600">{cgpa.grade}</span> (GPA:{" "}
-                <span className="text-blue-600">{cgpa.gradePoints}</span>)
+              <p className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                Grade: <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{cgpa.grade}</span> (GPA:{" "}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{cgpa.gradePoints}</span>)
               </p>
             </div>
             <Button
               onClick={handleSubmit}
               disabled={loading || Object.keys(errors).length > 0}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-200"
+              className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-200"
             >
               {loading ? "Generating..." : "Generate Result"}
             </Button>
