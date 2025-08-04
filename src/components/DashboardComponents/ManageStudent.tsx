@@ -236,8 +236,8 @@ const ManageStudent = () => {
       // Title
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
-      doc.setTextColor(34, 102, 153);
-      doc.text("STUDENT LIST", 148.5, 35, { align: "center" });
+      doc.setTextColor(0, 51, 102);
+      doc.text("Student List", 148.5, 35, { align: "center" });
 
       // --- TABLE SECTION ---
       const columns = [
@@ -276,8 +276,8 @@ const ManageStudent = () => {
         styles: {
           font: "helvetica",
           fontSize: 9,
-          textColor: [60, 60, 60],
-          lineColor: [210, 210, 210],
+          textColor: [0, 51, 102],
+          lineColor: [0, 51, 102],
           lineWidth: 0.1,
           cellPadding: 3,
           overflow: "linebreak",
