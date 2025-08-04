@@ -67,7 +67,7 @@ export const AcademicPrograms = () => {
                 className={`${
                   filter === faculty
                     ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white"
-                    : "text-gray-600 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white"
+                    : "text-gray-600 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white"
                 } px-4 py-2 rounded-full transition-all duration-300`}
                 onClick={() => setFilter(faculty)}
               >
@@ -86,7 +86,7 @@ export const AcademicPrograms = () => {
               whileHover={{ scale: 1.05, rotate: 1 }}
               className="group"
             >
-              <Card className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
+              <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/50 backdrop-blur-sm border  rounded-2xl shadow-xl group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
                 <CardContent className="p-6 text-center">
                   <span className="text-4xl mb-4 block">{program.icon}</span>
                   <h3 className="text-lg font-semibold text-gray-800">{program.title}</h3>

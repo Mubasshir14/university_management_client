@@ -14,7 +14,7 @@ const images = [
     height: 300,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/PGWdVQvJ/3.jpg",
     alt: "Library",
     location: "Central Library",
     description: "A hub for knowledge and research.",
@@ -22,7 +22,7 @@ const images = [
     height: 450,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/twXm65Nv/images.jpg",
     alt: "Lecture Hall",
     location: "Academic Block",
     description: "State-of-the-art facilities for learning.",
@@ -30,7 +30,7 @@ const images = [
     height: 250,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/vCYKgBps/51555804018-3a7cc4db70-k.jpg",
     alt: "Student Lounge",
     location: "Student Center",
     description: "A vibrant space for student collaboration.",
@@ -38,7 +38,7 @@ const images = [
     height: 350,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/XxWbDBJt/Sports-Facilities01x640.jpg",
     alt: "Sports Field",
     location: "Athletic Complex",
     description: "Where champions train and compete.",
@@ -46,7 +46,7 @@ const images = [
     height: 200,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/vCYKgBps/51555804018-3a7cc4db70-k.jpg",
     alt: "Student Lounge",
     location: "Student Center",
     description: "A vibrant space for student collaboration.",
@@ -54,7 +54,7 @@ const images = [
     height: 350,
   },
   {
-    src: "https://i.ibb.co/ymkgQWg4/campus.jpg",
+    src: "https://i.ibb.co.com/cWwQdnj/convert.webp",
     alt: "Sports Field",
     location: "Athletic Complex",
     description: "Where champions train and compete.",

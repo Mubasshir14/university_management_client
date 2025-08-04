@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sansita.variable} ${arima.variable} ${oleo_script.variable} ${lobster.variable} antialiased bg-gradient-to-b from-blue-600/10 to-purple-600/10`}
+        className={`${sansita.variable} ${arima.variable} ${oleo_script.variable} ${lobster.variable} antialiased bg-gradient-to-b from-blue-200/10 to-purple-200/10`}
       >
         <Providers>
           <Toaster richColors position="top-center" />

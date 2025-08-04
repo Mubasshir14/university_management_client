@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
 
 const events = [
-  { title: "Annual Convocation 2025", date: "July 25, 2025", image: "https://i.ibb.co/ymkgQWg4/campus.jpg", link: "/events/convocation" },
+  { title: "Convocation 2025", date: "July 25, 2025", image: "https://i.ibb.co/ymkgQWg4/campus.jpg", link: "/events/convocation" },
   { title: "Tech Fest 2025", date: "August 10, 2025", image: "https://i.ibb.co/ymkgQWg4/campus.jpg", link: "/events/tech-fest" },
   { title: "Cultural Night", date: "September 5, 2025", image: "https://i.ibb.co/ymkgQWg4/campus.jpg", link: "/events/cultural-night" },
   { title: "Career Fair", date: "October 15, 2025", image: "https://i.ibb.co/ymkgQWg4/campus.jpg", link: "/events/career-fair" },
@@ -41,7 +41,7 @@ export const EventCarousel = () => {
               whileHover={{ scale: 1.05, rotate: 1 }}
               className="group"
             >
-              <Card className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl overflow-hidden group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
+              <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm border border-blue-500/50 rounded-2xl shadow-xl overflow-hidden group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
                 <CardContent className="p-0">
                   <div className="relative">
                     <motion.img

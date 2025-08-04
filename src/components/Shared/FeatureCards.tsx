@@ -33,7 +33,7 @@ export const FeatureCards = () => {
               whileHover={{ scale: 1.05 }}
               className="group font-sansita"
             >
-              <Card className="relative bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden group-hover:ring-2 group-hover:ring-blue-500/50">
+              <Card className="relative  backdrop-blur-sm border border-blue-500/50 rounded-2xl shadow-xl transition-all duration-300 overflow-hidden group-hover:ring-2 group-hover:ring-blue-500/50 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <CardHeader>
                   <motion.div
@@ -59,7 +59,7 @@ export const FeatureCards = () => {
                       className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white border-none hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
                       asChild
                     >
-                      <a href={feature.link}>Learn More</a>
+                      <a href={feature.link}>View More</a>
                     </Button>
                   </motion.div>
                 </CardContent>

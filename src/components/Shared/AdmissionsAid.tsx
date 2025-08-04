@@ -72,8 +72,8 @@ export const AdmissionsAid = () => {
         >
           Admissions & Aid
           <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
-          <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-pink-500 to-teal-500 rounded-full" />
-          <span className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full" />
+          {/* <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-pink-500 to-teal-500 rounded-full" />
+          <span className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full" /> */}
         </motion.h2>
         <motion.p
           className="text-center text-gray-600 text-lg sm:text-xl mb-12"
@@ -99,12 +99,12 @@ export const AdmissionsAid = () => {
               className={`relative flex ${index % 2 === 0 ? "justify-start" : "justify-end"} mb-8`}
             >
               <div className={`w-full sm:w-1/2 ${index % 2 === 0 ? "pr-8" : "pl-8"}`}>
-                <Card className="bg-gradient-to-r from-blue-100 to-purple-300  backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
+                <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/50  backdrop-blur-sm border rounded-2xl shadow-xl group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
                         <motion.span
-                          className="text-2xl font-bold text-blue-600 bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-md animate-pulse-slow"
+                          className="text-2xl font-bold text-blue-600  rounded-full w-12 h-12 flex items-center justify-center shadow-md animate-pulse-slow"
                           whileHover={{ scale: 1.2 }}
                           title={step.title}
                         >
@@ -163,9 +163,9 @@ export const AdmissionsAid = () => {
         >
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 text-center">Application Season Progress</h3>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+            <div className="w-full  rounded-full h-[15px] border-2 border-blue-500/50 mt-2 ">
               <motion.div
-                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
@@ -173,7 +173,7 @@ export const AdmissionsAid = () => {
             </div>
             <p className="text-center text-gray-600 text-sm mt-2">Deadline: December 15, 2025</p>
           </div>
-          <Card className="bg-gradient-to-r from-blue-100 to-purple-300 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl">
+          <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/50 backdrop-blur-sm border  rounded-2xl shadow-xl">
             <CardContent className="p-6 text-center">
               <h3 className="text-lg font-semibold text-gray-800">Contact Admissions</h3>
               <div className="mt-4 space-y-2 text-gray-600 text-sm">
