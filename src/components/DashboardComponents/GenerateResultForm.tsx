@@ -17,7 +17,7 @@ import {
   getApprovedRegisteredStudent,
   getSingleRegistration,
 } from "../Services/Registration";
-import { generateStudentResult } from "../Services/result";
+import { generateStudentResult } from "../Services/Result";
 import { useRouter } from "next/navigation";
 
 // ------------------ Types ------------------
@@ -238,7 +238,6 @@ export default function GenerateResultForm() {
       </CardHeader>
 
       <CardContent className="space-y-8 p-6">
-       
         <div className="space-y-2">
           <label className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
             Select Registration

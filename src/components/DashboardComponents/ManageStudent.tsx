@@ -14,6 +14,8 @@ import {
 import { toast } from "sonner";
 import { getApprovedStudent } from "../Services/Student";
 import { Eye } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const ManageStudent = () => {
   const [students, setStudents] = useState<any[]>([]);
@@ -58,6 +60,285 @@ const ManageStudent = () => {
       </div>
     );
   }
+
+  // const downloadStudentList = () => {
+  //   try {
+  //     const doc = new jsPDF("landscape", "mm", "a4");
+
+  //     // Add Header with Title and Logo/Metadata
+  //     doc.setFont("helvetica", "bold");
+  //     doc.setFontSize(18);
+  //     doc.setTextColor(0, 51, 102); // Dark blue for header
+  //     doc.text("Student Signature Sheet", 148.5, 15, { align: "center" });
+
+  //     // --- University Name ---
+  //     doc.setFont("times", "bold");
+  //     doc.setFontSize(24);
+  //     doc.setTextColor(0, 51, 102);
+  //     doc.text("State University of Bangladesh", 105, 20, { align: "center" });
+
+  //     // --- University Address ---
+  //     doc.setFont("times", "normal");
+  //     doc.setFontSize(12);
+  //     doc.text(
+  //       "State University of Bangladesh Ave, Dhaka, Bangladesh",
+  //       105,
+  //       28,
+  //       { align: "center" }
+  //     );
+
+  //     // --- University Logo ---
+  //     doc.addImage(
+  //       "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
+  //       "JPEG",
+  //       95, // X
+  //       30, // Y
+  //       20, // width
+  //       20 // height
+  //     );
+
+  //     // Define table columns
+  //     const columns = [
+  //       { header: "Sl. No.", dataKey: "slNo" },
+  //       { header: "Student ID", dataKey: "id" },
+  //       { header: "Full Name", dataKey: "name" },
+  //       { header: "Email", dataKey: "email" },
+  //       { header: "Contact No", dataKey: "contactNo" },
+  //       { header: "Gender", dataKey: "gender" },
+  //       { header: "Department", dataKey: "department" },
+  //       { header: "Semester", dataKey: "semester" },
+  //       { header: "Blood Group", dataKey: "bloodGroup" },
+  //     ];
+
+  //     // Prepare table data
+  //     const rows = students.map((student, index) => ({
+  //       slNo: index + 1,
+  //       id: student.id || "N/A",
+  //       name: student.name || "N/A",
+  //       email: student.email || "N/A",
+  //       contactNo: student.contactNo || "N/A",
+  //       gender: student.gender
+  //         ? student.gender.charAt(0).toUpperCase() + student.gender.slice(1)
+  //         : "N/A",
+  //       department: student.academicDepartment?.name || "N/A",
+  //       semester: student.academicSemester
+  //         ? `${student.academicSemester.name} ${student.academicSemester.year}`
+  //         : "N/A",
+  //       bloodGroup: student.bloodGroup || "N/A",
+  //     }));
+
+  //     // Generate Table with enhanced styling
+  //     autoTable(doc, {
+  //       columns,
+  //       body: rows,
+  //       startY: 45,
+  //       theme: "grid",
+  //       styles: {
+  //         font: "helvetica",
+  //         fontSize: 9,
+  //         textColor: [50, 50, 50],
+  //         lineColor: [200, 200, 200],
+  //         lineWidth: 0.1,
+  //         cellPadding: 3,
+  //         overflow: "linebreak",
+  //       },
+  //       headStyles: {
+  //         fillColor: [0, 51, 102], // Dark blue header
+  //         textColor: [255, 255, 255], // White text
+  //         fontSize: 10,
+  //         fontStyle: "bold",
+  //         halign: "center",
+  //         valign: "middle",
+  //       },
+  //       alternateRowStyles: {
+  //         fillColor: [245, 245, 245], // Light gray for alternate rows
+  //       },
+  //       columnStyles: {
+  //         slNo: { cellWidth: 15, halign: "center" },
+  //         id: { cellWidth: 25 },
+  //         name: { cellWidth: 40 },
+  //         email: { cellWidth: 50 },
+  //         contactNo: { cellWidth: 30 },
+  //         gender: { cellWidth: 20, halign: "center" },
+  //         department: { cellWidth: 35 },
+  //         semester: { cellWidth: 30 },
+  //         bloodGroup: { cellWidth: 20, halign: "center" },
+  //       },
+  //       margin: { top: 45, left: 14, right: 14 },
+  //       didDrawPage: (data) => {
+  //         // Add footer with page number
+  //         doc.setFontSize(8);
+  //         doc.setTextColor(100);
+  //         doc.text(
+  //           `Page ${data.pageNumber} of ${doc.getNumberOfPages()}`,
+  //           148.5,
+  //           200,
+  //           { align: "center" }
+  //         );
+  //       },
+  //     });
+
+  //     // Add watermark (optional)
+  //     doc.setFontSize(40);
+  //     doc.setTextColor(230, 230, 230);
+  //     doc.text("Confidential", 148.5, 100, {
+  //       align: "center",
+  //       angle: 45,
+  //     });
+
+  //     // Save the PDF with a unique filename
+  //     const fileName = `Student_List_${
+  //       new Date().toISOString().split("T")[0]
+  //     }.pdf`;
+  //     doc.save(fileName);
+
+  //     // Show success toast
+  //     toast.success("Student list downloaded successfully!");
+  //   } catch (error: any) {
+  //     console.error("Error generating PDF:", error);
+  //     toast.error("Failed to generate PDF. Please try again.");
+  //   }
+  // };
+  const downloadStudentList = () => {
+    try {
+      const doc = new jsPDF("landscape", "mm", "a4");
+
+      // --- HEADER SECTION ---
+      // University Logo
+      doc.addImage(
+        "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
+        "JPEG",
+        15, // X
+        8, // Y
+        25, // width
+        25 // height
+      );
+
+      // University Name
+      doc.setFont("times", "bold");
+      doc.setFontSize(22);
+      doc.setTextColor(0, 51, 102);
+      doc.text("State University of Bangladesh", 148.5, 18, {
+        align: "center",
+      });
+
+      // University Address
+      doc.setFont("times", "italic");
+      doc.setFontSize(11);
+      doc.setTextColor(80);
+      doc.text(
+        "State University of Bangladesh Ave, Dhaka, Bangladesh",
+        148.5,
+        25,
+        { align: "center" }
+      );
+
+      // Title
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.setTextColor(34, 102, 153);
+      doc.text("STUDENT LIST", 148.5, 35, { align: "center" });
+
+      // --- TABLE SECTION ---
+      const columns = [
+        { header: "Sl. No.", dataKey: "slNo" },
+        { header: "Student ID", dataKey: "id" },
+        { header: "Full Name", dataKey: "name" },
+        { header: "Email", dataKey: "email" },
+        { header: "Contact No", dataKey: "contactNo" },
+        { header: "Gender", dataKey: "gender" },
+        { header: "Department", dataKey: "department" },
+        { header: "Semester", dataKey: "semester" },
+        { header: "Blood Group", dataKey: "bloodGroup" },
+      ];
+
+      const rows = students.map((student, index) => ({
+        slNo: index + 1,
+        id: student.id || "N/A",
+        name: student.name || "N/A",
+        email: student.email || "N/A",
+        contactNo: student.contactNo || "N/A",
+        gender: student.gender
+          ? student.gender.charAt(0).toUpperCase() + student.gender.slice(1)
+          : "N/A",
+        department: student.academicDepartment?.name || "N/A",
+        semester: student.academicSemester
+          ? `${student.academicSemester.name} ${student.academicSemester.year}`
+          : "N/A",
+        bloodGroup: student.bloodGroup || "N/A",
+      }));
+
+      autoTable(doc, {
+        columns,
+        body: rows,
+        startY: 42,
+        theme: "grid",
+        styles: {
+          font: "helvetica",
+          fontSize: 9,
+          textColor: [60, 60, 60],
+          lineColor: [210, 210, 210],
+          lineWidth: 0.1,
+          cellPadding: 3,
+          overflow: "linebreak",
+        },
+        headStyles: {
+          fillColor: [0, 51, 102],
+          textColor: [255, 255, 255],
+          fontSize: 10,
+          fontStyle: "bold",
+          halign: "center",
+          valign: "middle",
+        },
+        alternateRowStyles: {
+          fillColor: [245, 250, 255], // Light bluish alternate rows
+        },
+        columnStyles: {
+          slNo: { cellWidth: 15, halign: "center" },
+          id: { cellWidth: 25 },
+          name: { cellWidth: 40 },
+          email: { cellWidth: 50 },
+          contactNo: { cellWidth: 30 },
+          gender: { cellWidth: 20, halign: "center" },
+          department: { cellWidth: 35 },
+          semester: { cellWidth: 30 },
+          bloodGroup: { cellWidth: 20, halign: "center" },
+        },
+        margin: { top: 40, left: 14, right: 14 },
+        didDrawPage: (data) => {
+          // Footer - Page Number
+          doc.setFontSize(8);
+          doc.setTextColor(120);
+          doc.text(
+            `Page ${data.pageNumber} of ${doc.getNumberOfPages()}`,
+            148.5,
+            200,
+            { align: "center" }
+          );
+        },
+      });
+
+      // --- WATERMARK ---
+      // doc.setFont("helvetica", "bold");
+      // doc.setFontSize(45);
+      // doc.setTextColor(230, 230, 230);
+      // doc.text("State University of bangladesh", 148.5, 110, {
+      //   align: "center",
+      //   angle: 45,
+      // });
+
+      // --- SAVE PDF ---
+      const fileName = `Student_List_${
+        new Date().toISOString().split("T")[0]
+      }.pdf`;
+      doc.save(fileName);
+
+      toast.success("Student list downloaded successfully!");
+    } catch (error: any) {
+      console.error("Error generating PDF:", error);
+      toast.error("Failed to generate PDF. Please try again.");
+    }
+  };
 
   return (
     <section className="py-10 bg-gradient-to-b from-blue-600/10 to-purple-600/10 relative font-sansita">
@@ -128,10 +409,18 @@ const ManageStudent = () => {
           }}
         >
           <div className="border-2 border-gray-200/20 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
-            <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-              Manage Students
-              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
-            </h1>
+            <div className="flex md:flex-row flex-col  items-center justify-between">
+              <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
+                Manage Students
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
+              </h1>
+              <Button
+                onClick={downloadStudentList}
+                className="my-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none hover:from-blue-700   hover:to-green-500"
+              >
+                Download Student List
+              </Button>
+            </div>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
