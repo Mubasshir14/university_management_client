@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import Image from "next/image";
 
 const MyResult = () => {
   const [result, setResult] = useState<any | null>(null);
@@ -49,26 +50,158 @@ const MyResult = () => {
     fetchResultInfo();
   }, []);
 
-  const loadImageAsBase64 = (url: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.src = url;
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL("image/jpeg"));
-        } else {
-          reject(new Error("Failed to get canvas context"));
-        }
-      };
-      img.onerror = () => reject(new Error("Failed to load image"));
-    });
-  };
+  // const downloadPDF = async () => {
+  //   try {
+  //     if (!result || !result.student || !result.coursesMarks) {
+  //       toast.error("Incomplete result data. Cannot generate PDF.");
+  //       return;
+  //     }
+
+  //     const doc = new jsPDF();
+  //     autoTable(doc, {});
+
+  //     // University Address
+  //     doc.setFont("times", "normal");
+  //     doc.setFontSize(24);
+  //     doc.setTextColor(0, 51, 102);
+  //     doc.text("State University of Bangladesh", 105, 70, { align: "center" });
+  //     doc.text(
+  //       "State University of Bangladesh Ave, Dhaka, Bangladesh",
+  //       105,
+  //       76,
+  //       {
+  //         align: "center",
+  //       }
+  //     );
+
+  //     // Add University Logo (using a base64 or placeholder since external images can't be directly loaded)
+  //     doc.addImage(
+  //       "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
+  //       "JPEG",
+  //       85,
+  //       10,
+  //       40,
+  //       40
+  //     );
+  //     // Title: ACADEMIC TRANSCRIPT
+  //     doc.setFont("times", "bold");
+  //     doc.setFontSize(10);
+  //     doc.setTextColor(0, 51, 102);
+  //     doc.text("ACADEMIC TRANSCRIPT", 105, 60, { align: "center" });
+
+  //     // Horizontal Line
+  //     doc.setDrawColor(0, 51, 102);
+  //     doc.setLineWidth(0.8);
+  //     doc.line(20, 82, 190, 82);
+
+  //     // Student Information (Left Side)
+  //     doc.setFont("times", "bold");
+  //     doc.setFontSize(14);
+  //     doc.text("Student Information", 20, 92);
+  //     doc.setFont("times", "normal");
+  //     doc.setFontSize(10);
+  //     doc.text(
+  //       `Name: ${result.student.firstName} ${result.student.lastName}`,
+  //       20,
+  //       100
+  //     );
+  //     doc.text(
+  //       `Student ID: ${result.student_id || result.student.id}`,
+  //       20,
+  //       106
+  //     );
+  //     doc.text(
+  //       `Department: ${result.registration.academicDepartment?.name || "N/A"}`,
+  //       20,
+  //       112
+  //     );
+  //     doc.text(
+  //       `Semester: ${result.registration.academicSemester?.name || "N/A"} - ${
+  //         result.registration.academicSemester?.year || "N/A"
+  //       }`,
+  //       20,
+  //       118
+  //     );
+
+  //     // Summary Result (Right Side)
+  //     doc.setFont("times", "bold");
+  //     doc.setFontSize(14);
+  //     doc.text("Result", 140, 92);
+  //     doc.setFont("times", "normal");
+  //     doc.setFontSize(10);
+  //     doc.text(`Average Marks: ${result.averageMarks || "N/A"}`, 140, 100);
+  //     doc.text(`Average Grade: ${result.avgGrade || "N/A"}`, 140, 106);
+  //     doc.text(
+  //       `Average Grade Points: ${result.avgGradePoints || "N/A"}`,
+  //       140,
+  //       112
+  //     );
+
+  //     // Course Marks Table
+  //     autoTable(doc, {
+  //       startY: 130,
+  //       head: [["Course Code", "Course Name", "Credits", "Marks", "Grade"]],
+  //       body: result.coursesMarks.map((course: any) => [
+  //         course.courseId?.courseCode || "N/A",
+  //         course.courseId?.name || "N/A",
+  //         course.courseId?.credits || 0,
+  //         course.total || 0,
+  //         course.total >= 0 && course.total <= 19
+  //           ? "F"
+  //           : course.total >= 20 && course.total <= 39
+  //           ? "D"
+  //           : course.total >= 40 && course.total <= 59
+  //           ? "C"
+  //           : course.total >= 60 && course.total <= 79
+  //           ? "B"
+  //           : course.total >= 80 && course.total <= 100
+  //           ? "A"
+  //           : "N/A",
+  //       ]),
+  //       theme: "grid",
+  //       styles: { font: "times", fontSize: 10, cellPadding: 4 },
+  //       headStyles: {
+  //         fillColor: [0, 51, 102],
+  //         textColor: [255, 255, 255],
+  //         fontStyle: "bold",
+  //       },
+  //       bodyStyles: { textColor: [0, 0, 0] },
+  //       alternateRowStyles: { fillColor: [245, 245, 245] },
+  //       margin: { left: 20, right: 20 },
+  //       tableLineColor: [0, 51, 102],
+  //       tableLineWidth: 0.2,
+  //     });
+
+  //     doc.setFont("times", "italic");
+  //     doc.setFontSize(12);
+  //     doc.setTextColor(0, 0, 0);
+  //     doc.text("Dr. John Smith", 20, 270, { align: "left" });
+  //     doc.setFont("times", "bold");
+  //     doc.setLineWidth(0.5);
+  //     doc.line(20, 272, 60, 272);
+  //     doc.text("Register", 20, 278, { align: "left" });
+  //     doc.setFont("times", "normal");
+  //     // doc.text(
+  //     //   "State University of Bangladesh - Official Transcript",
+  //     //   105,
+  //     //   280,
+  //     //   {
+  //     //     align: "center",
+  //     //   }
+  //     // );
+  //     doc.setFont("times", "italic");
+  //     doc.text("Prof. Jane Doe", 190, 270, { align: "right" });
+  //     doc.setFont("times", "bold");
+  //     doc.line(150, 272, 190, 272);
+  //     doc.text("Vice Chancellor", 190, 278, { align: "right" });
+
+  //     // Save the PDF
+  //     doc.save(`Transcript_${result.student_id || result.student.id}.pdf`);
+  //   } catch (error: any) {
+  //     toast.error("Failed to generate PDF: " + error.message);
+  //     console.error("PDF generation error:", error);
+  //   }
+  // };
 
   const downloadPDF = async () => {
     try {
@@ -78,67 +211,85 @@ const MyResult = () => {
       }
 
       const doc = new jsPDF();
-      autoTable(doc, {});
 
-      const logoUrl =
-        "/public/university-education-logo-design-template-free-vector.jpg";
-      let logoBase64;
-      try {
-        logoBase64 = await loadImageAsBase64(logoUrl);
-
-        doc.setGState(doc.GState({ opacity: 0.4 }));
-        doc.addImage(logoBase64, "JPEG", 50, 50, 100, 100);
-        doc.setGState(doc.GState({ opacity: 1 }));
-        doc.addImage(logoBase64, "JPEG", 85, 10, 40, 12);
-      } catch (error) {
-        console.warn("Failed to load logo, skipping image:", error);
-      }
-
-      // Set elegant fonts
+      // --- University Name ---
       doc.setFont("times", "bold");
-      doc.setFontSize(22);
-      doc.setTextColor(0, 51, 102); // Dark blue for header
-      doc.text("Academic Transcript", 105, 35, { align: "center" });
+      doc.setFontSize(24);
+      doc.setTextColor(0, 51, 102);
+      doc.text("State University of Bangladesh", 105, 20, { align: "center" });
 
+      // --- University Address ---
       doc.setFont("times", "normal");
       doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-      doc.text("XYZ University", 105, 45, { align: "center" });
-      doc.text("123 University Ave, City, Country", 105, 51, {
-        align: "center",
-      });
+      doc.text(
+        "State University of Bangladesh Ave, Dhaka, Bangladesh",
+        105,
+        28,
+        { align: "center" }
+      );
 
-      // Decorative line under header
+      // --- University Logo ---
+      doc.addImage(
+        "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
+        "JPEG",
+        95, // X
+        30, // Y
+        20, // width
+        20 // height
+      );
+
+      // --- Academic Transcript Title ---
+      doc.setFont("times", "bold");
+      doc.setFontSize(10);
+      doc.text("Grade Card", 105, 55, { align: "center" });
+
+      // --- Horizontal Line ---
       doc.setDrawColor(0, 51, 102);
-      doc.setLineWidth(0.5);
-      doc.line(20, 55, 190, 55);
+      doc.setLineWidth(0.8);
+      doc.line(20, 60, 190, 60);
 
-      // Student Information
+      // --- Student Information (Left Side) ---
       doc.setFont("times", "bold");
       doc.setFontSize(14);
-      doc.text("Student Information", 20, 65);
+      doc.text("Student Information", 20, 67);
+
       doc.setFont("times", "normal");
       doc.setFontSize(10);
       doc.text(
         `Name: ${result.student.firstName} ${result.student.lastName}`,
         20,
-        75
+        73
       );
-      doc.text(`Student ID: ${result.student_id || result.student.id}`, 20, 81);
+      doc.text(`Student ID: ${result.student_id || result.student.id}`, 20, 79);
       doc.text(
         `Department: ${result.registration.academicDepartment?.name || "N/A"}`,
         20,
-        87
+        85
       );
       doc.text(
         `Semester: ${result.registration.academicSemester?.name || "N/A"} - ${
           result.registration.academicSemester?.year || "N/A"
         }`,
         20,
-        93
+        91
       );
 
-      // Course Marks Table
+      // --- Summary Result (Right Side) ---
+      doc.setFont("times", "bold");
+      doc.setFontSize(14);
+      doc.text("Result", 140, 67);
+
+      doc.setFont("times", "normal");
+      doc.setFontSize(10);
+      doc.text(`Average Marks: ${result.averageMarks || "N/A"}`, 140, 73);
+      doc.text(`Grade: ${result.avgGrade || "N/A"}`, 140, 79);
+      doc.text(
+        `CGPA: ${result.avgGradePoints || "N/A"}`,
+        140,
+        85
+      );
+
+      // --- Course Marks Table ---
       autoTable(doc, {
         startY: 100,
         head: [["Course Code", "Course Name", "Credits", "Marks", "Grade"]],
@@ -160,46 +311,37 @@ const MyResult = () => {
             : "N/A",
         ]),
         theme: "grid",
-        styles: { font: "times", fontSize: 10, cellPadding: 3 },
+        styles: { font: "times", fontSize: 10, cellPadding: 4 },
         headStyles: {
           fillColor: [0, 51, 102],
-          textColor: [255, 255, 255],
+          textColor: [0, 51, 102],
           fontStyle: "bold",
         },
-        bodyStyles: { textColor: [0, 0, 0] },
-        alternateRowStyles: { fillColor: [240, 240, 240] },
+        bodyStyles: { textColor: [0, 51, 102] },
+        alternateRowStyles: { fillColor: [245, 245, 245] },
         margin: { left: 20, right: 20 },
+        tableLineColor: [0, 51, 102],
+        tableLineWidth: 0.2,
       });
 
-      // Summary
-      const finalY = (doc as any).lastAutoTable.finalY + 10;
-      doc.setFont("times", "bold");
-      doc.setFontSize(12);
-      doc.text("Summary", 20, finalY);
-      doc.setFont("times", "normal");
-      doc.setFontSize(10);
-      doc.text(
-        `Average Marks: ${result.averageMarks || "N/A"}`,
-        20,
-        finalY + 8
-      );
-      doc.text(`Average Grade: ${result.avgGrade || "N/A"}`, 20, finalY + 14);
-      doc.text(
-        `Average Grade Points: ${result.avgGradePoints || "N/A"}`,
-        20,
-        finalY + 20
-      );
-
-      // Footer
+      // --- Signatures ---
       doc.setFont("times", "italic");
-      doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
-      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 280);
-      doc.text("XYZ University - Official Transcript", 105, 280, {
-        align: "center",
-      });
+      doc.setFontSize(12);
+      doc.setTextColor(0, 51, 102);
+      doc.text("Dr. John Smith", 20, 270, { align: "left" });
 
-      // Save the PDF
+      doc.setFont("times", "bold");
+      doc.line(20, 272, 60, 272); 
+      doc.text("Register", 20, 280, { align: "left" }); 
+
+      doc.setFont("times", "italic");
+      doc.text("Prof. Jane Doe", 190, 270, { align: "right" });
+
+      doc.setFont("times", "bold");
+      doc.line(150, 272, 190, 272); 
+      doc.text("Vice Chancellor", 190, 280, { align: "right" });
+
+      // Save PDF
       doc.save(`Transcript_${result.student_id || result.student.id}.pdf`);
     } catch (error: any) {
       toast.error("Failed to generate PDF: " + error.message);
@@ -236,6 +378,15 @@ const MyResult = () => {
         >
           <Download className="h-5 w-5" /> Download PDF
         </button>
+      </div>
+
+      <div className="flex items-center justify-center">
+        <Image
+          src="https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg"
+          width={200}
+          height={200}
+          alt="UNIVERSITY LOGO"
+        />
       </div>
 
       <div className="grid gap-6">

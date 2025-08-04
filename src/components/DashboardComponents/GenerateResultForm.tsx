@@ -18,6 +18,7 @@ import {
   getSingleRegistration,
 } from "../Services/Registration";
 import { generateStudentResult } from "../Services/result";
+import { useRouter } from "next/navigation";
 
 // ------------------ Types ------------------
 type Course = {
@@ -86,6 +87,7 @@ export default function GenerateResultForm() {
   const [cgpa, setCgpa] = useState({ grade: "NA", gradePoints: 0 });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const router = useRouter();
 
   // ------------------ Fetch registrations -----------------
 
@@ -197,7 +199,6 @@ export default function GenerateResultForm() {
         (course.finalTerm ?? 0),
     }));
 
-    console.log("Submitting courseMarks:", courseMarksData);
     setLoading(true);
     try {
       const res = await generateStudentResult(
@@ -207,6 +208,7 @@ export default function GenerateResultForm() {
       console.log(res);
       if (res) {
         toast.success("Result generated successfully!");
+        router.push("/admin/dashboard/student-result");
         setCourseMarks(
           courseMarks.map((c) => ({
             ...c,
@@ -236,16 +238,16 @@ export default function GenerateResultForm() {
       </CardHeader>
 
       <CardContent className="space-y-8 p-6">
-        {/* Select Registration */}
+       
         <div className="space-y-2">
           <label className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
             Select Registration
           </label>
           <Select onValueChange={handleSelectRegistration} disabled={loading}>
-            <SelectTrigger className="w-full border-gray-300 focus:ring-2 focus:ring-blue-500">
+            <SelectTrigger className="w-full border-gray-300 focus:ring-2 focus:ring-blue-500 ">
               <SelectValue placeholder="Select a registration" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="font-bold font-sansita">
               {registrations.map((reg) => (
                 <SelectItem key={reg._id} value={reg._id}>
                   {`${reg.student.name} (${reg.student_id})`}
@@ -362,11 +364,20 @@ export default function GenerateResultForm() {
             <div className="space-y-1 mb-4 sm:mb-0">
               <p className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                 Average Marks:{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{averageMarks.toFixed(2)}</span>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                  {averageMarks.toFixed(2)}
+                </span>
               </p>
               <p className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                Grade: <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{cgpa.grade}</span> (GPA:{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">{cgpa.gradePoints}</span>)
+                Grade:{" "}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                  {cgpa.grade}
+                </span>{" "}
+                (GPA:{" "}
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                  {cgpa.gradePoints}
+                </span>
+                )
               </p>
             </div>
             <Button
