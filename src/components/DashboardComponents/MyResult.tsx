@@ -3,7 +3,6 @@
 
 import React, { useEffect, useState } from "react";
 import { getMeAsStudentData } from "../Services/Student";
-import { getMyResult } from "../Services/Result";
 import { toast } from "sonner";
 import {
   Loader2,
@@ -16,6 +15,7 @@ import {
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import Image from "next/image";
+import { getMyResult } from "../Services/result";
 
 const MyResult = () => {
   const [result, setResult] = useState<any | null>(null);
@@ -60,13 +60,11 @@ const MyResult = () => {
 
       const doc = new jsPDF();
 
-      // --- University Name ---
       doc.setFont("times", "bold");
       doc.setFontSize(24);
       doc.setTextColor(0, 51, 102);
       doc.text("State University of Bangladesh", 105, 20, { align: "center" });
 
-      // --- University Address ---
       doc.setFont("times", "normal");
       doc.setFontSize(12);
       doc.text(
@@ -76,27 +74,23 @@ const MyResult = () => {
         { align: "center" }
       );
 
-      // --- University Logo ---
       doc.addImage(
         "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
         "JPEG",
-        95, // X
-        30, // Y
-        20, // width
-        20 // height
+        95, 
+        30,
+        20, 
+        20 
       );
 
-      // --- Academic Transcript Title ---
       doc.setFont("times", "bold");
       doc.setFontSize(10);
       doc.text("Grade Card", 105, 55, { align: "center" });
 
-      // --- Horizontal Line ---
       doc.setDrawColor(0, 51, 102);
       doc.setLineWidth(0.8);
       doc.line(20, 60, 190, 60);
 
-      // --- Student Information (Left Side) ---
       doc.setFont("times", "bold");
       doc.setFontSize(14);
       doc.text("Student Information", 20, 67);
@@ -122,7 +116,6 @@ const MyResult = () => {
         91
       );
 
-      // --- Summary Result (Right Side) ---
       doc.setFont("times", "bold");
       doc.setFontSize(14);
       doc.text("Result", 140, 67);
@@ -133,7 +126,6 @@ const MyResult = () => {
       doc.text(`Grade: ${result.avgGrade || "N/A"}`, 140, 79);
       doc.text(`CGPA: ${result.avgGradePoints || "N/A"}`, 140, 85);
 
-      // --- Course Marks Table ---
       autoTable(doc, {
         startY: 100,
         head: [["Course Code", "Course Name", "Credits", "Marks", "Grade"]],
@@ -168,7 +160,6 @@ const MyResult = () => {
         tableLineWidth: 0.2,
       });
 
-      // --- Signatures ---
       doc.setFont("times", "italic");
       doc.setFontSize(12);
       doc.setTextColor(0, 51, 102);
@@ -185,7 +176,6 @@ const MyResult = () => {
       doc.line(150, 272, 190, 272);
       doc.text("Vice Chancellor", 190, 280, { align: "right" });
 
-      // Save PDF
       doc.save(`Transcript_${result.student_id || result.student.id}.pdf`);
     } catch (error: any) {
       toast.error("Failed to generate PDF: " + error.message);

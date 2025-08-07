@@ -203,18 +203,17 @@ const ManageStudent = () => {
     try {
       const doc = new jsPDF("landscape", "mm", "a4");
 
-      // --- HEADER SECTION ---
-      // University Logo
+
       doc.addImage(
         "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
         "JPEG",
-        15, // X
-        8, // Y
-        25, // width
-        25 // height
+        15, 
+        8, 
+        25, 
+        25 
       );
 
-      // University Name
+
       doc.setFont("times", "bold");
       doc.setFontSize(22);
       doc.setTextColor(0, 51, 102);
@@ -222,7 +221,7 @@ const ManageStudent = () => {
         align: "center",
       });
 
-      // University Address
+
       doc.setFont("times", "italic");
       doc.setFontSize(11);
       doc.setTextColor(80);
@@ -233,13 +232,13 @@ const ManageStudent = () => {
         { align: "center" }
       );
 
-      // Title
+
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
       doc.setTextColor(0, 51, 102);
       doc.text("Student List", 148.5, 35, { align: "center" });
 
-      // --- TABLE SECTION ---
+
       const columns = [
         { header: "Sl. No.", dataKey: "slNo" },
         { header: "Student ID", dataKey: "id" },
@@ -291,7 +290,7 @@ const ManageStudent = () => {
           valign: "middle",
         },
         alternateRowStyles: {
-          fillColor: [245, 250, 255], // Light bluish alternate rows
+          fillColor: [245, 250, 255], 
         },
         columnStyles: {
           slNo: { cellWidth: 15, halign: "center" },
@@ -306,7 +305,6 @@ const ManageStudent = () => {
         },
         margin: { top: 40, left: 14, right: 14 },
         didDrawPage: (data) => {
-          // Footer - Page Number
           doc.setFontSize(8);
           doc.setTextColor(120);
           doc.text(
@@ -327,7 +325,6 @@ const ManageStudent = () => {
       //   angle: 45,
       // });
 
-      // --- SAVE PDF ---
       const fileName = `Student_List_${
         new Date().toISOString().split("T")[0]
       }.pdf`;
