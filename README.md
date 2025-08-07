@@ -174,6 +174,7 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂add-department
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂add-faculty
  ┃ ┃ ┃ ┃ ┣ 📂add-semester
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂approve-registration
@@ -188,6 +189,8 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂filter-semester
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂generate-result
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂manage-advisor
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂manage-course
@@ -200,12 +203,16 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂pending-registration
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂student-result
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂waiting-approval
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂student
  ┃ ┃ ┃ ┗ 📂dashboard
  ┃ ┃ ┃ ┃ ┣ 📂my-information
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂my-result
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂registration
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
@@ -214,6 +221,7 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┣ 📂update-registration-information
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂user
  ┃ ┃ ┗ 📜layout.tsx
  ┃ ┣ 📂login
  ┃ ┃ ┗ 📜page.tsx
@@ -254,6 +262,7 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📜FilterByCourse.tsx
  ┃ ┃ ┣ 📜FilterStudentByDepartment.tsx
  ┃ ┃ ┣ 📜FilterStudentBySemester.tsx
+ ┃ ┃ ┣ 📜GenerateResultForm.tsx
  ┃ ┃ ┣ 📜ManageCourse.tsx
  ┃ ┃ ┣ 📜ManageDepartment.tsx
  ┃ ┃ ┣ 📜ManageFaculty.tsx
@@ -261,8 +270,10 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📜ManageStudent.tsx
  ┃ ┃ ┣ 📜MyInformation.tsx
  ┃ ┃ ┣ 📜MyRegistrationInformation.tsx
+ ┃ ┃ ┣ 📜MyResult.tsx
  ┃ ┃ ┣ 📜PendingRegistration.tsx
  ┃ ┃ ┣ 📜Semester.tsx
+ ┃ ┃ ┣ 📜StudentResult.tsx
  ┃ ┃ ┣ 📜UpdateIndividualCourseByAdmin.tsx
  ┃ ┃ ┣ 📜UpdateRegistrationInformation.tsx
  ┃ ┃ ┗ 📜WaitingApproval.tsx
@@ -285,6 +296,8 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📂Faculty
  ┃ ┃ ┃ ┗ 📜index.ts
  ┃ ┃ ┣ 📂Registration
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┣ 📂result
  ┃ ┃ ┃ ┗ 📜index.ts
  ┃ ┃ ┣ 📂Semester
  ┃ ┃ ┃ ┗ 📜index.ts

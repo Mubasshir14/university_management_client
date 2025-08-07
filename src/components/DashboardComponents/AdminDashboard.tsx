@@ -599,7 +599,8 @@ const AdminDashboard: React.FC = () => {
 
     const { data: studentsByDept } = await dashboradDepBasedStudent();
     setStudentByDeptData({
-      labels: studentsByDept.map((dept: any) => dept.departmentName),
+      // departmentName
+      labels: studentsByDept.map((dept: any) => dept.shortName), 
       datasets: [
         {
           label: "Students by Department",
