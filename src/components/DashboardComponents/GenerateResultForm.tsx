@@ -17,8 +17,8 @@ import {
   getApprovedRegisteredStudent,
   getSingleRegistration,
 } from "../Services/Registration";
-import { generateStudentResult } from "../Services/Result";
 import { useRouter } from "next/navigation";
+import { generateStudentResult } from "../Services/result";
 
 // ------------------ Types ------------------
 type Course = {
@@ -89,7 +89,6 @@ export default function GenerateResultForm() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const router = useRouter();
 
-  // ------------------ Fetch registrations -----------------
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -114,7 +113,6 @@ export default function GenerateResultForm() {
     fetchStudents();
   }, []);
 
-  // ------------------ When Registration Selected ------------------
   const handleSelectRegistration = async (id: string) => {
     const reg = registrations.find((r) => r._id === id);
     if (!reg) return;
@@ -139,7 +137,6 @@ export default function GenerateResultForm() {
     }
   };
 
-  // ------------------ Handle Marks Change ------------------
 
   const handleMarksChange = (
     index: number,
@@ -176,7 +173,6 @@ export default function GenerateResultForm() {
     setCgpa(calculateGradeAndPoints(avg));
   };
 
-  // ------------------ Submit Result ------------------
 
   const handleSubmit = async () => {
     if (!selectedRegistration) {
@@ -256,7 +252,7 @@ export default function GenerateResultForm() {
           </Select>
         </div>
 
-        {/* Courses Table */}
+       
         {courseMarks.length > 0 && (
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="w-full text-sm text-center bg-white">
@@ -357,7 +353,7 @@ export default function GenerateResultForm() {
           </div>
         )}
 
-        {/* Average & CGPA */}
+       
         {courseMarks.length > 0 && (
           <div className="flex flex-col sm:flex-row justify-between items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="space-y-1 mb-4 sm:mb-0">

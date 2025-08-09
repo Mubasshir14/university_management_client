@@ -78,24 +78,7 @@ export default function Navbar() {
             />
           </Link>
         </motion.div>
-
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          {/* {navItems.map((item, index) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <Link
-                href={item.href}
-                className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-colors duration-200 "
-              >
-                {item.name}
-              </Link>
-            </motion.div>
-          ))} */}
           {filteredNavItems.map((item, index) => (
             <motion.div
               key={item.name}
@@ -175,8 +158,6 @@ export default function Navbar() {
             </motion.div>
           )}
         </div>
-
-        {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -193,22 +174,6 @@ export default function Navbar() {
               className=" backdrop-blur-sm border-gray-600 w-[250px]"
             >
               <div className="px-3 flex flex-col gap-4 mt-4">
-                {/* {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-colors duration-200 hover:border-b-2 hover:border-b-pink-700"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))} */}
                 {filteredNavItems.map((item, index) => (
                   <motion.div
                     key={item.name}

@@ -162,7 +162,6 @@ const UpdateRegistrationInformation = () => {
       </h2>
 
       <div className="grid gap-6">
-        {/* Card for Student Info */}
         <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <User className="h-6 w-6 text-blue-600" />
@@ -194,8 +193,6 @@ const UpdateRegistrationInformation = () => {
             </p>
           </div>
         </div>
-
-        {/* Card for Academic Info */}
         <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <Building className="h-6 w-6 text-purple-600" />
@@ -219,8 +216,6 @@ const UpdateRegistrationInformation = () => {
             </p>
           </div>
         </div>
-
-        {/* Card for Courses */}
         <div className="p-6 bg-gradient-to-br from-pink-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <Book className="h-6 w-6 text-pink-600" />

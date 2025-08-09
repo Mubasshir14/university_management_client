@@ -72,22 +72,7 @@ const DepartmentDetail = ({ department }: { department: Department }) => {
             )}
           </div>
         </div>
-
-        {/* <div className="grid grid-cols-2 gap-4 border-t border-gray-600/30 pt-6 text-gray-300 text-sm">
-          <div>
-            <p><span className="font-medium">Created:</span> {new Date(department.createdAt).toLocaleDateString()}</p>
-          </div>
-          <div>
-            <p><span className="font-medium">Last Updated:</span> {new Date(department.updatedAt).toLocaleDateString()}</p>
-          </div>
-        </div> */}
       </CardContent>
-
-      {/* <CardFooter className="p-6 text-center">
-        <p className="text-gray-400 text-sm">
-          Department ID: <span className="font-mono text-xs">{department._id}</span>
-        </p>
-      </CardFooter> */}
     </Card>
   );
 };

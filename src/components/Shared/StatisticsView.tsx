@@ -16,22 +16,19 @@ import {
   ChartData,
   ChartOptions,
   TooltipItem,
-  Chart as ChartJSOrUndefined, // Import ChartJS as ChartJSOrUndefined for the ref type
+  Chart as ChartJSOrUndefined, 
 } from "chart.js";
 import { useEffect, useRef } from "react";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Register Chart.js components and plugins
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
-// Define the structure for your statistics data
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 interface Stat {
   label: string;
   value: number;
   suffix: string;
 }
 
-// Your statistics data
 const stats: Stat[] = [
   { label: "Students", value: 25000, suffix: "+" },
   { label: "Faculty", value: 500, suffix: "+" },
@@ -40,7 +37,6 @@ const stats: Stat[] = [
   { label: "Research Projects", value: 150, suffix: "+" },
 ];
 
-// Define chart data using the stats array
 const chartData: ChartData<"bar"> = {
   labels: stats.map((stat) => stat.label),
   datasets: [
@@ -48,20 +44,18 @@ const chartData: ChartData<"bar"> = {
       label: "University Stats",
       data: stats.map((stat) => stat.value),
       backgroundColor: (ctx) => {
-        // Default gradient for initial render if useEffect hasn't run yet
         const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, "rgba(59, 130, 246, 0.8)"); // blue-500
-        gradient.addColorStop(1, "rgba(147, 51, 234, 0.8)"); // purple-500
+        gradient.addColorStop(0, "rgba(59, 130, 246, 0.8)"); 
+        gradient.addColorStop(1, "rgba(147, 51, 234, 0.8)");
         return gradient;
       },
       borderColor: "rgba(59, 130, 246, 1)",
       borderWidth: 1,
-      hoverBackgroundColor: "rgba(236, 72, 153, 0.9)", // pink-500
+      hoverBackgroundColor: "rgba(236, 72, 153, 0.9)", 
     },
   ],
 };
 
-// Define chart options
 const chartOptions: ChartOptions<"bar"> = {
   responsive: true,
   maintainAspectRatio: false,
@@ -75,7 +69,7 @@ const chartOptions: ChartOptions<"bar"> = {
     },
     datalabels: {
       display: true,
-      color: "#4B5563", // gray-600
+      color: "#4B5563", 
       anchor: "end",
       align: "top",
       formatter: (value: number, context: any) =>
@@ -86,11 +80,11 @@ const chartOptions: ChartOptions<"bar"> = {
   scales: {
     y: {
       beginAtZero: true,
-      ticks: { color: "#4B5563" }, // gray-600
-      grid: { color: "rgba(209, 213, 219, 0.2)" }, // gray-200
+      ticks: { color: "#4B5563" }, 
+      grid: { color: "rgba(209, 213, 219, 0.2)" }, 
     },
     x: {
-      ticks: { color: "#4B5563" }, // gray-600
+      ticks: { color: "#4B5563" }, 
       grid: { display: false },
     },
   },
@@ -102,31 +96,25 @@ const chartOptions: ChartOptions<"bar"> = {
 };
 
 export const StatisticsView = () => {
-  // CORRECTED REF TYPE:
   const chartRef = useRef<ChartJSOrUndefined<"bar", (number | [number, number] | null)[], unknown>>(null);
-
-  // Effect to apply gradient after chart is mounted (for correct rendering)
   useEffect(() => {
-    // Access the Chart.js instance via chartRef.current
     const chart = chartRef.current;
 
     if (chart) {
-      const ctx = chart.ctx; // Get the context from the chart instance
+      const ctx = chart.ctx;
       const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-      gradient.addColorStop(0, "rgba(59, 130, 246, 0.8)"); // blue-500
-      gradient.addColorStop(1, "rgba(147, 51, 234, 0.8)"); // purple-500
+      gradient.addColorStop(0, "rgba(59, 130, 246, 0.8)"); 
+      gradient.addColorStop(1, "rgba(147, 51, 234, 0.8)"); 
 
-      // Update the dataset's background color
       if (chart.data.datasets[0]) {
         chart.data.datasets[0].backgroundColor = gradient;
       }
-      chart.update(); // Important: Call update to re-render the chart with the new gradient
+      chart.update(); 
     }
-  }, []); // Empty dependency array means this runs once after initial render
+  }, []); 
 
   return (
     <section className="py-20 bg-gradient-to-b from-blue-600/10 to-purple-600/10 relative overflow-hidden">
-      {/* Background SVG for subtle animation and texture */}
       <div className="absolute inset-0 opacity-10 animate-pulse-slow">
         <svg className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="10%" cy="10%" r="100" fill="url(#pattern1)" />
@@ -182,7 +170,6 @@ export const StatisticsView = () => {
           <Card className="bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-2xl group-hover:shadow-3xl max-w-5xl mx-auto group-hover:ring-2 group-hover:ring-blue-500/50 transition-all duration-300">
             <CardContent className="p-8">
               <div className="h-80 sm:h-96 lg:h-[450px]">
-                {/* Use the corrected chartRef here */}
                 <Bar data={chartData} options={chartOptions} ref={chartRef} />
               </div>
             </CardContent>
@@ -203,7 +190,6 @@ export const StatisticsView = () => {
           </Button>
         </motion.div>
       </div>
-      {/* Custom Tailwind CSS for pulse animation */}
       <style jsx>{`
         @keyframes pulse-slow {
           0% {

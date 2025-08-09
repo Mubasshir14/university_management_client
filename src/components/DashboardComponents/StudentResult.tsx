@@ -2,9 +2,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getAllStudentResults } from "../Services/Result";
 import { toast } from "sonner";
 import { Loader2} from "lucide-react";
+import { getAllStudentResults } from "../Services/result";
 
 const StudentResult = () => {
   const [result, setResult] = useState<any>([]);

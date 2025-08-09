@@ -130,7 +130,6 @@ export default function AddDepartment() {
                   )}
                 />
 
-                {/* Short Name */}
                 <FormField
                   control={form.control}
                   name="shortName"
@@ -151,37 +150,6 @@ export default function AddDepartment() {
                   )}
                 />
               </div>
-
-              {/* <FormField
-                control={form.control}
-                name="faculty"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                      Faculty
-                    </FormLabel>
-                    <FormControl className="bg-gradient-to-b from-blue-600/10 to-purple-600/10">
-                      <Select
-                        isMulti
-                        options={faculties.map((f) => ({
-                          value: f._id,
-                          label: f.name,
-                        }))}
-                        value={faculties
-                          .filter((f) => field.value.includes(f._id))
-                          .map((f) => ({ value: f._id, label: f.name }))}
-                        onChange={(selected) =>
-                          field.onChange(selected.map((s) => s.value))
-                        }
-                        className="text-blue-500 bg-gradient-to-b from-blue-600/10 to-purple-600/10"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-400 text-sm" />
-                  </FormItem>
-                )}
-              /> */}
-
-              {/* Image Upload */}
               <FormItem>
                 <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                   Department Image
@@ -217,7 +185,6 @@ export default function AddDepartment() {
                 )}
               </FormItem>
 
-              {/* Submit */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

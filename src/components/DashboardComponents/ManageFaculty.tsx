@@ -38,7 +38,7 @@ export default function ManageFaculty() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<keyof Faculty>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchFaculties = async () => {

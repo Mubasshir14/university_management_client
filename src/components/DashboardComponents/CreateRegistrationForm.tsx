@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 interface Course {
   _id: string;
   name: string;
+  courseCode: string;
   credits: number;
 }
 
@@ -39,7 +40,7 @@ interface StudentData {
 }
 
 const CreateRegistrationForm = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [courses, setCourses] = useState<Course[]>([]);
   const [studentData, setStudentData] = useState<StudentData | null>(null);
 
@@ -121,7 +122,7 @@ const CreateRegistrationForm = () => {
         toast.success("Registration created successfully");
         setSelectedCourses([]);
         setTotalCredit(0);
-        router.push('/student/dashboard/registration-information')
+        router.push("/student/dashboard/registration-information");
       } else {
         toast.error(res.message || "Failed to create registration");
       }
@@ -232,7 +233,7 @@ const CreateRegistrationForm = () => {
                   className="cursor-pointer bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium"
                 />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                  {`${course.name} - ${course.credits} Credits `}
+                  {`${course.name} (${course.courseCode}) - ${course.credits} Credits `}
                 </span>
               </label>
             ))}

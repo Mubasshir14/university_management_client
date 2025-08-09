@@ -41,7 +41,7 @@ export default function ManageCourse() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<keyof Course>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -240,16 +240,6 @@ export default function ManageCourse() {
                           <TableCell>{course.shortName || "N/A"}</TableCell>
                           <TableCell>{course.courseCode || "N/A"}</TableCell>
                           <TableCell>{course.credits ?? "N/A"}</TableCell>
-                          {/* <TableCell className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                            {course.faculty && Array.isArray(course.faculty)
-                              ? course.faculty.map((fac) => fac.name).join(", ") || "N/A"
-                              : "N/A"}
-                          </TableCell>
-                          <TableCell className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                            {course.offered_in && Array.isArray(course.offered_in)
-                              ? course.offered_in.map((sem) => `${sem.name} ${sem.year}`).join(", ") || "N/A"
-                              : "N/A"}
-                          </TableCell> */}
                           <TableCell className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                             {course.faculty &&
                             Array.isArray(course.faculty) &&

@@ -112,40 +112,6 @@ export default function Student() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  //   const handleSubmit = async (e: any) => {
-  //     e.preventDefault();
-  //     const submitData = new FormData();
-  //     Object.entries(formData).forEach(([key, value]) => {
-  //       if (value) submitData.append(key, value as any);
-  //     });
-  //     submitData.append("name", `${formData.firstName} ${formData.lastName}`);
-
-  //     const toastId = "submitting";
-  //     try {
-  //       const res = await addStudent(submitData);
-  //       if (res.success) {
-  //         toast.success(res.message || "Student added successfully", { id: toastId });
-  //         router.push('/student/dashboard')
-  //         setFormData({
-  //           image: null,
-  //           firstName: "",
-  //           lastName: "",
-  //           gender: "",
-  //           email: user?.email || "",
-  //           contactNo: "",
-  //           bloodGroup: "",
-  //           academicDepartment: "",
-  //           academicSemester: "",
-  //           isApproved: false,
-  //         });
-  //         setImagePreview(null);
-  //       } else {
-  //         toast.error(res.message || "Failed to add student", { id: toastId });
-  //       }
-  //     } catch (err: any) {
-  //       toast.error(err.message || "Failed to add student. Please try again.", { id: toastId });
-  //     }
-  //   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

@@ -196,32 +196,6 @@ export default function AddFaculty() {
                   transition={{ duration: 0.4 }}
                   className="grid grid-cols-1 gap-4 sm:grid-cols-2"
                 >
-                  {/* <FormField
-                    control={form.control}
-                    name="id"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                          Faculty ID
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="e.g., FAC-001"
-                            className="bg-white/5 border-gray-600  placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
-                            {...field}
-                            value={field.value || ""}
-                          />
-                        </FormControl>
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <FormMessage className="text-red-400 text-sm" />
-                        </motion.div>
-                      </FormItem>
-                    )}
-                  /> */}
                   <FormField
                     control={form.control}
                     name="name"
@@ -261,7 +235,7 @@ export default function AddFaculty() {
                           <Input
                             type="email"
                             placeholder="e.g., john.doe@example.com"
-                            className="bg-white/5 border-gray-600  placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
+                            className="bg-white/5 border-gray-600  placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg text-blue-700"
                             {...field}
                             value={field.value || ""}
                           />

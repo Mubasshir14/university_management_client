@@ -227,9 +227,7 @@ export default function ManageDepartment() {
                               <span className="text-gray-400">No image</span>
                             )}
                           </TableCell>
-                          {/* <TableCell className="">
-                            {department.faculty.map((f) => f.name).join(", ") || "None"}
-                          </TableCell> */}
+                         
                           <TableCell>
                             <div className="flex flex-col gap-1">
                               {department.faculty.slice(0, 2).map((f, idx) => (

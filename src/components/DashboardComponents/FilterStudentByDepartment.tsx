@@ -98,8 +98,6 @@ const FilterStudentByDepartment = () => {
                   ))}
                 </TableBody>
               </Table>
-
-              {/* Pagination Controls */}
               <div className="flex justify-between mt-4">
                 <Button
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg"

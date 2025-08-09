@@ -61,130 +61,129 @@ const ApproveRegistration = () => {
   }
 
   const downloadRegistrationList = () => {
-  try {
-    const doc = new jsPDF("landscape", "mm", "a4");
+    try {
+      const doc = new jsPDF("landscape", "mm", "a4");
 
-    doc.addImage(
-      "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
-      "JPEG",
-      15,
-      8,
-      25,
-      25
-    );
+      doc.addImage(
+        "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
+        "JPEG",
+        15,
+        8,
+        25,
+        25
+      );
 
-    doc.setFont("times", "bold");
-    doc.setFontSize(22);
-    doc.setTextColor(0, 51, 102);
-    doc.text("State University of Bangladesh", 148.5, 18, {
-      align: "center",
-    });
+      doc.setFont("times", "bold");
+      doc.setFontSize(22);
+      doc.setTextColor(0, 51, 102);
+      doc.text("State University of Bangladesh", 148.5, 18, {
+        align: "center",
+      });
 
-    doc.setFont("times", "italic");
-    doc.setFontSize(11);
-    doc.setTextColor(80);
-    doc.text(
-      "State University of Bangladesh Ave, Dhaka, Bangladesh",
-      148.5,
-      25,
-      { align: "center" }
-    );
+      doc.setFont("times", "italic");
+      doc.setFontSize(11);
+      doc.setTextColor(80);
+      doc.text(
+        "State University of Bangladesh Ave, Dhaka, Bangladesh",
+        148.5,
+        25,
+        { align: "center" }
+      );
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(16);
-    doc.setTextColor(0, 51, 102);
-    doc.text("Registration List", 148.5, 35, { align: "center" });
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.setTextColor(0, 51, 102);
+      doc.text("Registration List", 148.5, 35, { align: "center" });
 
-    const columns = [
-      { header: "Sl. No.", dataKey: "slNo" },
-      { header: "Student ID", dataKey: "id" },
-      { header: "Full Name", dataKey: "name" },
-      { header: "Email", dataKey: "email" },
-      { header: "Contact No", dataKey: "contactNo" },
-      { header: "Gender", dataKey: "gender" },
-      { header: "Department", dataKey: "department" },
-      { header: "Semester", dataKey: "semester" },
-      { header: "Blood Group", dataKey: "bloodGroup" },
-    ];
+      const columns = [
+        { header: "Sl. No.", dataKey: "slNo" },
+        { header: "Student ID", dataKey: "id" },
+        { header: "Full Name", dataKey: "name" },
+        { header: "Email", dataKey: "email" },
+        { header: "Contact No", dataKey: "contactNo" },
+        { header: "Gender", dataKey: "gender" },
+        { header: "Department", dataKey: "department" },
+        { header: "Semester", dataKey: "semester" },
+        { header: "Blood Group", dataKey: "bloodGroup" },
+      ];
 
-    const rows = students.map((student, index) => ({
-      slNo: index + 1,
-      id: student?.student?.id || "N/A",
-      name: student?.student?.name || "N/A",
-      email: student?.student?.email || "N/A",
-      contactNo: student?.student?.contactNo || "N/A",
-      gender: student?.student?.gender
-        ? student.student.gender.charAt(0).toUpperCase() +
-          student.student.gender.slice(1)
-        : "N/A",
-      department: student?.academicDepartment?.name || "N/A",
-      semester: student?.academicSemester
-        ? `${student.academicSemester.name} ${student.academicSemester.year}`
-        : "N/A",
-      bloodGroup: student?.student?.bloodGroup || "N/A",
-    }));
+      const rows = students.map((student, index) => ({
+        slNo: index + 1,
+        id: student?.student?.id || "N/A",
+        name: student?.student?.name || "N/A",
+        email: student?.student?.email || "N/A",
+        contactNo: student?.student?.contactNo || "N/A",
+        gender: student?.student?.gender
+          ? student.student.gender.charAt(0).toUpperCase() +
+            student.student.gender.slice(1)
+          : "N/A",
+        department: student?.academicDepartment?.name || "N/A",
+        semester: student?.academicSemester
+          ? `${student.academicSemester.name} ${student.academicSemester.year}`
+          : "N/A",
+        bloodGroup: student?.student?.bloodGroup || "N/A",
+      }));
 
-    autoTable(doc, {
-      columns,
-      body: rows,
-      startY: 42,
-      theme: "grid",
-      styles: {
-        font: "helvetica",
-        fontSize: 9,
-        textColor: [0, 51, 102],
-        lineColor: [0, 51, 102],
-        lineWidth: 0.1,
-        cellPadding: 3,
-        overflow: "linebreak",
-      },
-      headStyles: {
-        fillColor: [0, 51, 102],
-        textColor: [255, 255, 255],
-        fontSize: 10,
-        fontStyle: "bold",
-        halign: "center",
-        valign: "middle",
-      },
-      alternateRowStyles: {
-        fillColor: [245, 250, 255],
-      },
-      columnStyles: {
-        slNo: { cellWidth: 15, halign: "center" },
-        id: { cellWidth: 25 },
-        name: { cellWidth: 40 },
-        email: { cellWidth: 50 },
-        contactNo: { cellWidth: 30 },
-        gender: { cellWidth: 20, halign: "center" },
-        department: { cellWidth: 35 },
-        semester: { cellWidth: 30 },
-        bloodGroup: { cellWidth: 20, halign: "center" },
-      },
-      margin: { top: 40, left: 14, right: 14 },
-      didDrawPage: (data) => {
-        doc.setFontSize(8);
-        doc.setTextColor(120);
-        doc.text(
-          `Page ${data.pageNumber} of ${doc.getNumberOfPages()}`,
-          148.5,
-          200,
-          { align: "center" }
-        );
-      },
-    });
+      autoTable(doc, {
+        columns,
+        body: rows,
+        startY: 42,
+        theme: "grid",
+        styles: {
+          font: "helvetica",
+          fontSize: 9,
+          textColor: [0, 51, 102],
+          lineColor: [0, 51, 102],
+          lineWidth: 0.1,
+          cellPadding: 3,
+          overflow: "linebreak",
+        },
+        headStyles: {
+          fillColor: [0, 51, 102],
+          textColor: [255, 255, 255],
+          fontSize: 10,
+          fontStyle: "bold",
+          halign: "center",
+          valign: "middle",
+        },
+        alternateRowStyles: {
+          fillColor: [245, 250, 255],
+        },
+        columnStyles: {
+          slNo: { cellWidth: 15, halign: "center" },
+          id: { cellWidth: 25 },
+          name: { cellWidth: 40 },
+          email: { cellWidth: 50 },
+          contactNo: { cellWidth: 30 },
+          gender: { cellWidth: 20, halign: "center" },
+          department: { cellWidth: 35 },
+          semester: { cellWidth: 30 },
+          bloodGroup: { cellWidth: 20, halign: "center" },
+        },
+        margin: { top: 40, left: 14, right: 14 },
+        didDrawPage: (data) => {
+          doc.setFontSize(8);
+          doc.setTextColor(120);
+          doc.text(
+            `Page ${data.pageNumber} of ${doc.getNumberOfPages()}`,
+            148.5,
+            200,
+            { align: "center" }
+          );
+        },
+      });
 
-    const fileName = `Registration_List_${new Date()
-      .toISOString()
-      .split("T")[0]}.pdf`;
-    doc.save(fileName);
+      const fileName = `Registration_List_${
+        new Date().toISOString().split("T")[0]
+      }.pdf`;
+      doc.save(fileName);
 
-    toast.success("Registration list downloaded successfully!");
-  } catch (error: any) {
-    console.error("Error generating PDF:", error);
-    toast.error("Failed to generate PDF. Please try again.");
-  }
-};
-
+      toast.success("Registration list downloaded successfully!");
+    } catch (error: any) {
+      console.error("Error generating PDF:", error);
+      toast.error("Failed to generate PDF. Please try again.");
+    }
+  };
 
   return (
     <section className="py-10 bg-gradient-to-b from-blue-600/10 to-purple-600/10 relative font-sansita">
@@ -255,13 +254,9 @@ const ApproveRegistration = () => {
           }}
         >
           <div className="border-2 border-gray-200/20 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
-            {/* <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-              Approved Registration
-              <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
-            </h1> */}
             <div className="flex md:flex-row flex-col  items-center justify-between">
               <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-                Manage Students
+                Manage Registrations
                 <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
               </h1>
               <Button

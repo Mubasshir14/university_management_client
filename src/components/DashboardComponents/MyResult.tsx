@@ -50,7 +50,6 @@ const MyResult = () => {
     fetchResultInfo();
   }, []);
 
-
   const downloadPDF = async () => {
     try {
       if (!result || !result.student || !result.coursesMarks) {
@@ -77,10 +76,10 @@ const MyResult = () => {
       doc.addImage(
         "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
         "JPEG",
-        95, 
+        95,
         30,
-        20, 
-        20 
+        20,
+        20
       );
 
       doc.setFont("times", "bold");
@@ -273,7 +272,6 @@ const MyResult = () => {
           </div>
         </div>
 
-        {/* Courses Marks Table */}
         <div className="p-6 bg-gradient-to-br from-pink-50 to-blue-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <Book className="h-6 w-6 text-pink-600" />
@@ -363,8 +361,6 @@ const MyResult = () => {
             </p>
           )}
         </div>
-
-        {/* Summary */}
         <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <CheckCircle className="h-6 w-6 text-blue-600" />

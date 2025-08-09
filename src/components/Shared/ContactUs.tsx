@@ -64,7 +64,6 @@ export const ContactUs = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Contact Information Section */}
           <motion.div
             className="space-y-8 lg:pr-8"
             initial="hidden"
@@ -99,8 +98,6 @@ export const ContactUs = () => {
                 </motion.div>
               </CardContent>
             </Card>
-
-            {/* Optional: Embed a map */}
             <motion.div
               className="w-full h-80 rounded-xl overflow-hidden shadow-lg border border-gray-200"
               variants={infoItemVariants}
@@ -118,7 +115,6 @@ export const ContactUs = () => {
             </motion.div>
           </motion.div>
 
-          {/* Contact Form Section */}
           <motion.div
             className="lg:pl-8"
             variants={formVariants}
