@@ -40,7 +40,7 @@ export interface AcademicSemester {
 }
 
 export default function Student() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
@@ -112,7 +112,6 @@ export default function Student() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const submitData = new FormData();
@@ -155,6 +154,7 @@ export default function Student() {
         });
         setImagePreview(null);
         logout();
+        setUser(null);
         router.push("/");
       } else {
         toast.error(res.message || "Failed to add student", { id: toastId });
@@ -454,15 +454,15 @@ export default function Student() {
                       whileTap={{ scale: 0.95 }}
                       whileHover={{ scale: 1.05 }}
                     >
-                      {loading ? "Submitting..." : "Add Student"}
+                      {loading ? "Submitting..." : "Submit"}
                     </motion.button>
                   </Button>
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                  {/* <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                     {" "}
                     <small>
-                      Please Login Agin After Submitted SUccessfully
+                      Please Login Agin After Submitted Successfully
                     </small>{" "}
-                  </span>
+                  </span> */}
                 </motion.div>
               </form>
             )}

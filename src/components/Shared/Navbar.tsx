@@ -30,15 +30,17 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, setIsLoading } = useUser();
+  const { user, setUser, setIsLoading } = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSignOut = () => {
     try {
       logout();
+      setUser(null);
+      setIsLoading(true);
       toast.success("Signed out successfully");
       router.push("/");
-      setIsLoading(true);
+
       if (protectedRoutes.some((route) => pathname.match(route))) {
         router.push("/");
       }

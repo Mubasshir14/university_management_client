@@ -22,13 +22,14 @@ import { protectedRoutes } from "@/components/constant";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { user, setIsLoading } = useUser();
+  const { user,setUser, setIsLoading } = useUser();
 
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = () => {
     logout();
+    setUser(null);
     setIsLoading(true);
     router.push("/");
 

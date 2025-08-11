@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { getAllCourse } from "../Services/Course";
+import {
+  getAllCoursesAccordingToStudentAcademicSemester,
+} from "../Services/Course";
 import { createRegistration } from "../Services/Registration";
 import { getMeAsStudentData } from "../Services/Student";
 import Link from "next/link";
@@ -55,16 +57,22 @@ const CreateRegistrationForm = () => {
       try {
         setLoadingData(true);
 
-        const [studentRes, courseRes] = await Promise.all([
-          getMeAsStudentData(),
-          getAllCourse(),
-        ]);
+        // const [studentRes, courseRes] = await Promise.all([
+        //   getMeAsStudentData(),
+        //   // getAllCourse(),
+        //   getAllCoursesAccordingToStudentAcademicSemester(studentRes.data._id)
+        // ]);
 
+        const studentRes = await getMeAsStudentData();
         if (studentRes.success) {
           setStudentData(studentRes.data);
         } else {
           toast.error(studentRes.message || "Failed to fetch student data");
         }
+
+        const courseRes = await getAllCoursesAccordingToStudentAcademicSemester(
+          studentRes.data._id
+        );
 
         if (courseRes.success) {
           setCourses(courseRes.data);

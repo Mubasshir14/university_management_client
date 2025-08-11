@@ -21,6 +21,24 @@ export const getAllCourse = async () => {
   }
 };
 
+export const getAllCoursesAccordingToStudentAcademicSemester = async (id:string) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course/student/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["COURSE"],
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 export const addCourse = async (courseData: any): Promise<any> => {
   try {
     const res = await fetch(
