@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -15,7 +16,7 @@ import {
 import { toast } from "sonner";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { getAllCourse } from "../Services/Course";
+import { deleteCourse, getAllCourse } from "../Services/Course";
 
 interface Course {
   _id: string;
@@ -63,6 +64,20 @@ export default function ManageCourse() {
     };
     fetchCourses();
   }, []);
+
+  const handleDelete = async (courseId:string) => {
+    try {
+      const res = await deleteCourse(courseId);
+
+      if (res?.success) {
+        toast.success("Course deleted successfully!");
+      } else {
+        toast.error(res?.message || "Failed to delete course.");
+      }
+    } catch (err: any) {
+      toast.error("Something went wrong while deleting.");
+    }
+  };
 
   const handleSort = (column: keyof Course) => {
     if (sortBy === column) {
@@ -287,9 +302,8 @@ export default function ManageCourse() {
                               variant="ghost"
                               size="sm"
                               className="text-red-400 hover:text-red-300 hover:bg-red-600/20"
-                              onClick={() =>
-                                toast.info("Delete functionality coming soon!")
-                              }
+                             onClick={() => handleDelete(course._id)}
+                              
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

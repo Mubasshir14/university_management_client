@@ -58,3 +58,23 @@ export const addCourse = async (courseData: any): Promise<any> => {
     return Error(error);
   }
 };
+
+export const deleteCourse = async (id: string): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/course/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+
+    revalidateTag("COURSE");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
