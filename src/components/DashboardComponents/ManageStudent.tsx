@@ -12,16 +12,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
-import { getApprovedStudent } from "../Services/Student";
-import { Eye } from "lucide-react";
+import { deleteStudent, getApprovedStudent } from "../Services/Student";
+import { Edit, Trash2 } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useRouter } from "next/navigation";
 
 const ManageStudent = () => {
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -61,21 +63,18 @@ const ManageStudent = () => {
     );
   }
 
-
   const downloadStudentList = () => {
     try {
       const doc = new jsPDF("landscape", "mm", "a4");
 
-
       doc.addImage(
         "https://i.ibb.co/MygP1k8Q/university-education-logo-design-template-free-vector.jpg",
         "JPEG",
-        15, 
-        8, 
-        25, 
-        25 
+        15,
+        8,
+        25,
+        25
       );
-
 
       doc.setFont("times", "bold");
       doc.setFontSize(22);
@@ -83,7 +82,6 @@ const ManageStudent = () => {
       doc.text("State University of Bangladesh", 148.5, 18, {
         align: "center",
       });
-
 
       doc.setFont("times", "italic");
       doc.setFontSize(11);
@@ -95,12 +93,10 @@ const ManageStudent = () => {
         { align: "center" }
       );
 
-
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
       doc.setTextColor(0, 51, 102);
       doc.text("Student List", 148.5, 35, { align: "center" });
-
 
       const columns = [
         { header: "Sl. No.", dataKey: "slNo" },
@@ -153,7 +149,7 @@ const ManageStudent = () => {
           valign: "middle",
         },
         alternateRowStyles: {
-          fillColor: [245, 250, 255], 
+          fillColor: [245, 250, 255],
         },
         columnStyles: {
           slNo: { cellWidth: 15, halign: "center" },
@@ -197,6 +193,20 @@ const ManageStudent = () => {
     } catch (error: any) {
       console.error("Error generating PDF:", error);
       toast.error("Failed to generate PDF. Please try again.");
+    }
+  };
+
+  const handleDelete = async (studentId: string) => {
+    try {
+      const res = await deleteStudent(studentId);
+
+      if (res?.success) {
+        toast.success("Student deleted successfully!");
+      } else {
+        toast.error(res?.message || "Failed to delete student.");
+      }
+    } catch (err: any) {
+      toast.error("Something went wrong while deleting.");
     }
   };
 
@@ -332,9 +342,21 @@ const ManageStudent = () => {
                       <TableCell>
                         <Button
                           variant="outline"
-                          className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
+                          className=" border-blue-600 text-blue-500 hover:bg-blue-200/30 hover:text-blue-400"
+                          onClick={() =>
+                            router.push(
+                              `/admin/dashboard/update-student/${student._id}`
+                            )
+                          }
                         >
-                          <Eye />
+                          <Edit />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className=" border-blue-600 text-blue-500 hover:bg-blue-600/30 hover:text-blue-400"
+                          onClick={() => handleDelete(student._id)}
+                        >
+                          <Trash2 />
                         </Button>
                       </TableCell>
                     </motion.tr>

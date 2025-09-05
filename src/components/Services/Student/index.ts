@@ -229,3 +229,24 @@ export const addStudent = async (stuData: FormData): Promise<any> => {
     return Error(error);
   }
 };
+
+export const deleteStudent = async (id: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/delete-student/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+        next: {
+          tags: ["STUDENT"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
