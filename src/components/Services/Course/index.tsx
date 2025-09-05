@@ -78,3 +78,41 @@ export const deleteCourse = async (id: string): Promise<any> => {
     return Error(error);
   }
 };
+
+export const getSingleCourse = async (id:string) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["COURSE"],
+      },
+    });
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
+export const updateCourse = async (id: string, courseData: any): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/course/update-course/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(courseData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("COURSE");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};

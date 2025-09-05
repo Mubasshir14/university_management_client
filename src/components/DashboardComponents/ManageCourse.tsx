@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { deleteCourse, getAllCourse } from "../Services/Course";
+import { useRouter } from "next/navigation";
 
 interface Course {
   _id: string;
@@ -43,6 +44,7 @@ export default function ManageCourse() {
   const [sortBy, setSortBy] = useState<keyof Course>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const itemsPerPage = 10;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -65,7 +67,7 @@ export default function ManageCourse() {
     fetchCourses();
   }, []);
 
-  const handleDelete = async (courseId:string) => {
+  const handleDelete = async (courseId: string) => {
     try {
       const res = await deleteCourse(courseId);
 
@@ -236,9 +238,7 @@ export default function ManageCourse() {
                             (sortOrder === "asc" ? "↑" : "↓")}
                         </TableHead>
                         <TableHead className="">Faculty</TableHead>
-                        <TableHead className="">
-                          Offered In
-                        </TableHead>
+                        <TableHead className="">Offered In</TableHead>
                         <TableHead className="">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -293,7 +293,9 @@ export default function ManageCourse() {
                               size="sm"
                               className="text-blue-400 hover:text-blue-300 hover:bg-blue-600/20"
                               onClick={() =>
-                                toast.info("Edit functionality coming soon!")
+                                router.push(
+                                  `/admin/dashboard/update-course/${course._id}`
+                                )
                               }
                             >
                               <Edit className="h-4 w-4" />
@@ -302,8 +304,7 @@ export default function ManageCourse() {
                               variant="ghost"
                               size="sm"
                               className="text-red-400 hover:text-red-300 hover:bg-red-600/20"
-                             onClick={() => handleDelete(course._id)}
-                              
+                              onClick={() => handleDelete(course._id)}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
