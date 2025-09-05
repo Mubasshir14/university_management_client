@@ -6,18 +6,15 @@ import { cookies } from "next/headers";
 
 export const getAllDepartment = async () => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/department`,
-      {
-        method: "GET",
-        // headers: {
-        //   Authorization: (await cookies()).get("accessToken")!.value,
-        // },
-        next: {
-          tags: ["DEPARTMENT"],
-        },
-      }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/department`, {
+      method: "GET",
+      // headers: {
+      //   Authorization: (await cookies()).get("accessToken")!.value,
+      // },
+      next: {
+        tags: ["DEPARTMENT"],
+      },
+    });
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -46,7 +43,6 @@ export const getSingleDepartment = async (departmentId: string) => {
   }
 };
 
-
 export const addDepartment = async (deptData: FormData): Promise<any> => {
   try {
     const res = await fetch(
@@ -54,6 +50,25 @@ export const addDepartment = async (deptData: FormData): Promise<any> => {
       {
         method: "POST",
         body: deptData,
+        headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("DEPARTMENT");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateDepartment = async (departmentId: string, formData: any) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/department/update-department/${departmentId}`,
+      {
+        method: "PATCH",
+        body: formData,
         headers: {
           Authorization: (await cookies()).get("accessToken")!.value,
         },

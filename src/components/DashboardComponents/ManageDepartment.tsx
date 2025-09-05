@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { getAllDepartment } from "../Services/Department";
+import { useRouter } from "next/navigation";
 
 interface AcademicDepartment {
   _id: string;
@@ -32,13 +33,13 @@ export default function ManageDepartment() {
   const [sortBy, setSortBy] = useState<keyof AcademicDepartment>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const itemsPerPage = 5;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
         setLoading(true);
         const res = await getAllDepartment();
-        console.log(res.data);
         if (res.success) {
           setDepartments(res.data);
         } else {
@@ -227,7 +228,7 @@ export default function ManageDepartment() {
                               <span className="text-gray-400">No image</span>
                             )}
                           </TableCell>
-                         
+
                           <TableCell>
                             <div className="flex flex-col gap-1">
                               {department.faculty.slice(0, 2).map((f, idx) => (
@@ -252,7 +253,9 @@ export default function ManageDepartment() {
                               size="sm"
                               className="text-blue-400 hover:text-blue-300 hover:bg-blue-600/20"
                               onClick={() =>
-                                toast.info("Edit functionality coming soon!")
+                                router.push(
+                                  `/admin/dashboard/update-department/${department._id}`
+                                )
                               }
                             >
                               <Edit className="h-4 w-4" />
