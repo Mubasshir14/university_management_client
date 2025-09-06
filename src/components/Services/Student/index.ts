@@ -56,7 +56,6 @@ export const dashboradSemBasedStudent = async () => {
   }
 };
 
-
 export const getStudentByDepartment = async (id: string) => {
   try {
     const res = await fetch(
@@ -104,7 +103,6 @@ export const getStudentBySemester = async (id: string) => {
     return Error(error.message);
   }
 };
-
 
 export const makeApproval = async (id: string) => {
   try {
@@ -172,7 +170,7 @@ export const getApprovedStudent = async () => {
 export const getSinglStudent = async (studentId: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/student/${studentId}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/single-student/${studentId}`,
       {
         method: "GET",
         headers: {
@@ -219,6 +217,28 @@ export const addStudent = async (stuData: FormData): Promise<any> => {
         method: "POST",
         body: stuData,
         headers: {
+          Authorization: (await cookies()).get("accessToken")!.value,
+        },
+      }
+    );
+    revalidateTag("STUDENT");
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+export const updateImformationByAdmin = async (
+  id: string,
+  stuData: any
+): Promise<any> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/student/update-student/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(stuData),
+        headers: {
+          'Content-Type': 'application/json',
           Authorization: (await cookies()).get("accessToken")!.value,
         },
       }
