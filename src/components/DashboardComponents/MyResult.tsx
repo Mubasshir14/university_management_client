@@ -149,7 +149,7 @@ const MyResult = () => {
         styles: { font: "times", fontSize: 10, cellPadding: 4 },
         headStyles: {
           fillColor: [0, 51, 102],
-          textColor: [0, 51, 102],
+          textColor: [255, 255, 255],
           fontStyle: "bold",
         },
         bodyStyles: { textColor: [0, 51, 102] },
