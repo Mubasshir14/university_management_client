@@ -28,6 +28,7 @@ interface Faculty {
   gender: string;
   email: string;
   contactNo: string;
+  nid: string;
   bloodGroup?: string;
   academicDepartment: { _id: string; name: string };
 }
@@ -183,6 +184,7 @@ export default function ManageFaculty() {
                         <TableHead className="">Gender</TableHead>
                         <TableHead className="">Email</TableHead>
                         <TableHead className="">Contact No</TableHead>
+                        <TableHead className="">NID</TableHead>
                         <TableHead className="">Blood Group</TableHead>
                         <TableHead className="">Department</TableHead>
                         <TableHead className="">Actions</TableHead>
@@ -216,6 +218,7 @@ export default function ManageFaculty() {
                           <TableCell className="capitalize">{faculty.gender}</TableCell>
                           <TableCell>{faculty.email}</TableCell>
                           <TableCell>{faculty.contactNo}</TableCell>
+                          <TableCell>{faculty.nid}</TableCell>
                           <TableCell>{faculty.bloodGroup || "N/A"}</TableCell>
                           <TableCell>{faculty.academicDepartment.name}</TableCell>
                           <TableCell className="flex gap-2">

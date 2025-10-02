@@ -38,7 +38,6 @@ const MyResult = () => {
           toast.error(resultRes.message || "Result not found");
           return;
         }
-        console.log(resultRes.data);
         setResult(resultRes.data);
       } catch (error: any) {
         toast.error(error.message || "Something went wrong");
@@ -108,11 +107,16 @@ const MyResult = () => {
         85
       );
       doc.text(
-        `Semester: ${result.registration.academicSemester?.name || "N/A"} - ${
+        `Session: ${result.registration.academicSemester?.name || "N/A"} - ${
           result.registration.academicSemester?.year || "N/A"
         }`,
         20,
         91
+      );
+      doc.text(
+        `Year: ${result.student.year}`,
+        20,
+        97
       );
 
       doc.setFont("times", "bold");
@@ -264,10 +268,16 @@ const MyResult = () => {
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Semester:
+                Session:
               </span>{" "}
               {`${result.registration.academicSemester?.name || "N/A"} -
               ${result.registration.academicSemester?.year || "N/A"}`}
+            </p>
+            <p>
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                Year:
+              </span>{" "}
+              {result.student.year}
             </p>
           </div>
         </div>

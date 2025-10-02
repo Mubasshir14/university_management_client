@@ -150,7 +150,7 @@ export default function ManageSemester() {
           <div className="border-2 border-gray-200/20 bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 relative">
-                Manage Semesters
+                Manage Session
                 <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
                 {/* <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-pink-600 to-teal-600 rounded-full" /> */}
               </h1>
@@ -162,7 +162,7 @@ export default function ManageSemester() {
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <Link href="/admin/dashboard/add-semester">Add Semester</Link>
+                  <Link href="/admin/dashboard/add-semester">Add Session</Link>
                 </motion.div>
               </Button>
             </div>

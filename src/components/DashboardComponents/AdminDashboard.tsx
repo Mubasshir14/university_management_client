@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
@@ -143,7 +144,7 @@ const AdminDashboard: React.FC = () => {
       labels: semesters.map((sem: any) => `${sem.name} ${sem.year}`),
       datasets: [
         {
-          label: "Semesters",
+          label: "Session",
           data: semesters.map(() => 1),
           backgroundColor: "rgba(255, 206, 86, 0.5)",
           borderColor: "rgba(255, 206, 86, 1)",
@@ -208,7 +209,7 @@ const AdminDashboard: React.FC = () => {
       ),
       datasets: [
         {
-          label: "Students by Semester",
+          label: "Students by Session",
           data: studentsBySem.map((sem: any) => sem.totalStudents),
           backgroundColor: "rgba(75, 192, 192, 0.5)",
           borderColor: "rgba(75, 192, 192, 1)",

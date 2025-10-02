@@ -24,6 +24,8 @@ interface Course {
 
 interface RegistrationData {
   student_id: string;
+  year: string;
+  student: any;
   totalCredit: number;
   isApproved: boolean;
   academicDepartment: { name: string };
@@ -147,10 +149,16 @@ const MyRegistrationInformation = () => {
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Semester:
+                Session:
               </span>{" "}
               {registration.academicSemester?.name} -{" "}
               {registration.academicSemester?.year}
+            </p>
+            <p>
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                Year:
+              </span>{" "}
+              {registration.student.year}
             </p>
           </div>
         </div>

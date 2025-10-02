@@ -24,7 +24,7 @@ import { protectedRoutes } from "../constant";
 const navItems = [
   { name: "Department", href: "/department" },
   { name: "Faculty", href: "/faculty" },
-  { name: "Get Admitted", href: "/get-admit" },
+  { name: "Get Registered", href: "/get-admit" },
 ];
 
 export default function Navbar() {

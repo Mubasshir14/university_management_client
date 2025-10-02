@@ -211,10 +211,18 @@ const MyInformation = () => {
               </div>
               <div>
                 <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                  Semester:
+                  Session:
                 </Label>
                 <div className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 rounded-lg p-2 ">
                   {`${studentData.academicSemester.name} ${studentData.academicSemester.year}`}
+                </div>
+              </div>
+              <div>
+                <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                  Year:
+                </Label>
+                <div className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 rounded-lg p-2 ">
+                  {studentData.year}
                 </div>
               </div>
             </motion.div>

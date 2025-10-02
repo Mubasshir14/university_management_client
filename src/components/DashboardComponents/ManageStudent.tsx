@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
@@ -102,12 +103,13 @@ const ManageStudent = () => {
         { header: "Sl. No.", dataKey: "slNo" },
         { header: "Student ID", dataKey: "id" },
         { header: "Full Name", dataKey: "name" },
-        { header: "Email", dataKey: "email" },
+        // { header: "Email", dataKey: "email" },
         { header: "Contact No", dataKey: "contactNo" },
         { header: "Gender", dataKey: "gender" },
         { header: "Department", dataKey: "department" },
-        { header: "Semester", dataKey: "semester" },
-        { header: "Blood Group", dataKey: "bloodGroup" },
+        { header: "Session", dataKey: "session" },
+        { header: "Year", dataKey: "year" },
+        // { header: "Blood Group", dataKey: "bloodGroup" },
       ];
 
       const rows = students.map((student, index) => ({
@@ -120,9 +122,10 @@ const ManageStudent = () => {
           ? student.gender.charAt(0).toUpperCase() + student.gender.slice(1)
           : "N/A",
         department: student.academicDepartment?.name || "N/A",
-        semester: student.academicSemester
+        session: student.academicSemester
           ? `${student.academicSemester.name} ${student.academicSemester.year}`
           : "N/A",
+        year: student.year,
         bloodGroup: student.bloodGroup || "N/A",
       }));
 
@@ -302,7 +305,8 @@ const ManageStudent = () => {
                     <TableHead>Gender</TableHead>
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
-                    <TableHead>Semester</TableHead>
+                    <TableHead>Session</TableHead>
+                    <TableHead>Year</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
@@ -326,6 +330,7 @@ const ManageStudent = () => {
                       <TableCell>{student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
                           <motion.img

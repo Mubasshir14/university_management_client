@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -39,11 +41,23 @@ export interface AcademicSemester {
   endMonth?: string;
 }
 
+export const academicYear = [
+  { key: "1st Year 1st Semester", value: "1st Year 1st Semester" },
+  { key: "1st Year 2nd Semester", value: "1st Year 2nd Semester" },
+  { key: "2nd Year 1st Semester", value: "2nd Year 1st Semester" },
+  { key: "2nd Year 2nd Semester", value: "2nd Year 2nd Semester" },
+  { key: "3rd Year 1st Semester", value: "3rd Year 1st Semester" },
+  { key: "3rd Year 2nd Semester", value: "3rd Year 2nd Semester" },
+  { key: "4th Year 1st Semester", value: "4th Year 1st Semester" },
+  { key: "4th Year 2nd Semester", value: "4th Year 2nd Semester" },
+];
+
 export default function Student() {
   const { user, setUser } = useUser();
   const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+  const [year, setYears] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -52,10 +66,11 @@ export default function Student() {
     lastName: "",
     gender: "",
     email: user?.email || "",
-    contactNo: "",
+    contactNo: user?.phone || "",
     bloodGroup: "",
     academicDepartment: "",
     academicSemester: "",
+    year: "",
     isApproved: false,
   });
 
@@ -88,7 +103,11 @@ export default function Student() {
 
   useEffect(() => {
     if (user?.email) {
-      setFormData((prev) => ({ ...prev, email: user.email }));
+      setFormData((prev) => ({
+        ...prev,
+        email: user.email,
+        contactNo: user.phone || "",
+      }));
     }
   }, [user?.email]);
 
@@ -125,13 +144,14 @@ export default function Student() {
       bloodGroup: formData.bloodGroup,
       academicDepartment: formData.academicDepartment,
       academicSemester: formData.academicSemester,
+      year: formData.year,
       isApproved: formData.isApproved,
     };
     submitData.append("data", JSON.stringify(dataPayload));
     if (formData.image) {
       submitData.append("image", formData.image);
     }
-
+    console.log(submitData);
     const toastId = "submitting";
     try {
       const res = await addStudent(submitData);
@@ -146,10 +166,11 @@ export default function Student() {
           lastName: "",
           gender: "",
           email: user?.email || "",
-          contactNo: "",
+          contactNo: user?.phone || "",
           bloodGroup: "",
           academicDepartment: "",
           academicSemester: "",
+          year: "",
           isApproved: false,
         });
         setImagePreview(null);
@@ -236,7 +257,7 @@ export default function Student() {
         >
           <div className="border-2 border-gray-200/20 bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <h1 className="text-2xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-              Student Admission Form
+              Student Registration Form
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
             </h1>
             {loading ? (
@@ -339,7 +360,8 @@ export default function Student() {
                     value={formData.contactNo}
                     onChange={handleChange}
                     required
-                    className="bg-white/5 border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
+                    disabled
+                    className="bg-white/5 border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg text-blue-800"
                     placeholder="e.g., +1234567890"
                   />
                 </motion.div>
@@ -393,7 +415,7 @@ export default function Student() {
                   </div>
                   <div>
                     <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                      Academic Semester
+                      Academic Session
                     </Label>
                     <Select
                       onValueChange={(val) =>
@@ -435,6 +457,31 @@ export default function Student() {
                       {departments.map((dept: Department) => (
                         <SelectItem key={dept._id} value={dept._id}>
                           {dept.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                >
+                  <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                    Academic Year
+                  </Label>
+                  <Select
+                    onValueChange={(val) => handleSelectChange("year", val)}
+                    value={formData.year}
+                  >
+                    <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                      <SelectValue placeholder="Select Department" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {academicYear.map((year: any) => (
+                        <SelectItem key={year.key} value={year.value}>
+                          {year.value}
                         </SelectItem>
                       ))}
                     </SelectContent>

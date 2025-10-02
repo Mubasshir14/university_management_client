@@ -58,8 +58,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: ShoppingCart,
           },
           {
-            title: "Add Semester",
+            title: "Add Session",
             url: "/admin/dashboard/add-semester",
+            icon: Settings,
+          },
+          {
+            title: "Manage Student ID",
+            url: "/admin/dashboard/manage-studentid",
             icon: Settings,
           },
           {
@@ -89,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             isActive: true,
           },
           {
-            title: "Manage Semester",
+            title: "Manage Session",
             url: "/admin/dashboard/manage-semester",
             icon: Settings,
           },
@@ -124,7 +129,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
-            title: "Filter By Semester",
+            title: "Filter By Session",
             url: "/admin/dashboard/filter-semester",
             icon: Settings,
           },

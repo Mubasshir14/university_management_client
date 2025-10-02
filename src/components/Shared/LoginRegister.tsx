@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -16,7 +18,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
-import { User, Mail, Lock, KeyRound, Phone, Map } from "lucide-react";
+import {
+  User,
+  Mail,
+  Lock,
+  KeyRound,
+  Phone,
+  Map,
+  CreditCard,
+  IdCard,
+} from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/components/context/UserContext";
@@ -70,20 +81,43 @@ export const LoginRegister = () => {
 
   // register
   const onRegisterSubmit: SubmitHandler<FieldValues> = async (data) => {
-    try {
-      setIsLoading(true);
-      const res = await registerUser(data);
-      if (res?.success) {
-        toast.success(res?.message);
-        router.push("/");
-      } else {
-        toast.error(res?.message);
+    const errors: any = {};
+
+    if (!data.email) errors.email = "Email is required";
+    else if (!/^[\w-\.]+@(gmail\.com|yahoo\.com)$/.test(data.email))
+      errors.email = "Only Gmail or Yahoo emails are allowed";
+
+    if (!data.phone) errors.phone = "Phone is required";
+    else if (!/^(?:\+8801[3-9]\d{8}|01[3-9]\d{8})$/.test(data.phone))
+      errors.phone = "Invalid Bangladeshi phone number";
+
+    if (!data.nid) errors.nid = "NID is required";
+    else if (!/^\d{10}$|^\d{13}$|^\d{17}$/.test(data.nid))
+      errors.nid = "NID must be 10, 13, or 17 digits";
+
+    if (!data.student_id) errors.student_id = "Student ID is required";
+    else if (!/^\d{6}$/.test(data.student_id))
+      errors.student_id = "Student ID must be exactly 6 digits";
+
+    Object.keys(errors).forEach((key) =>
+      registerForm.setError(key as any, { message: errors[key] })
+    );
+
+    if (Object.keys(errors).length === 0) {
+      try {
+        setIsLoading(true);
+        const res = await registerUser(data);
+        if (res?.success) {
+          toast.success(res.message);
+          router.push("/");
+        } else {
+          toast.error(res.message);
+        }
+      } catch (err: any) {
+        toast.error("Registration failed. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err: any) {
-      console.error(err);
-      toast.error("Registration failed. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -160,7 +194,6 @@ export const LoginRegister = () => {
               <CardTitle className="text-3xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 relative">
                 Welcome
                 <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
-                {/* <span className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-pink-600 to-teal-600 rounded-full" /> */}
               </CardTitle>
               <p className="text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-sm mt-2">
                 Access Your Academic Journey
@@ -241,7 +274,7 @@ export const LoginRegister = () => {
                                   <Input
                                     type="password"
                                     placeholder="••••••••"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />
@@ -265,7 +298,7 @@ export const LoginRegister = () => {
                         </MotionButton>
                         <div className="text-center mt-4 space-y-2">
                           <p className="text-sm bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                            Don’t have an account?{" "}
+                            Don't have an account?{" "}
                             <button
                               type="button"
                               className="font-medium text-blue-400 hover:text-blue-500 transition-colors duration-200"
@@ -314,7 +347,7 @@ export const LoginRegister = () => {
                                 <FormControl>
                                   <Input
                                     placeholder="John Doe"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />
@@ -346,10 +379,10 @@ export const LoginRegister = () => {
                                 <FormControl>
                                   <Input
                                     type="email"
-                                    placeholder="you@example.com"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    placeholder="you@gmail.com"
                                     {...field}
                                     value={field.value || ""}
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                   />
                                 </FormControl>
                                 <motion.div
@@ -357,12 +390,137 @@ export const LoginRegister = () => {
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ duration: 0.3 }}
                                 >
-                                  <FormMessage className="text-red-400 text-sm mt-1" />
+                                  <FormMessage className="text-red-400 text-sm mt-1">
+                                    {field.value &&
+                                    !/^[\w-\.]+@(gmail\.com|yahoo\.com)$/.test(
+                                      field.value
+                                    )
+                                      ? "Only Gmail or Yahoo emails are allowed"
+                                      : null}
+                                  </FormMessage>
                                 </motion.div>
                               </div>
                             </FormItem>
                           )}
                         />
+
+                        <FormField
+                          control={registerForm.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                Phone
+                              </FormLabel>
+                              <div className="relative group">
+                                <Phone
+                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
+                                  size={24}
+                                />
+                                <FormControl>
+                                  <Input
+                                    placeholder="01XXXXXXXXX"
+                                    {...field}
+                                    value={field.value || ""}
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                  />
+                                </FormControl>
+                                <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <FormMessage className="text-red-400 text-sm mt-1">
+                                    {field.value &&
+                                    !/^(?:\+8801[3-9]\d{8}|01[3-9]\d{8})$/.test(
+                                      field.value
+                                    )
+                                      ? "Invalid Bangladeshi phone number"
+                                      : null}
+                                  </FormMessage>
+                                </motion.div>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={registerForm.control}
+                          name="nid"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                NID
+                              </FormLabel>
+                              <div className="relative group">
+                                <CreditCard
+                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
+                                  size={24}
+                                />
+                                <FormControl>
+                                  <Input
+                                    placeholder="NID number"
+                                    {...field}
+                                    value={field.value || ""}
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                  />
+                                </FormControl>
+                                <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <FormMessage className="text-red-400 text-sm mt-1">
+                                    {field.value &&
+                                    !/^\d{10}$|^\d{13}$|^\d{17}$/.test(
+                                      field.value
+                                    )
+                                      ? "NID must be 10, 13, or 17 digits"
+                                      : null}
+                                  </FormMessage>
+                                </motion.div>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={registerForm.control}
+                          name="student_id"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                Student ID
+                              </FormLabel>
+                              <div className="relative group">
+                                <IdCard
+                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
+                                  size={24}
+                                />
+                                <FormControl>
+                                  <Input
+                                    placeholder="6-digit Student ID"
+                                    {...field}
+                                    value={field.value || ""}
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                  />
+                                </FormControl>
+                                <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <FormMessage className="text-red-400 text-sm mt-1">
+                                    {field.value && !/^\d{6}$/.test(field.value)
+                                      ? "Student ID must be exactly 6 digits"
+                                      : null}
+                                  </FormMessage>
+                                </motion.div>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
                         <FormField
                           control={registerForm.control}
                           name="password"
@@ -380,7 +538,7 @@ export const LoginRegister = () => {
                                   <Input
                                     type="password"
                                     placeholder="••••••••"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />
@@ -413,7 +571,7 @@ export const LoginRegister = () => {
                                   <Input
                                     type="password"
                                     placeholder="••••••••"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />
@@ -451,7 +609,7 @@ export const LoginRegister = () => {
                                 <FormControl>
                                   <Input
                                     placeholder="Your Address"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
                                   />
@@ -467,39 +625,7 @@ export const LoginRegister = () => {
                             </FormItem>
                           )}
                         />
-                        <FormField
-                          control={registerForm.control}
-                          name="phone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                                Phone
-                              </FormLabel>
-                              <div className="relative group">
-                                <Phone
-                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
-                                  size={24}
-                                />
-                                <FormControl>
-                                  <Input
-                                    type="tel"
-                                    placeholder="01XXXXXXXXXXX"
-                                    className="pl-12 bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
-                                    {...field}
-                                    value={field.value || ""}
-                                  />
-                                </FormControl>
-                                <motion.div
-                                  initial={{ opacity: 0, y: -10 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                >
-                                  <FormMessage className="text-red-400 text-sm mt-1" />
-                                </motion.div>
-                              </div>
-                            </FormItem>
-                          )}
-                        />
+
                         <MotionButton
                           type="submit"
                           variant="outline"

@@ -99,12 +99,13 @@ const ApproveRegistration = () => {
         { header: "Sl. No.", dataKey: "slNo" },
         { header: "Student ID", dataKey: "id" },
         { header: "Full Name", dataKey: "name" },
-        { header: "Email", dataKey: "email" },
+        // { header: "Email", dataKey: "email" },
         { header: "Contact No", dataKey: "contactNo" },
         { header: "Gender", dataKey: "gender" },
         { header: "Department", dataKey: "department" },
-        { header: "Semester", dataKey: "semester" },
-        { header: "Blood Group", dataKey: "bloodGroup" },
+        { header: "Session", dataKey: "session" },
+        { header: "Year", dataKey: "year" },
+        // { header: "Blood Group", dataKey: "bloodGroup" },
       ];
 
       const rows = students.map((student, index) => ({
@@ -118,9 +119,10 @@ const ApproveRegistration = () => {
             student.student.gender.slice(1)
           : "N/A",
         department: student?.academicDepartment?.name || "N/A",
-        semester: student?.academicSemester
+        session: student?.academicSemester
           ? `${student.academicSemester.name} ${student.academicSemester.year}`
           : "N/A",
+        year: student.student.year,
         bloodGroup: student?.student?.bloodGroup || "N/A",
       }));
 
@@ -277,7 +279,8 @@ const ApproveRegistration = () => {
                     <TableHead>Gender</TableHead>
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
-                    <TableHead>Semester</TableHead>
+                    <TableHead>Session</TableHead>
+                    <TableHead>Year</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Total Credit</TableHead>
                     {/* <TableHead>Actions</TableHead> */}
@@ -302,6 +305,7 @@ const ApproveRegistration = () => {
                       <TableCell>{student.student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{student.student.year}</TableCell>{" "}
                       <TableCell>
                         {student.student.image ? (
                           <motion.img

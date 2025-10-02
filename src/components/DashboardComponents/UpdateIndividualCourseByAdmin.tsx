@@ -46,6 +46,7 @@ interface Student {
   firstName: string;
   lastName?: string;
   image?: string;
+  year: string;
 }
 
 interface RegistrationData {
@@ -111,7 +112,7 @@ const UpdateIndividualCourseByAdmin = ({
         academicDepartmentId: registration.academicDepartment?._id,
         courseIdsToDrop: selectedCoursesToDrop,
       };
-      console.log('redData', regData);
+      console.log("redData", regData);
 
       const response = await updateAndDropCourseByAdmin(regData);
 
@@ -129,7 +130,6 @@ const UpdateIndividualCourseByAdmin = ({
       setIsSubmitting(false);
     }
   };
-
 
   if (!registration) {
     return (
@@ -209,9 +209,15 @@ const UpdateIndividualCourseByAdmin = ({
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Semester:
+                Session:
               </span>{" "}
               {`${registration?.academicSemester?.name} - ${registration?.academicSemester?.year}`}
+            </p>
+            <p>
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                Year:
+              </span>{" "}
+              {registration.student.year}
             </p>
           </div>
         </div>

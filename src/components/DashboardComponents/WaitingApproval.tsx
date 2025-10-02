@@ -144,7 +144,8 @@ const WaitingApproval = () => {
                     <TableHead>Gender</TableHead>
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
-                    <TableHead>Semester</TableHead>
+                    <TableHead>Session</TableHead>
+                    <TableHead>Year</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
@@ -166,6 +167,7 @@ const WaitingApproval = () => {
                       <TableCell>{student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
                           <motion.img
