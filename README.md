@@ -1,7 +1,7 @@
 
 
 ## University Management System – A Complete Academic Solution
-
+## **[Live](https://university-management-client.vercel.app/)**
 Welcome to our comprehensive **University Management System**, designed to streamline and digitize the entire academic and administrative process of a university.
 
 This platform offers an all-in-one solution with the following core features:
