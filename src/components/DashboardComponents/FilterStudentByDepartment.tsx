@@ -60,6 +60,7 @@ const FilterStudentByDepartment = () => {
                     <TableHead>Contact</TableHead>
                     <TableHead>Gender</TableHead>
                     <TableHead>Dept</TableHead>
+                    <TableHead>Session</TableHead>
                     <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                   </TableRow>
@@ -81,6 +82,7 @@ const FilterStudentByDepartment = () => {
                       </TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
                           <Image

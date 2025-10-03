@@ -469,7 +469,7 @@ export default function Student() {
                   transition={{ duration: 0.4, delay: 0.5 }}
                 >
                   <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                    Academic Year
+                    Academic Semester
                   </Label>
                   <Select
                     onValueChange={(val) => handleSelectChange("year", val)}

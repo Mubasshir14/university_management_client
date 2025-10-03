@@ -217,7 +217,7 @@ const UpdateRegistrationInformation = () => {
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Year:
+                Semester:
               </span>{" "}
               {registration.student.year}
             </p>

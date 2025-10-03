@@ -134,6 +134,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Settings,
           },
           {
+            title: "Filter By Semester",
+            url: "/admin/dashboard/filter-year",
+            icon: Settings,
+          },
+          {
             title: "Filter By Course",
             url: "/admin/dashboard/filter-course",
             icon: Settings,

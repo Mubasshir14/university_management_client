@@ -374,7 +374,7 @@ const AdminDashboard: React.FC = () => {
         </div>
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4 font-sansita">
-            Students by Semester
+            Students by Session
           </h2>
           <Bar
             options={{
@@ -383,7 +383,7 @@ const AdminDashboard: React.FC = () => {
                 ...chartOptions.plugins,
                 title: {
                   ...chartOptions.plugins.title,
-                  text: "Students by Semester",
+                  text: "Students by Session",
                 },
               },
             }}

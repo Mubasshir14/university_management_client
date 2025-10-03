@@ -107,9 +107,12 @@ export const LoginRegister = () => {
       try {
         setIsLoading(true);
         const res = await registerUser(data);
+        console.log(res);
         if (res?.success) {
-          toast.success(res.message);
-          router.push("/");
+          toast.success(
+            "Registration successful! Please check your email to verify your account."
+          );
+          router.push("/verify-notice");
         } else {
           toast.error(res.message);
         }

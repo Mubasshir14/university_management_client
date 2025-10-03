@@ -12,11 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Course from "./Course";
-import { getStudentByCourse } from "../Services/Registration";
+import Year from "./Year";
+import { getStudentBySemester } from "../Services/Student";
 
-const FilterByCourse = () => {
-  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+const FilterStudentByYear = () => {
+  const [selectedSemesterId, setSelectedSemesterId] = useState<string | null>(
+    null
+  );
 
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -24,24 +26,25 @@ const FilterByCourse = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      if (selectedCourseId) {
-        const res = await getStudentByCourse(selectedCourseId);
+      if (selectedSemesterId) {
+        const res = await getStudentBySemester(selectedSemesterId);
         setStudents(res.data || []);
       }
     };
     fetchStudents();
-  }, [selectedCourseId]);
+  }, [selectedSemesterId]);
 
   const paginatedStudents = students.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
   const totalPages = Math.ceil(students.length / itemsPerPage);
+
   return (
     <section className="py-10 font-sansita">
-      <Course onSelect={setSelectedCourseId} />
+      <Year onSelect={setSelectedSemesterId} />
 
-      {selectedCourseId && (
+      {selectedSemesterId && (
         <div className="mt-10 px-4">
           {students.length === 0 ? (
             <p className="text-center text-gray-500">No students found.</p>
@@ -69,23 +72,22 @@ const FilterByCourse = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                     >
-                      <TableCell>{student.student.id}</TableCell>
-                      <TableCell>{student.student.name}</TableCell>
-                      <TableCell>{student.student.email}</TableCell>
-                      <TableCell>{student.student.contactNo}</TableCell>
+                      <TableCell>{student.id}</TableCell>
+                      <TableCell>{student.name}</TableCell>
+                      <TableCell>{student.email}</TableCell>
+                      <TableCell>{student.contactNo}</TableCell>
                       <TableCell className="capitalize">
-                        {student.student.gender}
+                        {student.gender}
                       </TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
-                      <TableCell>{student.student.year}</TableCell>
-
+                      <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
                           <Image
                             height={40}
                             width={40}
-                            src={student.student.image}
+                            src={student.image}
                             alt={student.name}
                             className="h-10 w-10 object-cover rounded-full"
                           />
@@ -125,4 +127,4 @@ const FilterByCourse = () => {
   );
 };
 
-export default FilterByCourse;
+export default FilterStudentByYear;

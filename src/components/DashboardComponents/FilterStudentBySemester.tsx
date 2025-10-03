@@ -1,7 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
-import { getStudentBySemester } from "../Services/Student";
 import {
   Table,
   TableBody,
@@ -14,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Semester from "./Semester";
+import { getStudentBySession } from "../Services/Student";
 
 const FilterStudentBySemester = () => {
   const [selectedSemesterId, setSelectedSemesterId] = useState<
@@ -27,7 +27,7 @@ const FilterStudentBySemester = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       if (selectedSemesterId) {
-        const res = await getStudentBySemester(selectedSemesterId);
+        const res = await getStudentBySession(selectedSemesterId);
         console.log(res.data);
         setStudents(res.data || []);
       }
@@ -60,6 +60,7 @@ const FilterStudentBySemester = () => {
                     <TableHead>Contact</TableHead>
                     <TableHead>Gender</TableHead>
                     <TableHead>Dept</TableHead>
+                    <TableHead>Session</TableHead>
                     <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                   </TableRow>
@@ -81,6 +82,7 @@ const FilterStudentBySemester = () => {
                       </TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
                           <Image

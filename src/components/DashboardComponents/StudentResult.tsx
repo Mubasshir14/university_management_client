@@ -70,7 +70,7 @@ const StudentResult = () => {
                 Session
               </th>
               <th className="p-3 font-semibold text-gray-800 dark:text-gray-100">
-                Year
+                Semester
               </th>
               <th className="p-3 font-semibold text-gray-800 dark:text-gray-100">
                 Average Marks

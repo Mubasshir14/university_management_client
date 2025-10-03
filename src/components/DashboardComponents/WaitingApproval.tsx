@@ -145,7 +145,7 @@ const WaitingApproval = () => {
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
                     <TableHead>Session</TableHead>
-                    <TableHead>Year</TableHead>
+                    <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>

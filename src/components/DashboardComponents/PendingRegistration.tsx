@@ -151,7 +151,7 @@ const PendingRegistration = () => {
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
                     <TableHead>Session</TableHead>
-                    <TableHead>Year</TableHead>
+                    <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Total Credits</TableHead>
                     <TableHead>Actions</TableHead>

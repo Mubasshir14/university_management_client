@@ -104,7 +104,7 @@ const ApproveRegistration = () => {
         { header: "Gender", dataKey: "gender" },
         { header: "Department", dataKey: "department" },
         { header: "Session", dataKey: "session" },
-        { header: "Year", dataKey: "year" },
+        { header: "Semester", dataKey: "year" },
         // { header: "Blood Group", dataKey: "bloodGroup" },
       ];
 
@@ -280,7 +280,7 @@ const ApproveRegistration = () => {
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
                     <TableHead>Session</TableHead>
-                    <TableHead>Year</TableHead>
+                    <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Total Credit</TableHead>
                     {/* <TableHead>Actions</TableHead> */}

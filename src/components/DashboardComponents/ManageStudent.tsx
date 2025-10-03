@@ -108,7 +108,7 @@ const ManageStudent = () => {
         { header: "Gender", dataKey: "gender" },
         { header: "Department", dataKey: "department" },
         { header: "Session", dataKey: "session" },
-        { header: "Year", dataKey: "year" },
+        { header: "Semester", dataKey: "year" },
         // { header: "Blood Group", dataKey: "bloodGroup" },
       ];
 
@@ -306,7 +306,7 @@ const ManageStudent = () => {
                     <TableHead>Blood Group</TableHead>
                     <TableHead>Department</TableHead>
                     <TableHead>Session</TableHead>
-                    <TableHead>Year</TableHead>
+                    <TableHead>Semester</TableHead>
                     <TableHead>Image</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>

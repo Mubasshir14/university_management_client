@@ -5,6 +5,31 @@ import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
+// export const registerUser = async (userData: FieldValues) => {
+//   try {
+//     const res = await fetch(
+//       `${process.env.NEXT_PUBLIC_BASE_API}/user/register`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(userData),
+//       }
+//     );
+//     const result = await res.json();
+
+//     if (result.success) {
+//       (await cookies()).set("accessToken", result.data.accessToken);
+//       (await cookies()).set("refreshToken", result?.data?.refreshToken);
+//     }
+
+//     return result;
+//   } catch (error: any) {
+//     return Error(error);
+//   }
+// };
+
 export const registerUser = async (userData: FieldValues) => {
   try {
     const res = await fetch(
@@ -17,16 +42,26 @@ export const registerUser = async (userData: FieldValues) => {
         body: JSON.stringify(userData),
       }
     );
+
     const result = await res.json();
 
     if (result.success) {
-      (await cookies()).set("accessToken", result.data.accessToken);
-      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      return {
+        success: true,
+        message:
+          "Registration successful! Please check your email to verify your account.",
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || "Registration failed",
+      };
     }
-
-    return result;
   } catch (error: any) {
-    return Error(error);
+    return {
+      success: false,
+      message: error?.message || "Registration failed",
+    };
   }
 };
 

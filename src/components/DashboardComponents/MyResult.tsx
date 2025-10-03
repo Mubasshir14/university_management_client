@@ -114,7 +114,7 @@ const MyResult = () => {
         91
       );
       doc.text(
-        `Year: ${result.student.year}`,
+        `Semester: ${result.student.year}`,
         20,
         97
       );
@@ -275,7 +275,7 @@ const MyResult = () => {
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">
-                Year:
+                Semester:
               </span>{" "}
               {result.student.year}
             </p>
