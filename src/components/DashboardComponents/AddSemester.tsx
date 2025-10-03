@@ -354,7 +354,7 @@ export default function AddSemester() {
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none hover:from-blue-700 hover:to-purple-700 transition-all duration-300 rounded-lg animate-pulse-slow"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Adding Semester..." : "Add Semester"}
+                    {isSubmitting ? "Adding Session..." : "Add Session"}
                   </Button>
                 </motion.div>
               </form>

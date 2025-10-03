@@ -329,7 +329,7 @@ const AdminDashboard: React.FC = () => {
                 ...chartOptions.plugins,
                 title: {
                   ...chartOptions.plugins.title,
-                  text: "Semester Count",
+                  text: "Session Count",
                 },
               },
             }}

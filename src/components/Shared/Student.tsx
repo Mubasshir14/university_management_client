@@ -424,7 +424,7 @@ export default function Student() {
                       value={formData.academicSemester}
                     >
                       <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                        <SelectValue placeholder="Select Semester" />
+                        <SelectValue placeholder="Select Session" />
                       </SelectTrigger>
                       <SelectContent>
                         {semesters.map((sem: AcademicSemester) => (
