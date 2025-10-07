@@ -15,19 +15,19 @@ import {
 } from "chart.js";
 import {
   dashboradDepBasedStudent,
-  dashboradSemBasedStudent,
+  dashboradSessionBasedStudent,
   getAAllStudent,
   getApprovedStudent,
   getNotApprovedStudent,
 } from "../Services/Student";
 import { getAllDepartment } from "../Services/Department";
-import { getAllSemester } from "../Services/Semester";
 import { getAllCourse } from "../Services/Course";
 import { getAllFaculty } from "../Services/Faculty";
 import {
   getApprovedRegisteredStudent,
   getNotApprovedRegisteredStudent,
 } from "../Services/Registration";
+import { getAllsession } from "../Services/Session";
 
 ChartJS.register(
   CategoryScale,
@@ -74,7 +74,7 @@ const AdminDashboard: React.FC = () => {
     labels: [],
     datasets: [],
   });
-  const [studentBySemData, setStudentBySemData] = useState<ChartData>({
+  const [studentBySessionData, setStudentBySessionData] = useState<ChartData>({
     labels: [],
     datasets: [],
   });
@@ -139,13 +139,13 @@ const AdminDashboard: React.FC = () => {
       ],
     });
 
-    const { data: semesters } = await getAllSemester();
+    const { data: sessions } = await getAllsession();
     setSemesterData({
-      labels: semesters.map((sem: any) => `${sem.name} ${sem.year}`),
+      labels: sessions.map((ses: any) => `${ses.name} ${ses.year}`),
       datasets: [
         {
           label: "Session",
-          data: semesters.map(() => 1),
+          data: sessions.map(() => 1),
           backgroundColor: "rgba(255, 206, 86, 0.5)",
           borderColor: "rgba(255, 206, 86, 1)",
           borderWidth: 1,
@@ -155,10 +155,10 @@ const AdminDashboard: React.FC = () => {
 
     const { data: allStudents } = await getAAllStudent();
     const maleCount = allStudents.filter(
-      (s:any) => s.gender?.toLowerCase() === "male"
+      (s: any) => s.gender?.toLowerCase() === "male"
     ).length;
     const femaleCount = allStudents.filter(
-      (s:any) => s.gender?.toLowerCase() === "female"
+      (s: any) => s.gender?.toLowerCase() === "female"
     ).length;
 
     setAllStudentData({
@@ -171,7 +171,7 @@ const AdminDashboard: React.FC = () => {
           borderColor: "rgba(153, 102, 255, 1)",
           borderWidth: 1,
         },
-                {
+        {
           label: "Male",
           data: [maleCount],
           backgroundColor: "rgba(54, 162, 235, 0.5)",
@@ -202,21 +202,27 @@ const AdminDashboard: React.FC = () => {
       ],
     });
 
-    const { data: studentsBySem } = await dashboradSemBasedStudent();
-    setStudentBySemData({
-      labels: studentsBySem.map(
-        (sem: any) => `${sem.semesterName}-${sem.year}`
-      ),
-      datasets: [
-        {
-          label: "Students by Session",
-          data: studentsBySem.map((sem: any) => sem.totalStudents),
-          backgroundColor: "rgba(75, 192, 192, 0.5)",
-          borderColor: "rgba(75, 192, 192, 1)",
-          borderWidth: 1,
-        },
-      ],
-    });
+    const { data: studentsBySession } = await dashboradSessionBasedStudent();
+    console.log("Students by Session Response:", studentsBySession);
+
+    if (studentsBySession && Array.isArray(studentsBySession)) {
+      setStudentBySessionData({
+        labels: studentsBySession.map(
+          (ses: any) => `${ses.sesesterName}-${ses.year}`
+        ),
+        datasets: [
+          {
+            label: "Students by Session",
+            data: studentsBySession.map((ses: any) => ses.totalStudents || 0),
+            backgroundColor: "rgba(75, 192, 192, 0.5)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      });
+    } else {
+      console.error("Invalid studentsBySession data:", studentsBySession);
+    }
 
     const { data: notApproved } = await getNotApprovedStudent();
     const { data: approved } = await getApprovedStudent();
@@ -321,7 +327,7 @@ const AdminDashboard: React.FC = () => {
           />
         </div> */}
         <div className="bg-white p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4 font-sansita">Semesters</h2>
+          <h2 className="text-xl font-semibold mb-4 font-sansita">Sessions</h2>
           <Bar
             options={{
               ...chartOptions,
@@ -387,9 +393,10 @@ const AdminDashboard: React.FC = () => {
                 },
               },
             }}
-            data={studentBySemData}
+            data={studentBySessionData}
           />
         </div>
+
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4 font-sansita">
             Student Approval Status

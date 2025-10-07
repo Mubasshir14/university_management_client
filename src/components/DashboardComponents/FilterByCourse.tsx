@@ -77,7 +77,7 @@ const FilterByCourse = () => {
                         {student.student.gender}
                       </TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
-                      <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{`${student.academicSession.name} ${student.academicSession.year}`}</TableCell>
                       <TableCell>{student.student.year}</TableCell>
 
                       <TableCell>

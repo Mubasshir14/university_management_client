@@ -107,8 +107,8 @@ const MyResult = () => {
         85
       );
       doc.text(
-        `Session: ${result.registration.academicSemester?.name || "N/A"} - ${
-          result.registration.academicSemester?.year || "N/A"
+        `Session: ${result.registration.academicSession?.name || "N/A"} - ${
+          result.registration.academicSession?.year || "N/A"
         }`,
         20,
         91
@@ -270,8 +270,8 @@ const MyResult = () => {
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Session:
               </span>{" "}
-              {`${result.registration.academicSemester?.name || "N/A"} -
-              ${result.registration.academicSemester?.year || "N/A"}`}
+              {`${result.registration.academicSession?.name || "N/A"} -
+              ${result.registration.academicSession?.year || "N/A"}`}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">

@@ -18,8 +18,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
 import { getAllFaculty } from "../Services/Faculty";
-import { getAllSemester } from "../Services/Semester";
 import { addCourse } from "../Services/Course";
+import { getAllsession } from "../Services/Session";
 
 interface Faculty {
   _id: string;
@@ -30,7 +30,7 @@ interface Faculty {
   };
 }
 
-interface AcademicSemester {
+interface AcademicSession {
   _id: string;
   name: string;
   startMonth: string;
@@ -41,7 +41,7 @@ interface AcademicSemester {
 export default function AddCourse() {
   const router = useRouter();
   const [faculties, setFaculties] = useState<Faculty[]>([]);
-  const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+  const [sessions, setSessions] = useState<AcademicSession[]>([]);
   const [loading, setLoading] = useState(true);
 
   const form = useForm({
@@ -65,7 +65,7 @@ export default function AddCourse() {
         setLoading(true);
         const [facultyRes, semesterRes] = await Promise.all([
           getAllFaculty(),
-          getAllSemester(),
+          getAllsession(),
         ]);
         if (facultyRes.success) {
           setFaculties(facultyRes.data);
@@ -73,7 +73,7 @@ export default function AddCourse() {
           toast.error(facultyRes.message || "Failed to fetch faculties");
         }
         if (semesterRes.success) {
-          setSemesters(semesterRes.data);
+          setSessions(semesterRes.data);
         } else {
           toast.error(semesterRes.message || "Failed to fetch semesters");
         }
@@ -89,9 +89,9 @@ export default function AddCourse() {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = "creating";
     const formattedData = {
-    ...data,
-    credits: Number(data.credits),
-  };
+      ...data,
+      credits: Number(data.credits),
+    };
 
     try {
       const res = await addCourse(formattedData);
@@ -393,7 +393,7 @@ export default function AddCourse() {
                           <FormControl>
                             <Select
                               isMulti
-                              options={semesters.map((sem) => ({
+                              options={sessions.map((sem) => ({
                                 value: sem._id,
                                 label: `${sem.name} ${sem.year}`,
                                 title: `${sem.startMonth} - ${sem.endMonth} ${sem.year}`,
@@ -403,7 +403,7 @@ export default function AddCourse() {
                               onChange={(selected) =>
                                 field.onChange(selected.map((s) => s.value))
                               }
-                              value={semesters
+                              value={sessions
                                 .filter((sem) => field.value.includes(sem._id))
                                 .map((sem) => ({
                                   value: sem._id,

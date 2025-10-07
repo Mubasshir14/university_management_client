@@ -172,8 +172,7 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂add-department
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂add-faculty
- ┃ ┃ ┃ ┃ ┣ 📂add-semester
+ ┃ ┃ ┃ ┃ ┣ 📂add-session
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂approve-registration
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
@@ -187,6 +186,8 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂filter-semester
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂filter-session
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂generate-result
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂manage-advisor
@@ -195,14 +196,25 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂manage-department
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📂manage-semester
+ ┃ ┃ ┃ ┃ ┣ 📂manage-session
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂manage-student
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂manage-studentid
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂pending-registration
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂student-result
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂update-course
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂update-department
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┃ ┃ ┣ 📂update-student
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂[id]
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┣ 📂waiting-approval
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┗ 📜page.tsx
@@ -220,13 +232,18 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂user
+ ┃ ┃ ┃ ┗ 📂dashboard
+ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┗ 📜layout.tsx
  ┃ ┣ 📂login
  ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂signup
  ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂verify-email
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂verify-notice
+ ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📜error.tsx
- ┃ ┣ 📜favicon.ico
  ┃ ┣ 📜globals.css
  ┃ ┣ 📜layout.tsx
  ┃ ┣ 📜loading.tsx
@@ -251,7 +268,7 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📜AddCourse.tsx
  ┃ ┃ ┣ 📜AddDepartment.tsx
  ┃ ┃ ┣ 📜AddFaculty.tsx
- ┃ ┃ ┣ 📜AddSemester.tsx
+ ┃ ┃ ┣ 📜AddSession.tsx
  ┃ ┃ ┣ 📜AdminDashboard.tsx
  ┃ ┃ ┣ 📜ApproveRegistration.tsx
  ┃ ┃ ┣ 📜Course.tsx
@@ -260,20 +277,26 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📜FilterByCourse.tsx
  ┃ ┃ ┣ 📜FilterStudentByDepartment.tsx
  ┃ ┃ ┣ 📜FilterStudentBySemester.tsx
+ ┃ ┃ ┣ 📜FilterStudentBySession.tsx
  ┃ ┃ ┣ 📜GenerateResultForm.tsx
  ┃ ┃ ┣ 📜ManageCourse.tsx
  ┃ ┃ ┣ 📜ManageDepartment.tsx
  ┃ ┃ ┣ 📜ManageFaculty.tsx
- ┃ ┃ ┣ 📜ManageSemester.tsx
+ ┃ ┃ ┣ 📜ManageSession.tsx
  ┃ ┃ ┣ 📜ManageStudent.tsx
+ ┃ ┃ ┣ 📜ManageStudentID.tsx
  ┃ ┃ ┣ 📜MyInformation.tsx
  ┃ ┃ ┣ 📜MyRegistrationInformation.tsx
  ┃ ┃ ┣ 📜MyResult.tsx
  ┃ ┃ ┣ 📜PendingRegistration.tsx
  ┃ ┃ ┣ 📜Semester.tsx
+ ┃ ┃ ┣ 📜Session.tsx
  ┃ ┃ ┣ 📜StudentResult.tsx
+ ┃ ┃ ┣ 📜UpdateCourse.tsx
+ ┃ ┃ ┣ 📜UpdateDepartment.tsx
  ┃ ┃ ┣ 📜UpdateIndividualCourseByAdmin.tsx
  ┃ ┃ ┣ 📜UpdateRegistrationInformation.tsx
+ ┃ ┃ ┣ 📜UpdateStudent.tsx
  ┃ ┃ ┗ 📜WaitingApproval.tsx
  ┃ ┣ 📂lib
  ┃ ┃ ┣ 📂providers
@@ -297,9 +320,11 @@ Make sure you have the following installed:
  ┃ ┃ ┃ ┗ 📜index.ts
  ┃ ┃ ┣ 📂result
  ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┣ 📂Semester
+ ┃ ┃ ┣ 📂Session
  ┃ ┃ ┃ ┗ 📜index.ts
- ┃ ┃ ┗ 📂Student
+ ┃ ┃ ┣ 📂Student
+ ┃ ┃ ┃ ┗ 📜index.ts
+ ┃ ┃ ┗ 📂StudentID
  ┃ ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂Shared
  ┃ ┃ ┣ 📜AboutUs.tsx
@@ -323,7 +348,7 @@ Make sure you have the following installed:
  ┃ ┃ ┗ 📜Student.tsx
  ┃ ┣ 📂Types
  ┃ ┃ ┣ 📜faculty.ts
- ┃ ┃ ┣ 📜semester.ts
+ ┃ ┃ ┣ 📜session.ts
  ┃ ┃ ┣ 📜student.ts
  ┃ ┃ ┗ 📜user.ts
  ┃ ┗ 📂ui
@@ -345,6 +370,7 @@ Make sure you have the following installed:
  ┃ ┃ ┣ 📜card.tsx
  ┃ ┃ ┣ 📜checkbox.tsx
  ┃ ┃ ┣ 📜collapsible.tsx
+ ┃ ┃ ┣ 📜dialog.tsx
  ┃ ┃ ┣ 📜dropdown-menu.tsx
  ┃ ┃ ┣ 📜form.tsx
  ┃ ┃ ┣ 📜input.tsx

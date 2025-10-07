@@ -37,7 +37,7 @@ interface RegistrationData {
   totalCredit: number;
   isApproved: boolean;
   academicDepartment: any;
-  academicSemester: any;
+  academicSession: any;
   courses: Course[];
 }
 
@@ -100,7 +100,7 @@ const UpdateRegistrationInformation = () => {
       setIsSubmitting(true);
       const regData = {
         studentId: registration.student,
-        academicSemesterId: registration.academicSemester,
+        academicSessionId: registration.academicSession,
         academicDepartmentId: registration.academicDepartment,
         courseIdsToDrop: selectedCoursesToDrop,
       };
@@ -212,8 +212,8 @@ const UpdateRegistrationInformation = () => {
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Session:
               </span>{" "}
-              {registration.academicSemester?.name} -{" "}
-              {registration.academicSemester?.year}
+              {registration.academicSession?.name} -{" "}
+              {registration.academicSession?.year}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">

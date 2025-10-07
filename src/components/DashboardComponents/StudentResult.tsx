@@ -102,8 +102,8 @@ const StudentResult = () => {
                   {res.registration.academicDepartment?.name || "N/A"}
                 </td>
                 <td className="p-3 text-gray-700 dark:text-gray-300">
-                  {res.registration.academicSemester?.name || "N/A"} -{" "}
-                  {res.registration.academicSemester?.year || "N/A"}
+                  {res.registration.academicSession?.name || "N/A"} -{" "}
+                  {res.registration.academicSession?.year || "N/A"}
                 </td>
                 <td className="p-3 text-gray-700 dark:text-gray-300">
                   {res.student.year}

@@ -15,10 +15,9 @@ import {
 import { toast } from "sonner";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { getAllSemester } from "../Services/Semester";
+import { getAllsession } from "../Services/Session";
 
-
-interface AcademicSemester {
+interface AcademicSession {
   _id: string;
   name: string;
   year: string;
@@ -27,35 +26,34 @@ interface AcademicSemester {
   endMonth: string;
 }
 
-export default function ManageSemester() {
-  const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+export default function ManageSession() {
+  const [Sessions, setSessions] = useState<AcademicSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState<keyof AcademicSemester>("year");
+  const [sortBy, setSortBy] = useState<keyof AcademicSession>("year");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const itemsPerPage = 5;
 
   useEffect(() => {
-    const fetchSemesters = async () => {
+    const fetchSessions = async () => {
       try {
         setLoading(true);
-        const res = await getAllSemester();
-        console.log(res.data.data);
+        const res = await getAllsession();
         if (res.success) {
-          setSemesters(res.data);
+          setSessions(res.data);
         } else {
-          toast.error(res.message || "Failed to fetch semesters");
+          toast.error(res.message || "Failed to fetch Sessions");
         }
       } catch (err: any) {
-        toast.error(err.message || "Failed to fetch semesters");
+        toast.error(err.message || "Failed to fetch Sessions");
       } finally {
         setLoading(false);
       }
     };
-    fetchSemesters();
+    fetchSessions();
   }, []);
 
-  const handleSort = (column: keyof AcademicSemester) => {
+  const handleSort = (column: keyof AcademicSession) => {
     if (sortBy === column) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
@@ -64,7 +62,7 @@ export default function ManageSemester() {
     }
   };
 
-  const sortedSemesters = [...semesters].sort((a, b) => {
+  const sortedSessions = [...Sessions].sort((a, b) => {
     const aValue = a[sortBy];
     const bValue = b[sortBy];
     if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
@@ -72,12 +70,12 @@ export default function ManageSemester() {
     return 0;
   });
 
-  const paginatedSemesters = sortedSemesters.slice(
+  const paginatedSessions = sortedSessions.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
 
-  const totalPages = Math.ceil(semesters.length / itemsPerPage);
+  const totalPages = Math.ceil(Sessions.length / itemsPerPage);
 
   return (
     <section className="py-10 bg-gradient-to-b from-blue-600/10 to-purple-600/10 relative font-sansita">
@@ -162,15 +160,15 @@ export default function ManageSemester() {
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <Link href="/admin/dashboard/add-semester">Add Session</Link>
+                  <Link href="/admin/dashboard/add-session">Add Session</Link>
                 </motion.div>
               </Button>
             </div>
             {loading ? (
               <div className="text-center text-gray-200">Loading...</div>
-            ) : semesters.length === 0 ? (
+            ) : Sessions.length === 0 ? (
               <div className="text-center text-gray-200">
-                No semesters found.
+                No Sessions found.
               </div>
             ) : (
               <>
@@ -222,19 +220,19 @@ export default function ManageSemester() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {paginatedSemesters.map((semester, index) => (
+                      {paginatedSessions.map((Session, index) => (
                         <motion.tr
-                          key={semester._id}
+                          key={Session._id}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                           className=" bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 transition-colors duration-200 border-b border-gray-600/50"
                         >
-                          <TableCell>{semester.name}</TableCell>
-                          <TableCell>{semester.year}</TableCell>
-                          <TableCell>{semester.code}</TableCell>
-                          <TableCell>{semester.startMonth}</TableCell>
-                          <TableCell>{semester.endMonth}</TableCell>
+                          <TableCell>{Session.name}</TableCell>
+                          <TableCell>{Session.year}</TableCell>
+                          <TableCell>{Session.code}</TableCell>
+                          <TableCell>{Session.startMonth}</TableCell>
+                          <TableCell>{Session.endMonth}</TableCell>
                           <TableCell className="flex gap-2">
                             <Button
                               variant="ghost"

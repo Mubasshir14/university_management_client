@@ -21,7 +21,7 @@ export const getAllCourse = async () => {
   }
 };
 
-export const getAllCoursesAccordingToStudentAcademicSemester = async (id:string) => {
+export const getAllCoursesAccordingToStudentAcademicSession = async (id:string) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/course/student/${id}`, {
       method: "GET",

@@ -43,7 +43,7 @@ export const createRegistration = async (regData: any): Promise<any> => {
 
 export const updateAndDropCourseByStudent = async (regData: {
   studentId: string;
-  academicSemesterId: string;
+  academicSessionId: string;
   academicDepartmentId: string;
   courseIdsToDrop: string[];
 }): Promise<any> => {
@@ -69,7 +69,7 @@ export const updateAndDropCourseByStudent = async (regData: {
 
 export const updateAndDropCourseByAdmin = async (regData: {
   studentId: string;
-  academicSemesterId: string;
+  academicSessionId: string;
   academicDepartmentId: string;
   courseIdsToDrop: string[];
 }): Promise<any> => {
@@ -124,10 +124,8 @@ export const getSingleRegistration = async (id: string) => {
       {
         method: "GET",
         headers: {
-          // "Content-Type": "application/json",
           Authorization: (await cookies()).get("accessToken")!.value,
         },
-        // body: JSON.stringify({ id }),
         next: {
           tags: ["REGISTRATION"],
         },

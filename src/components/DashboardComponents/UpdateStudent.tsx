@@ -15,11 +15,11 @@ import {
 } from "../ui/select";
 import { toast } from "sonner";
 import { getAllDepartment } from "../Services/Department";
-import { getAllSemester } from "../Services/Semester";
 
 import { BloodGroup, Gender } from "../Types/student";
 import { updateImformationByAdmin } from "../Services/Student";
 import { useRouter } from "next/navigation";
+import { getAllsession } from "../Services/Session";
 
 interface Department {
   _id: string;
@@ -29,7 +29,7 @@ interface Department {
   faculty?: { $id: string }[];
 }
 
-interface AcademicSemester {
+interface AcademicSesion {
   _id: string;
   name: string;
   year: string;
@@ -40,7 +40,7 @@ interface AcademicSemester {
 const UpdateStudent = ({ student }: { student: any }) => {
   const studentData = student.student || student;
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+  const [sessions, setSessions] = useState<AcademicSesion[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -50,7 +50,7 @@ const UpdateStudent = ({ student }: { student: any }) => {
     bloodGroup: studentData.bloodGroup || "",
     gender: studentData.gender || "",
     academicDepartment: studentData.academicDepartment?._id || "",
-    academicSemester: studentData.academicSemester?._id || "",
+    academicSession: studentData.academicSession?._id || "",
   });
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const UpdateStudent = ({ student }: { student: any }) => {
         setLoading(true);
         const [deptRes, semRes] = await Promise.all([
           getAllDepartment(),
-          getAllSemester(),
+          getAllsession(),
         ]);
         if (deptRes.success) {
           setDepartments(deptRes.data);
@@ -67,9 +67,9 @@ const UpdateStudent = ({ student }: { student: any }) => {
           toast.error(deptRes.message || "Failed to fetch departments");
         }
         if (semRes.success) {
-          setSemesters(semRes.data);
+          setSessions(semRes.data);
         } else {
-          toast.error(semRes.message || "Failed to fetch semesters");
+          toast.error(semRes.message || "Failed to fetch sessions");
         }
       } catch (err: any) {
         toast.error(err.message || "Failed to fetch data");
@@ -100,7 +100,7 @@ const UpdateStudent = ({ student }: { student: any }) => {
       bloodGroup: formData.bloodGroup,
       gender: formData.gender,
       academicDepartment: formData.academicDepartment,
-      academicSemester: formData.academicSemester,
+      academicSession: formData.academicSession,
     };
 
     const toastId = "updating";
@@ -301,8 +301,8 @@ const UpdateStudent = ({ student }: { student: any }) => {
                       Session:
                     </Label>
                     <div className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 rounded-lg p-2">
-                      {`${studentData.academicSemester?.name || "N/A"} ${
-                        studentData.academicSemester?.year || ""
+                      {`${studentData.academicSession?.name || "N/A"} ${
+                        studentData.academicSession?.year || ""
                       }`}
                     </div>
                   </div>
@@ -493,19 +493,19 @@ const UpdateStudent = ({ student }: { student: any }) => {
                       </div>
                       <div>
                         <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                          Academic Semester
+                          Academic Session
                         </Label>
                         <Select
                           onValueChange={(val) =>
-                            handleSelectChange("academicSemester", val)
+                            handleSelectChange("academicSession", val)
                           }
-                          value={formData.academicSemester}
+                          value={formData.academicSession}
                         >
                           <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                            <SelectValue placeholder="Select Semester" />
+                            <SelectValue placeholder="Select Session" />
                           </SelectTrigger>
                           <SelectContent>
-                            {semesters.map((sem: AcademicSemester) => (
+                            {sessions.map((sem: AcademicSesion) => (
                               <SelectItem key={sem._id} value={sem._id}>
                                 {sem.name} - {sem.year}
                               </SelectItem>

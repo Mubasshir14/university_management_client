@@ -1,10 +1,10 @@
-import AddSemester from "@/components/DashboardComponents/AddSemester";
+import AddSession from "@/components/DashboardComponents/AddSession";
 import React from "react";
 
 const AddSemesterPage = () => {
   return (
     <div>
-      <AddSemester />
+      <AddSession />
     </div>
   );
 };

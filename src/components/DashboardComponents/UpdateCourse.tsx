@@ -18,8 +18,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
 import { getAllFaculty } from "../Services/Faculty";
-import { getAllSemester } from "../Services/Semester";
 import { updateCourse } from "../Services/Course";
+import { getAllsession } from "../Services/Session";
 
 interface Faculty {
   _id: string;
@@ -30,7 +30,7 @@ interface Faculty {
   };
 }
 
-interface AcademicSemester {
+interface AcademicSession {
   _id: string;
   name: string;
   startMonth: string;
@@ -53,7 +53,7 @@ interface UpdateCourseProps {
 export default function UpdateCourse({ course }: UpdateCourseProps) {
   const router = useRouter();
   const [faculties, setFaculties] = useState<Faculty[]>([]);
-  const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+  const [sessions, setSessions] = useState<AcademicSession[]>([]);
   const [loading, setLoading] = useState(true);
 
   const form = useForm({
@@ -75,19 +75,19 @@ export default function UpdateCourse({ course }: UpdateCourseProps) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [facultyRes, semesterRes] = await Promise.all([
+        const [facultyRes, sessionRes] = await Promise.all([
           getAllFaculty(),
-          getAllSemester(),
+          getAllsession(),
         ]);
         if (facultyRes.success) {
           setFaculties(facultyRes.data);
         } else {
           toast.error(facultyRes.message || "Failed to fetch faculties");
         }
-        if (semesterRes.success) {
-          setSemesters(semesterRes.data);
+        if (sessionRes.success) {
+          setSessions(sessionRes.data);
         } else {
-          toast.error(semesterRes.message || "Failed to fetch semesters");
+          toast.error(sessionRes.message || "Failed to fetch sessions");
         }
       } catch (err: any) {
         toast.error(err.message || "Failed to fetch data");
@@ -347,22 +347,22 @@ export default function UpdateCourse({ course }: UpdateCourseProps) {
                           <FormControl>
                             <Select
                               isMulti
-                              options={semesters.map((sem) => ({
-                                value: sem._id,
-                                label: `${sem.name} ${sem.year}`,
-                                title: `${sem.startMonth} - ${sem.endMonth} ${sem.year}`,
+                              options={sessions.map((ses) => ({
+                                value: ses._id,
+                                label: `${ses.name} ${ses.year}`,
+                                title: `${ses.startMonth} - ${ses.endMonth} ${ses.year}`,
                               }))}
                               className="bg-white/5 text-blue-500 rounded"
                               classNamePrefix="react-select"
                               onChange={(selected) =>
                                 field.onChange(selected.map((s) => s.value))
                               }
-                              value={semesters
-                                .filter((sem) => field.value.includes(sem._id))
-                                .map((sem) => ({
-                                  value: sem._id,
-                                  label: `${sem.name} ${sem.year}`,
-                                  title: `${sem.startMonth} - ${sem.endMonth} ${sem.year}`,
+                              value={sessions
+                                .filter((ses) => field.value.includes(ses._id))
+                                .map((ses) => ({
+                                  value: ses._id,
+                                  label: `${ses.name} ${ses.year}`,
+                                  title: `${ses.startMonth} - ${ses.endMonth} ${ses.year}`,
                                 }))}
                             />
                           </FormControl>

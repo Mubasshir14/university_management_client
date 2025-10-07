@@ -8,9 +8,7 @@ export const getAllDepartment = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/department`, {
       method: "GET",
-      // headers: {
-      //   Authorization: (await cookies()).get("accessToken")!.value,
-      // },
+
       next: {
         tags: ["DEPARTMENT"],
       },
@@ -28,9 +26,6 @@ export const getSingleDepartment = async (departmentId: string) => {
       `${process.env.NEXT_PUBLIC_BASE_API}/department/${departmentId}`,
       {
         method: "GET",
-        // headers: {
-        //   Authorization: (await cookies()).get("accessToken")!.value,
-        // },
         next: {
           tags: ["DEPARTMENT"],
         },

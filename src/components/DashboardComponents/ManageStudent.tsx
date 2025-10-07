@@ -122,8 +122,8 @@ const ManageStudent = () => {
           ? student.gender.charAt(0).toUpperCase() + student.gender.slice(1)
           : "N/A",
         department: student.academicDepartment?.name || "N/A",
-        session: student.academicSemester
-          ? `${student.academicSemester.name} ${student.academicSemester.year}`
+        session: student.academicSession
+          ? `${student.academicSession.name} ${student.academicSession.year}`
           : "N/A",
         year: student.year,
         bloodGroup: student.bloodGroup || "N/A",
@@ -329,7 +329,7 @@ const ManageStudent = () => {
                       </TableCell>
                       <TableCell>{student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
-                      <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{`${student.academicSession.name} ${student.academicSession.year}`}</TableCell>
                       <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (

@@ -12,13 +12,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Year from "./Year";
-import { getStudentBySemester } from "../Services/Student";
+import { getStudentBySession } from "../Services/Student";
+import Session from "./Session";
 
-const FilterStudentByYear = () => {
-  const [selectedSemesterId, setSelectedSemesterId] = useState<string | null>(
-    null
-  );
+
+const FilterStudentBySession = () => {
+  const [selectedSessionId, setSelectedSessionId] = useState<
+    string | null
+  >(null);
 
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -26,13 +27,14 @@ const FilterStudentByYear = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      if (selectedSemesterId) {
-        const res = await getStudentBySemester(selectedSemesterId);
+      if (selectedSessionId) {
+        const res = await getStudentBySession(selectedSessionId);
+        console.log(res.data);
         setStudents(res.data || []);
       }
     };
     fetchStudents();
-  }, [selectedSemesterId]);
+  }, [selectedSessionId]);
 
   const paginatedStudents = students.slice(
     (page - 1) * itemsPerPage,
@@ -42,9 +44,9 @@ const FilterStudentByYear = () => {
 
   return (
     <section className="py-10 font-sansita">
-      <Year onSelect={setSelectedSemesterId} />
+      <Session onSelect={setSelectedSessionId} />
 
-      {selectedSemesterId && (
+      {selectedSessionId && (
         <div className="mt-10 px-4">
           {students.length === 0 ? (
             <p className="text-center text-gray-500">No students found.</p>
@@ -60,7 +62,7 @@ const FilterStudentByYear = () => {
                     <TableHead>Gender</TableHead>
                     <TableHead>Dept</TableHead>
                     <TableHead>Session</TableHead>
-                    <TableHead>Semester</TableHead>
+                    <TableHead>Session</TableHead>
                     <TableHead>Image</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -80,7 +82,7 @@ const FilterStudentByYear = () => {
                         {student.gender}
                       </TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
-                      <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{`${student.academicSession.name} ${student.academicSession.year}`}</TableCell>
                       <TableCell>{student.year}</TableCell>
                       <TableCell>
                         {student.image ? (
@@ -100,6 +102,7 @@ const FilterStudentByYear = () => {
                 </TableBody>
               </Table>
 
+            
               <div className="flex justify-between mt-4">
                 <Button
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg"
@@ -127,4 +130,4 @@ const FilterStudentByYear = () => {
   );
 };
 
-export default FilterStudentByYear;
+export default FilterStudentBySession;

@@ -22,14 +22,14 @@ import {
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { addsession } from "../Services/Session";
 import {
-  AcademicSemesterCode,
-  AcademicSemesterName,
+  AcademicSessionCode,
+  AcademicSessionName,
   Months,
-} from "../Types/semester";
-import { addSemester } from "../Services/Semester";
+} from "../Types/session";
 
-export default function AddSemester() {
+export default function AddSession() {
   const router = useRouter();
 
   const form = useForm({
@@ -49,16 +49,16 @@ export default function AddSemester() {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = "creating";
     try {
-      const res = await addSemester(data);
+      const res = await addsession(data);
       if (res.success) {
         toast.success(res.message, { id: toastId });
-        router.push("/admin/dashboard/manage-semester");
+        router.push("/admin/dashboard/manage-session");
       } else {
         toast.error(res.message, { id: toastId });
       }
     } catch (err: any) {
       console.error(err.message);
-      toast.error("Failed to add semester. Please try again.", { id: toastId });
+      toast.error("Failed to add session. Please try again.", { id: toastId });
     }
   };
 
@@ -138,16 +138,16 @@ export default function AddSemester() {
             </h1>
             <div className="grid grid-cols-3 md:grid-cols-3 gap-2 text-xs mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-2xl rounded-lg mx-auto px-3">
               <ul className="flex flex-col ">
-                <li>Semester Name: Autumn</li>
-                <li>Semester Code: 01</li>
+                <li>Session Name: Autumn</li>
+                <li>Session Code: 01</li>
               </ul>
               <ul className="flex flex-col ">
-                <li>Semester Name: Summer</li>
-                <li>Semester Code: 02</li>
+                <li>Session Name: Summer</li>
+                <li>Session Code: 02</li>
               </ul>
               <ul className="flex flex-col ">
-                <li>Semester Name: Fall</li>
-                <li>Semester Code: 03</li>
+                <li>Session Name: Fall</li>
+                <li>Session Code: 03</li>
               </ul>
             </div>
             <Form {...form}>
@@ -167,7 +167,7 @@ export default function AddSemester() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                          Semester Name
+                          Session Name
                         </FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -175,11 +175,11 @@ export default function AddSemester() {
                         >
                           <FormControl>
                             <SelectTrigger className="bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg">
-                              <SelectValue placeholder="Select Semester Name" />
+                              <SelectValue placeholder="Select Session Name" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                            {AcademicSemesterName.map((name) => (
+                            {AcademicSessionName.map((name) => (
                               <SelectItem
                                 key={name}
                                 value={name}
@@ -232,7 +232,7 @@ export default function AddSemester() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                          Semester Code
+                          Session Code
                         </FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -240,11 +240,11 @@ export default function AddSemester() {
                         >
                           <FormControl>
                             <SelectTrigger className="bg-white/5 border-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg">
-                              <SelectValue placeholder="Select Semester Code" />
+                              <SelectValue placeholder="Select Session Code" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                            {AcademicSemesterCode.map((code) => (
+                            {AcademicSessionCode.map((code) => (
                               <SelectItem
                                 key={code}
                                 value={code}

@@ -119,8 +119,8 @@ const ApproveRegistration = () => {
             student.student.gender.slice(1)
           : "N/A",
         department: student?.academicDepartment?.name || "N/A",
-        session: student?.academicSemester
-          ? `${student.academicSemester.name} ${student.academicSemester.year}`
+        session: student?.academicSession
+          ? `${student.academicSession.name} ${student.academicSession.year}`
           : "N/A",
         year: student.student.year,
         bloodGroup: student?.student?.bloodGroup || "N/A",
@@ -258,7 +258,7 @@ const ApproveRegistration = () => {
           <div className="border-2 border-gray-200/20 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <div className="flex md:flex-row flex-col  items-center justify-between">
               <h1 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 relative">
-                Manage Registrations
+                Manage Course Registrations
                 <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
               </h1>
               <Button
@@ -304,7 +304,7 @@ const ApproveRegistration = () => {
                       </TableCell>
                       <TableCell>{student.student.bloodGroup}</TableCell>
                       <TableCell>{student.academicDepartment.name}</TableCell>
-                      <TableCell>{`${student.academicSemester.name} ${student.academicSemester.year}`}</TableCell>
+                      <TableCell>{`${student.academicSession.name} ${student.academicSession.year}`}</TableCell>
                       <TableCell>{student.student.year}</TableCell>{" "}
                       <TableCell>
                         {student.student.image ? (

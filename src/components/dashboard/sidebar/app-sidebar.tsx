@@ -33,6 +33,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: SquareTerminal,
             isActive: true,
           },
+          // {
+          //   title: "Get Registered",
+          //   url: "/user/dashboard",
+          //   icon: Package,
+          // },
         ]
       : user?.role === "admin"
       ? [
@@ -59,7 +64,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Add Session",
-            url: "/admin/dashboard/add-semester",
+            url: "/admin/dashboard/add-session",
             icon: Settings,
           },
           {
@@ -95,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Manage Session",
-            url: "/admin/dashboard/manage-semester",
+            url: "/admin/dashboard/manage-session",
             icon: Settings,
           },
           {
@@ -130,12 +135,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Filter By Session",
-            url: "/admin/dashboard/filter-semester",
+            url: "/admin/dashboard/filter-session",
             icon: Settings,
           },
           {
             title: "Filter By Semester",
-            url: "/admin/dashboard/filter-year",
+            url: "/admin/dashboard/filter-semester",
             icon: Settings,
           },
           {

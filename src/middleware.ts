@@ -22,7 +22,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `https://university-management-client.vercel.app/login?redirectPath=${pathname}`,
+          `${process.env.NEXT_PUBLIC_BASE_F_API}/login?redirectPath=${pathname}`,
           request.url
         )
       );

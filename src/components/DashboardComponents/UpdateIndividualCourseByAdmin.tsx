@@ -32,7 +32,7 @@ interface AcademicDepartment {
   shortName?: string;
 }
 
-interface AcademicSemester {
+interface AcademicSession {
   _id: string;
   name: string;
   year: string;
@@ -55,7 +55,7 @@ interface RegistrationData {
   totalCredit: number;
   isApproved: boolean;
   academicDepartment: AcademicDepartment;
-  academicSemester: AcademicSemester;
+  academicSession: AcademicSession;
   courses: Course[];
   student: Student;
 }
@@ -70,7 +70,6 @@ const UpdateIndividualCourseByAdmin = ({
 }: {
   registration: RegistrationData;
 }) => {
-  console.log(registration);
   const [selectedCoursesToDrop, setSelectedCoursesToDrop] = useState<string[]>(
     []
   );
@@ -108,11 +107,10 @@ const UpdateIndividualCourseByAdmin = ({
       setIsSubmitting(true);
       const regData = {
         studentId: registration.student._id,
-        academicSemesterId: registration.academicSemester?._id,
+        academicSessionId: registration.academicSession?._id,
         academicDepartmentId: registration.academicDepartment?._id,
         courseIdsToDrop: selectedCoursesToDrop,
       };
-      console.log("redData", regData);
 
       const response = await updateAndDropCourseByAdmin(regData);
 
@@ -211,7 +209,7 @@ const UpdateIndividualCourseByAdmin = ({
               <span className="font-medium text-gray-700 dark:text-gray-300">
                 Session:
               </span>{" "}
-              {`${registration?.academicSemester?.name} - ${registration?.academicSemester?.year}`}
+              {`${registration?.academicSession?.name} - ${registration?.academicSession?.year}`}
             </p>
             <p>
               <span className="font-medium text-gray-700 dark:text-gray-300">

@@ -7,13 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import {
-  getAllCoursesAccordingToStudentAcademicSemester,
-} from "../Services/Course";
 import { createRegistration } from "../Services/Registration";
 import { getMeAsStudentData } from "../Services/Student";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getAllCoursesAccordingToStudentAcademicSession } from "../Services/Course";
 
 interface Course {
   _id: string;
@@ -27,7 +25,7 @@ interface Department {
   name: string;
 }
 
-interface Semester {
+interface Session {
   _id: string;
   name: string;
   year: string;
@@ -37,8 +35,10 @@ interface StudentData {
   _id: string;
   id: string;
   academicDepartment: Department;
-  academicSemester: Semester;
+  academicSession: Session;
   isRegistered: boolean;
+  isApproved: boolean;
+  year: string;
 }
 
 const CreateRegistrationForm = () => {
@@ -52,39 +52,92 @@ const CreateRegistrationForm = () => {
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoadingData(true)
+
+  //       const studentRes = await getMeAsStudentData();
+  //       if (studentRes.success) {
+  //         setStudentData(studentRes.data);
+  //       } else {
+  //         toast.error(studentRes.message || "Failed to fetch student data");
+  //       }
+
+  //       const courseRes = await getAllCoursesAccordingToStudentAcademicSession(
+  //         studentRes.data._id
+  //       );
+
+  //       if (courseRes.success) {
+  //         setCourses(courseRes.data);
+  //       } else {
+  //         toast.error(courseRes.message || "Failed to fetch courses");
+  //       }
+  //     } catch (err: any) {
+  //       toast.error(err.message || "Failed to fetch data");
+  //     } finally {
+  //       setLoadingData(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoadingData(true);
 
-        // const [studentRes, courseRes] = await Promise.all([
-        //   getMeAsStudentData(),
-        //   // getAllCourse(),
-        //   getAllCoursesAccordingToStudentAcademicSemester(studentRes.data._id)
-        // ]);
-
+        // 🧍‍♂️ Fetch Student Data
         const studentRes = await getMeAsStudentData();
-        if (studentRes.success) {
-          setStudentData(studentRes.data);
-        } else {
+        if (!studentRes.success) {
           toast.error(studentRes.message || "Failed to fetch student data");
+          return;
         }
 
-        const courseRes = await getAllCoursesAccordingToStudentAcademicSemester(
-          studentRes.data._id
+        const student = studentRes.data;
+        setStudentData(student);
+
+        // 🎓 Determine yearPrefix based on student's academic year
+        const prefixMap: Record<string, string> = {
+          "1st Year 1st Semester": "11",
+          "1st Year 2nd Semester": "12",
+          "2nd Year 1st Semester": "21",
+          "2nd Year 2nd Semester": "22",
+          "3rd Year 1st Semester": "31",
+          "3rd Year 2nd Semester": "32",
+          "4th Year 1st Semester": "41",
+          "4th Year 2nd Semester": "42",
+        };
+        const studentPrefix = prefixMap[student.year] || "";
+
+        // 📘 Fetch All Courses
+        const courseRes = await getAllCoursesAccordingToStudentAcademicSession(
+          student._id
         );
-
-        if (courseRes.success) {
-          setCourses(courseRes.data);
-        } else {
+        if (!courseRes.success) {
           toast.error(courseRes.message || "Failed to fetch courses");
+          return;
         }
+
+        // 🧮 Extract prefix dynamically from courseCode
+        const filteredCourses = courseRes.data.filter((course: any) => {
+          const code = course.courseCode || "";
+          const dashIndex = code.lastIndexOf("-");
+          if (dashIndex === -1) return false;
+
+          // extract next 2 chars after '-'
+          const prefix = code.substring(dashIndex + 1, dashIndex + 3);
+          return prefix === studentPrefix;
+        });
+
+        setCourses(filteredCourses);
       } catch (err: any) {
         toast.error(err.message || "Failed to fetch data");
       } finally {
         setLoadingData(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -118,7 +171,7 @@ const CreateRegistrationForm = () => {
       student: studentData._id,
       student_id: studentData.id,
       academicDepartment: studentData.academicDepartment,
-      academicSemester: studentData.academicSemester,
+      academicSession: studentData.academicSession,
       courses: selectedCourses,
       totalCredit,
     };
@@ -185,36 +238,46 @@ const CreateRegistrationForm = () => {
   return (
     <section className="max-w-2xl mx-auto p-6  rounded-xl  backdrop-blur-md font-sansita">
       <h2 className="text-2xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 ">
-        Create Registration
+        Course Registration
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="">
-          <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-            Academic Department
-          </Label>
-          <Select value={studentData.academicDepartment._id} disabled>
-            <SelectTrigger>
-              <SelectValue className="">
-                {studentData.academicDepartment.name}
-              </SelectValue>
-            </SelectTrigger>
-          </Select>
+        <div className="flex  justify-between px-2">
+          <div className="">
+            <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+              Academic Department
+            </Label>
+            <Select value={studentData.academicDepartment._id} disabled>
+              <SelectTrigger>
+                <SelectValue className="">
+                  {studentData.academicDepartment.name}
+                </SelectValue>
+              </SelectTrigger>
+            </Select>
+          </div>
+          <div className="px-2">
+            <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+              Academic Session
+            </Label>
+            <Select value={studentData.academicSession._id} disabled>
+              <SelectTrigger>
+                <SelectValue>
+                  {studentData.academicSession.name} -{" "}
+                  {studentData.academicSession.year}
+                </SelectValue>
+              </SelectTrigger>
+            </Select>
+          </div>
         </div>
-
         <div>
           <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
             Academic Semester
           </Label>
-          <Select value={studentData.academicSemester._id} disabled>
+          <Select value={studentData.academicSession._id} disabled>
             <SelectTrigger>
-              <SelectValue>
-                {studentData.academicSemester.name} -{" "}
-                {studentData.academicSemester.year}
-              </SelectValue>
+              <SelectValue>{studentData.year}</SelectValue>
             </SelectTrigger>
           </Select>
         </div>
-
         <div>
           <Label className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
             Courses
@@ -254,7 +317,11 @@ const CreateRegistrationForm = () => {
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg"
-          disabled={loading || studentData.isRegistered}
+          disabled={
+            loading ||
+            studentData.isRegistered ||
+            studentData.isApproved == false
+          }
         >
           {loading ? "Submitting..." : "Submit Registration"}
         </Button>

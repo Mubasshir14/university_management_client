@@ -1,6 +1,6 @@
 
-export const AcademicSemesterName = ["Autumn", "Summer", "Fall"] as const;
-export const AcademicSemesterCode = ["01", "02", "03"] as const;
+export const AcademicSessionName = ["Autumn", "Summer", "Fall"] as const;
+export const AcademicSessionCode = ["01", "02", "03"] as const;
 export const Months = [
   "January",
   "February",

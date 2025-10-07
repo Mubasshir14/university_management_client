@@ -38,9 +38,9 @@ export const dashboradDepBasedStudent = async () => {
   }
 };
 
-export const dashboradSemBasedStudent = async () => {
+export const dashboradSessionBasedStudent = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/sem`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/session`, {
       method: "GET",
       headers: {
         Authorization: (await cookies()).get("accessToken")!.value,

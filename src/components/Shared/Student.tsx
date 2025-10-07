@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { getAllDepartment } from "../Services/Department";
-import { getAllSemester } from "../Services/Semester";
+import { getAllsession } from "../Services/Session";
 import { addStudent } from "../Services/Student";
 import { BloodGroup, Gender } from "../Types/student";
 import Image from "next/image";
@@ -33,7 +33,7 @@ export interface Department {
   faculty?: { $id: string }[];
 }
 
-export interface AcademicSemester {
+export interface academicSession {
   _id: string;
   name: string;
   year: string;
@@ -56,7 +56,7 @@ export default function Student() {
   const { user, setUser } = useUser();
   const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [semesters, setSemesters] = useState<AcademicSemester[]>([]);
+  const [sessions, setSessions] = useState<academicSession[]>([]);
   const [year, setYears] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -69,18 +69,17 @@ export default function Student() {
     contactNo: user?.phone || "",
     bloodGroup: "",
     academicDepartment: "",
-    academicSemester: "",
+    academicSession: "",
     year: "",
     isApproved: false,
   });
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const [deptRes, semRes] = await Promise.all([
           getAllDepartment(),
-          getAllSemester(),
+          getAllsession(),
         ]);
         if (deptRes.success) {
           setDepartments(deptRes.data);
@@ -88,7 +87,8 @@ export default function Student() {
           toast.error(deptRes.message || "Failed to fetch departments");
         }
         if (semRes.success) {
-          setSemesters(semRes.data);
+          console.log(semRes.data);
+          setSessions(semRes.data);
         } else {
           toast.error(semRes.message || "Failed to fetch semesters");
         }
@@ -143,7 +143,7 @@ export default function Student() {
       contactNo: formData.contactNo,
       bloodGroup: formData.bloodGroup,
       academicDepartment: formData.academicDepartment,
-      academicSemester: formData.academicSemester,
+      academicSession: formData.academicSession,
       year: formData.year,
       isApproved: formData.isApproved,
     };
@@ -151,7 +151,6 @@ export default function Student() {
     if (formData.image) {
       submitData.append("image", formData.image);
     }
-    console.log(submitData);
     const toastId = "submitting";
     try {
       const res = await addStudent(submitData);
@@ -169,7 +168,7 @@ export default function Student() {
           contactNo: user?.phone || "",
           bloodGroup: "",
           academicDepartment: "",
-          academicSemester: "",
+          academicSession: "",
           year: "",
           isApproved: false,
         });
@@ -419,15 +418,15 @@ export default function Student() {
                     </Label>
                     <Select
                       onValueChange={(val) =>
-                        handleSelectChange("academicSemester", val)
+                        handleSelectChange("academicSession", val)
                       }
-                      value={formData.academicSemester}
+                      value={formData.academicSession}
                     >
                       <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                         <SelectValue placeholder="Select Session" />
                       </SelectTrigger>
                       <SelectContent>
-                        {semesters.map((sem: AcademicSemester) => (
+                        {sessions.map((sem: academicSession) => (
                           <SelectItem key={sem._id} value={sem._id}>
                             {sem.name} - {sem.year}
                           </SelectItem>

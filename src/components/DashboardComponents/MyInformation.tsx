@@ -214,7 +214,7 @@ const MyInformation = () => {
                   Session:
                 </Label>
                 <div className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 rounded-lg p-2 ">
-                  {`${studentData.academicSemester.name} ${studentData.academicSemester.year}`}
+                  {`${studentData.academicSession.name} ${studentData.academicSession.year}`}
                 </div>
               </div>
               <div>
@@ -249,7 +249,7 @@ const MyInformation = () => {
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  Make Registration
+                  Course Registration
                 </motion.button>
               </Button>
             </motion.div>
