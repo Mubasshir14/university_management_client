@@ -39,10 +39,8 @@ export const addsession = async (sessionData: any): Promise<any> => {
       }
     );
     revalidateTag("session");
-    console.log(res);
     return res.json();
   } catch (error: any) {
-    console.log(error);
     return Error(error);
   }
 };

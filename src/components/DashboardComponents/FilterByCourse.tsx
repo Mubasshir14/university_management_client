@@ -20,7 +20,7 @@ const FilterByCourse = () => {
 
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchStudents = async () => {

@@ -32,7 +32,7 @@ export default function ManageDepartment() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<keyof AcademicDepartment>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const router = useRouter();
 
   useEffect(() => {

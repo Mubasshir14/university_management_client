@@ -18,7 +18,6 @@ const MyInformation = () => {
         const data = await getMeAsStudentData();
         if (data.data) {
           setStudentData(data.data);
-          console.log(studentData);
         }
       } catch (error) {
         console.error("Failed to fetch student data:", error);

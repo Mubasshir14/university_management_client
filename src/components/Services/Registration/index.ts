@@ -62,7 +62,6 @@ export const updateAndDropCourseByStudent = async (regData: {
     revalidateTag("REGISTRATION");
     return res.json();
   } catch (error: any) {
-    console.log(error.message);
     return Error(error.message);
   }
 };
@@ -88,7 +87,6 @@ export const updateAndDropCourseByAdmin = async (regData: {
     revalidateTag("REGISTRATION");
     return res.json();
   } catch (error: any) {
-    console.log(error.message);
     return Error(error.message);
   }
 };

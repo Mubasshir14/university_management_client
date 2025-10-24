@@ -20,7 +20,6 @@ import {
 import { useRouter } from "next/navigation";
 import { generateStudentResult } from "../Services/result";
 
-// ------------------ Types ------------------
 type Course = {
   _id: string;
   name: string;
@@ -36,7 +35,6 @@ type Registration = {
   courses: Course[];
 };
 
-// ------------------ Helper ------------------
 export const calculateGradeAndPoints = (totalMarks: number) => {
   let result = {
     grade: "NA",
@@ -201,7 +199,6 @@ export default function GenerateResultForm() {
         selectedRegistration._id,
         courseMarksData
       );
-      console.log(res);
       if (res) {
         toast.success("Result generated successfully!");
         router.push("/admin/dashboard/student-result");

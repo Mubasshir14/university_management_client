@@ -103,13 +103,11 @@ const ManageStudent = () => {
         { header: "Sl. No.", dataKey: "slNo" },
         { header: "Student ID", dataKey: "id" },
         { header: "Full Name", dataKey: "name" },
-        // { header: "Email", dataKey: "email" },
         { header: "Contact No", dataKey: "contactNo" },
         { header: "Gender", dataKey: "gender" },
         { header: "Department", dataKey: "department" },
         { header: "Session", dataKey: "session" },
         { header: "Semester", dataKey: "year" },
-        // { header: "Blood Group", dataKey: "bloodGroup" },
       ];
 
       const rows = students.map((student, index) => ({

@@ -87,7 +87,6 @@ export default function Student() {
           toast.error(deptRes.message || "Failed to fetch departments");
         }
         if (semRes.success) {
-          console.log(semRes.data);
           setSessions(semRes.data);
         } else {
           toast.error(semRes.message || "Failed to fetch semesters");

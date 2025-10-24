@@ -82,7 +82,6 @@ export default function UpdateDepartment({ department }: { department: any }) {
         formData.append("image", imageFile);
       }
       const res = await updateDepartment(department._id, formData);
-      console.log(res);
       if (res.success) {
         toast.success(res.message || "Department updated successfully", {
           id: toastId,

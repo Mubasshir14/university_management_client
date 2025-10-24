@@ -35,7 +35,6 @@ const Faculty = () => {
     const fetchFaculties = async () => {
       try {
         const res = await getAllFaculty();
-        console.log(res.data);
         if (res.success && Array.isArray(res.data)) {
           setFaculties(res.data);
         } else {

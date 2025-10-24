@@ -32,7 +32,7 @@ export default function ManageSession() {
   const [page, setPage] = useState(1);
   const [sortBy, setSortBy] = useState<keyof AcademicSession>("year");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchSessions = async () => {

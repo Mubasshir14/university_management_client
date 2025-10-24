@@ -19,16 +19,14 @@ const FilterStudentByDepartment = () => {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<
     string | null
   >(null);
-  console.log(selectedDepartmentId);
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchStudents = async () => {
       if (selectedDepartmentId) {
         const res = await getStudentByDepartment(selectedDepartmentId);
-        console.log(res.data);
         setStudents(res.data || []);
       }
     };

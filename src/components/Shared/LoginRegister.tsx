@@ -107,7 +107,6 @@ export const LoginRegister = () => {
       try {
         setIsLoading(true);
         const res = await registerUser(data);
-        console.log(res);
         if (res?.success) {
           toast.success(
             "Registration successful! Please check your email to verify your account."

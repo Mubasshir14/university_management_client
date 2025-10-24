@@ -203,7 +203,6 @@ const AdminDashboard: React.FC = () => {
     });
 
     const { data: studentsBySession } = await dashboradSessionBasedStudent();
-    console.log("Students by Session Response:", studentsBySession);
 
     if (studentsBySession && Array.isArray(studentsBySession)) {
       setStudentBySessionData({

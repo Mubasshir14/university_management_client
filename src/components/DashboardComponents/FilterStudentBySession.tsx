@@ -15,21 +15,19 @@ import Image from "next/image";
 import { getStudentBySession } from "../Services/Student";
 import Session from "./Session";
 
-
 const FilterStudentBySession = () => {
-  const [selectedSessionId, setSelectedSessionId] = useState<
-    string | null
-  >(null);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(
+    null
+  );
 
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchStudents = async () => {
       if (selectedSessionId) {
         const res = await getStudentBySession(selectedSessionId);
-        console.log(res.data);
         setStudents(res.data || []);
       }
     };
@@ -102,7 +100,6 @@ const FilterStudentBySession = () => {
                 </TableBody>
               </Table>
 
-            
               <div className="flex justify-between mt-4">
                 <Button
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg"
