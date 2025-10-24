@@ -15,7 +15,6 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
   getNotApprovedRegisteredStudent,
-  makeManyRegistrationApproval,
   makeRegistrationApproval,
 } from "../Services/Registration";
 import Link from "next/link";
@@ -24,8 +23,7 @@ import { Input } from "../ui/input";
 const PendingRegistration = () => {
   const router = useRouter();
   const [students, setStudents] = useState<any[]>([]);
-  const [approving, setApproving] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
@@ -48,35 +46,6 @@ const PendingRegistration = () => {
     };
     fetchStudents();
   }, []);
-
-  const handleApproveAll = async () => {
-    if (selectedIds.length === 0) {
-      toast.error("Select at least one student to approve!");
-      return;
-    }
-
-    try {
-      setApproving(true);
-      const res = await makeManyRegistrationApproval({ ids: selectedIds });
-      if (res.success) {
-        toast.success("Selected students approved successfully!");
-        router.push("/admin/dashboard/approve-registration");
-        setSelectedIds([]);
-      } else {
-        toast.error(res.message || "Approval failed.");
-      }
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong");
-    } finally {
-      setApproving(false);
-    }
-  };
-
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
 
   const paginatedStudents = students.slice(
     (page - 1) * itemsPerPage,
@@ -174,7 +143,7 @@ const PendingRegistration = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none">
-                    <TableHead>Select</TableHead>
+                    
                     <TableHead>Student ID</TableHead>
                     <TableHead>Full Name</TableHead>
                     <TableHead>Email</TableHead>
@@ -198,7 +167,7 @@ const PendingRegistration = () => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 transition-colors duration-200 border-b border-gray-600/50"
                     >
-                      <TableCell>
+                       <TableCell>
                         <Input
                           type="checkbox"
                           checked={selectedIds.includes(student._id)}

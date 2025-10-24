@@ -226,7 +226,7 @@ export const makeRegistrationApproval = async (id: string) => {
   }
 };
 
-export const makeManyRegistrationApproval = async (ids: any) => {
+export const makeManyRegistrationApproval = async (ids: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/registration/make-approval-many`,

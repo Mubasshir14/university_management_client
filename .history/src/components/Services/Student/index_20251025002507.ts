@@ -40,18 +40,15 @@ export const dashboradDepBasedStudent = async () => {
 
 export const dashboradSessionBasedStudent = async () => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/student/session`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: (await cookies()).get("accessToken")!.value,
-        },
-        next: {
-          tags: ["STUDENT"],
-        },
-      }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/student/session`, {
+      method: "GET",
+      headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      next: {
+        tags: ["STUDENT"],
+      },
+    });
     const data = await res.json();
     return data;
   } catch (error: any) {
@@ -152,17 +149,16 @@ export const makeApproval = async (id: string) => {
   }
 };
 
-export const makeManyApproval = async (ids: any) => {
+export const makeManyApproval = async (data: any) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/student/make-approval-many`,
       {
         method: "PATCH",
-
-        body: JSON.stringify(ids),
-
+        
+        body: JSON.stringify(data),
+       
         headers: {
-          "Content-Type": "application/json",
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         next: {
@@ -290,7 +286,7 @@ export const updateImformationByAdmin = async (
         method: "PATCH",
         body: JSON.stringify(stuData),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: (await cookies()).get("accessToken")!.value,
         },
       }

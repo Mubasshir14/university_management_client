@@ -60,7 +60,7 @@ const PendingRegistration = () => {
       const res = await makeManyRegistrationApproval({ ids: selectedIds });
       if (res.success) {
         toast.success("Selected students approved successfully!");
-        router.push("/admin/dashboard/approve-registration");
+        router.push("/admin/dashboard/approve-registrationt");
         setSelectedIds([]);
       } else {
         toast.error(res.message || "Approval failed.");

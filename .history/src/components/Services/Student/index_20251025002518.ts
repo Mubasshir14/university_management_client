@@ -159,7 +159,7 @@ export const makeManyApproval = async (ids: any) => {
       {
         method: "PATCH",
 
-        body: JSON.stringify(ids),
+        body: JSON.stringify(data),
 
         headers: {
           "Content-Type": "application/json",

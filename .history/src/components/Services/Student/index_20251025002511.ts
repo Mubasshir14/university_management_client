@@ -152,14 +152,14 @@ export const makeApproval = async (id: string) => {
   }
 };
 
-export const makeManyApproval = async (ids: any) => {
+export const makeManyApproval = async (data: any) => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/student/make-approval-many`,
       {
         method: "PATCH",
 
-        body: JSON.stringify(ids),
+        body: JSON.stringify(data),
 
         headers: {
           "Content-Type": "application/json",

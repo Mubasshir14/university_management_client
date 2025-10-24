@@ -25,7 +25,7 @@ const PendingRegistration = () => {
   const router = useRouter();
   const [students, setStudents] = useState<any[]>([]);
   const [approving, setApproving] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
@@ -60,7 +60,7 @@ const PendingRegistration = () => {
       const res = await makeManyRegistrationApproval({ ids: selectedIds });
       if (res.success) {
         toast.success("Selected students approved successfully!");
-        router.push("/admin/dashboard/approve-registration");
+        router.push("/admin/dashboard/approve-registrationt");
         setSelectedIds([]);
       } else {
         toast.error(res.message || "Approval failed.");
@@ -72,7 +72,7 @@ const PendingRegistration = () => {
     }
   };
 
-  const toggleSelect = (id: string) => {
+    const toggleSelect = (id: string) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );

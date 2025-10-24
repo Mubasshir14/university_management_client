@@ -15,17 +15,15 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
   getNotApprovedRegisteredStudent,
-  makeManyRegistrationApproval,
   makeRegistrationApproval,
 } from "../Services/Registration";
 import Link from "next/link";
-import { Input } from "../ui/input";
 
 const PendingRegistration = () => {
   const router = useRouter();
   const [students, setStudents] = useState<any[]>([]);
-  const [approving, setApproving] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const itemsPerPage = 5;
@@ -48,35 +46,6 @@ const PendingRegistration = () => {
     };
     fetchStudents();
   }, []);
-
-  const handleApproveAll = async () => {
-    if (selectedIds.length === 0) {
-      toast.error("Select at least one student to approve!");
-      return;
-    }
-
-    try {
-      setApproving(true);
-      const res = await makeManyRegistrationApproval({ ids: selectedIds });
-      if (res.success) {
-        toast.success("Selected students approved successfully!");
-        router.push("/admin/dashboard/approve-registration");
-        setSelectedIds([]);
-      } else {
-        toast.error(res.message || "Approval failed.");
-      }
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong");
-    } finally {
-      setApproving(false);
-    }
-  };
-
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
 
   const paginatedStudents = students.slice(
     (page - 1) * itemsPerPage,
@@ -174,7 +143,6 @@ const PendingRegistration = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none">
-                    <TableHead>Select</TableHead>
                     <TableHead>Student ID</TableHead>
                     <TableHead>Full Name</TableHead>
                     <TableHead>Email</TableHead>
@@ -198,13 +166,6 @@ const PendingRegistration = () => {
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 transition-colors duration-200 border-b border-gray-600/50"
                     >
-                      <TableCell>
-                        <Input
-                          type="checkbox"
-                          checked={selectedIds.includes(student._id)}
-                          onChange={() => toggleSelect(student._id)}
-                        />
-                      </TableCell>
                       <TableCell>{student.student.id}</TableCell>
                       <TableCell>{student.student.name}</TableCell>
                       <TableCell>{student.student.email}</TableCell>
@@ -258,15 +219,13 @@ const PendingRegistration = () => {
                         >
                           Approve
                         </Button>
-                        <Link
-                          href={`/admin/dashboard/course-drop-individual-registration/${student._id}`}
+                        <Link href={`/admin/dashboard/course-drop-individual-registration/${student._id}`}>
+                        <Button
+                          variant="outline"
+                          className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
                         >
-                          <Button
-                            variant="outline"
-                            className="bg-white/5 border-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:bg-blue-600/30 hover:text-blue-400"
-                          >
-                            View
-                          </Button>
+                          View
+                        </Button>
                         </Link>
                       </TableCell>
                     </motion.tr>
@@ -295,38 +254,38 @@ const PendingRegistration = () => {
                 Next
               </Button>
             </div>
-            <div className="mt-6 text-right">
-              <Button
-                variant="default"
-                onClick={handleApproveAll}
-                disabled={selectedIds.length === 0 || approving}
-                className={`bg-blue-600 text-white hover:bg-blue-700 flex items-center justify-center gap-2`}
-              >
-                {approving && (
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
-                    ></path>
-                  </svg>
-                )}
-                {approving ? "Processing..." : "Approve All Selected"}
-              </Button>
-            </div>
+             <div className="mt-6 text-right">
+                          <Button
+                            variant="default"
+                            onClick={handleApproveAll}
+                            disabled={selectedIds.length === 0 || approving}
+                            className={`bg-blue-600 text-white hover:bg-blue-700 flex items-center justify-center gap-2`}
+                          >
+                            {approving && (
+                              <svg
+                                className="animate-spin h-4 w-4 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                                ></path>
+                              </svg>
+                            )}
+                            {approving ? "Processing..." : "Approve All Selected"}
+                          </Button>
+                        </div>
           </div>
         </motion.div>
       </div>

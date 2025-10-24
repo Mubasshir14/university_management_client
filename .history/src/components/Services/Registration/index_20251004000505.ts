@@ -225,27 +225,3 @@ export const makeRegistrationApproval = async (id: string) => {
     return Error(error.message);
   }
 };
-
-export const makeManyRegistrationApproval = async (ids: any) => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/registration/make-approval-many`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(ids),
-
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: (await cookies()).get("accessToken")!.value,
-        },
-        next: {
-          tags: ["REGISTRATION"],
-        },
-      }
-    );
-    const data = await res.json();
-    return data;
-  } catch (error: any) {
-    return Error(error.message);
-  }
-};

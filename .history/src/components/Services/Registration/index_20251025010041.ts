@@ -226,16 +226,13 @@ export const makeRegistrationApproval = async (id: string) => {
   }
 };
 
-export const makeManyRegistrationApproval = async (ids: any) => {
+export const makeRegistrationApproval = async (id: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/registration/make-approval-many`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/registration/make-approval/${id}`,
       {
         method: "PATCH",
-        body: JSON.stringify(ids),
-
         headers: {
-          "Content-Type": "application/json",
           Authorization: (await cookies()).get("accessToken")!.value,
         },
         next: {
