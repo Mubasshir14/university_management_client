@@ -7,5 +7,4 @@ export interface IUser {
   role: "user" | "student" | "admin" | "advisor";
   phone: string;
   address: string;
-  isStudent: boolean;
 }
