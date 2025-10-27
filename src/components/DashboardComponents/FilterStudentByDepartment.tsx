@@ -1,3 +1,5 @@
+
+
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
@@ -13,7 +15,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 const FilterStudentByDepartment = () => {
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<
@@ -21,13 +22,22 @@ const FilterStudentByDepartment = () => {
   >(null);
   const [students, setStudents] = useState<any[]>([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchStudents = async () => {
       if (selectedDepartmentId) {
-        const res = await getStudentByDepartment(selectedDepartmentId);
-        setStudents(res.data || []);
+        setIsLoading(true);
+        try {
+          const res = await getStudentByDepartment(selectedDepartmentId);
+          setStudents(res.data || []);
+        } catch (error) {
+          console.error("Error fetching students:", error);
+          setStudents([]);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
     fetchStudents();
@@ -45,8 +55,33 @@ const FilterStudentByDepartment = () => {
 
       {selectedDepartmentId && (
         <div className="mt-10 px-4">
-          {students.length === 0 ? (
-            <p className="text-center text-gray-500">No students found.</p>
+          {isLoading ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center justify-center h-96 bg-gradient-to-b from-blue-50/50 to-purple-50/50 rounded-xl p-8 backdrop-blur-sm border border-gray-200/20"
+            >
+              <motion.div
+                className="relative"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              >
+                <div className="w-16 h-16 border-4 border-blue-600/30 border-t-blue-600 rounded-full"></div>
+                <div className="absolute inset-0 w-16 h-16 border-4 border-purple-600/30 border-t-purple-600 rounded-full animate-ping"></div>
+              </motion.div>
+              <p className="mt-4 text-lg font-medium text-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                Loading students...
+              </p>
+              <p className="mt-1 text-sm text-gray-500">Fetching data for the selected department</p>
+            </motion.div>
+          ) : students.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-20"
+            >
+              <p className="text-gray-500 text-lg">No students found.</p>
+            </motion.div>
           ) : (
             <>
               <Table>
@@ -60,7 +95,6 @@ const FilterStudentByDepartment = () => {
                     <TableHead>Dept</TableHead>
                     <TableHead>Session</TableHead>
                     <TableHead>Semester</TableHead>
-                    <TableHead>Image</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
@@ -81,19 +115,6 @@ const FilterStudentByDepartment = () => {
                       <TableCell>{student.academicDepartment.name}</TableCell>
                       <TableCell>{`${student.academicSession.name} ${student.academicSession.year}`}</TableCell>
                       <TableCell>{student.year}</TableCell>
-                      <TableCell>
-                        {student.image ? (
-                          <Image
-                            height={40}
-                            width={40}
-                            src={student.image}
-                            alt={student.name}
-                            className="h-10 w-10 object-cover rounded-full"
-                          />
-                        ) : (
-                          "N/A"
-                        )}
-                      </TableCell>
                     </motion.tr>
                   ))}
                 </TableBody>

@@ -27,6 +27,8 @@ import {
   Map,
   CreditCard,
   IdCard,
+  EyeOff,
+  Eye,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -40,6 +42,8 @@ export const LoginRegister = () => {
   const loginForm = useForm<FieldValues>();
   const registerForm = useForm<FieldValues>();
   const [activeTab, setActiveTab] = useState("login");
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const { setIsLoading } = useUser();
 
@@ -230,8 +234,9 @@ export const LoginRegister = () => {
                     <Form {...loginForm}>
                       <form
                         onSubmit={loginForm.handleSubmit(onLoginSubmit)}
-                        className="space-y-5 mt-4"
+                        className="space-y-6 mt-4"
                       >
+                        {/* Email */}
                         <FormField
                           control={loginForm.control}
                           name="email"
@@ -242,13 +247,13 @@ export const LoginRegister = () => {
                               </FormLabel>
                               <div className="relative group">
                                 <Mail
-                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-blue-400 transition-transform duration-200"
+                                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-blue-400 transition-transform duration-200"
                                   size={24}
                                 />
                                 <FormControl>
                                   <Input
                                     type="email"
-                                    placeholder="you@example.com"
+                                    placeholder="you@gmail.com"
                                     className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
                                     {...field}
                                     value={field.value || ""}
@@ -259,33 +264,52 @@ export const LoginRegister = () => {
                             </FormItem>
                           )}
                         />
+
+                        {/* Password*/}
                         <FormField
                           control={loginForm.control}
                           name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
-                                Password
-                              </FormLabel>
-                              <div className="relative group">
-                                <Lock
-                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-blue-400 transition-transform duration-200"
-                                  size={24}
-                                />
-                                <FormControl>
-                                  <Input
-                                    type="password"
-                                    placeholder="••••••••"
-                                    className="pl-12 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
-                                    {...field}
-                                    value={field.value || ""}
+                          render={({ field }) => {
+                            return (
+                              <FormItem>
+                                <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                  Password
+                                </FormLabel>
+                                <div className="relative group">
+                                  <Lock
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-blue-400 transition-transform duration-200"
+                                    size={24}
                                   />
-                                </FormControl>
-                                <FormMessage className="text-red-400 text-sm mt-1" />
-                              </div>
-                            </FormItem>
-                          )}
+                                  <FormControl>
+                                    <Input
+                                      type={showPassword ? "text" : "password"}
+                                      placeholder="••••••••"
+                                      className="pl-12 pr-10 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                      {...field}
+                                      value={field.value || ""}
+                                    />
+                                  </FormControl>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setShowPassword(!showPassword)
+                                    }
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-400 transition-colors duration-200"
+                                  >
+                                    {showPassword ? (
+                                      <EyeOff size={20} />
+                                    ) : (
+                                      <Eye size={20} />
+                                    )}
+                                  </button>
+                                  <FormMessage className="text-red-400 text-sm mt-1" />
+                                </div>
+                              </FormItem>
+                            );
+                          }}
                         />
+
+                        {/* Submit Button */}
                         <MotionButton
                           type="submit"
                           variant="outline"
@@ -298,6 +322,8 @@ export const LoginRegister = () => {
                             ? "Logging in..."
                             : "Login"}
                         </MotionButton>
+
+                        {/* Bottom Links */}
                         <div className="text-center mt-4 space-y-2">
                           <p className="text-sm bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                             Don't have an account?{" "}
@@ -322,6 +348,7 @@ export const LoginRegister = () => {
                     </Form>
                   </motion.div>
                 </TabsContent>
+
                 <TabsContent value="register">
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
@@ -523,7 +550,7 @@ export const LoginRegister = () => {
                           )}
                         />
 
-                        <FormField
+                        {/* <FormField
                           control={registerForm.control}
                           name="password"
                           render={({ field }) => (
@@ -594,7 +621,103 @@ export const LoginRegister = () => {
                               </div>
                             </FormItem>
                           )}
+                        /> */}
+                        <FormField
+                          control={registerForm.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                Password
+                              </FormLabel>
+                              <div className="relative group">
+                                <Lock
+                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
+                                  size={24}
+                                />
+                                <FormControl>
+                                  <Input
+                                    type={showPassword ? "text" : "password"} // <-- toggle type
+                                    placeholder="••••••••"
+                                    className="pl-12 pr-10 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    {...field}
+                                    value={field.value || ""}
+                                  />
+                                </FormControl>
+                                <button
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-400 transition-colors duration-200"
+                                >
+                                  {showPassword ? (
+                                    <EyeOff size={20} />
+                                  ) : (
+                                    <Eye size={20} />
+                                  )}
+                                </button>
+                                <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <FormMessage className="text-red-400 text-sm mt-1" />
+                                </motion.div>
+                              </div>
+                            </FormItem>
+                          )}
                         />
+
+                        <FormField
+                          control={registerForm.control}
+                          name="passwordConfirm"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 font-medium">
+                                Confirm Password
+                              </FormLabel>
+                              <div className="relative group">
+                                <KeyRound
+                                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-purple-400 transition-transform duration-200 hover:rotate-5"
+                                  size={24}
+                                />
+                                <FormControl>
+                                  <Input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    className="pl-12 pr-10 bg-white/5 border-gray-600 text-blue-800 placeholder-gray-400 focus:ring-2 focus:ring-purple-600 rounded-lg transition-all duration-200"
+                                    {...field}
+                                    value={field.value || ""}
+                                  />
+                                </FormControl>
+                                <button
+                                  type="button"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-400 transition-colors duration-200"
+                                >
+                                  {showPassword ? (
+                                    <EyeOff size={20} />
+                                  ) : (
+                                    <Eye size={20} />
+                                  )}
+                                </button>
+                                <motion.div
+                                  initial={{ opacity: 0, y: -10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  {passwordConfirm &&
+                                    password !== passwordConfirm && (
+                                      <FormMessage className="text-red-400 text-sm">
+                                        Passwords do not match
+                                      </FormMessage>
+                                    )}
+                                  <FormMessage className="text-red-400 text-sm mt-1" />
+                                </motion.div>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
                         <FormField
                           control={registerForm.control}
                           name="address"

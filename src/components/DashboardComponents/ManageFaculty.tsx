@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -17,7 +16,6 @@ import { toast } from "sonner";
 import { Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { getAllFaculty } from "../Services/Faculty";
-
 
 interface Faculty {
   _id: string;
@@ -91,7 +89,11 @@ export default function ManageFaculty() {
   return (
     <section className="py-10 bg-gradient-to-b from-blue-600/10 to-purple-600/10 relative font-sansita">
       <div className="absolute inset-0 opacity-10">
-        <svg className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          className="w-full h-full"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M0 100C200 50, 400 150, 600 100S800 50, 1000 100s400 150, 600 100V600H0Z"
             fill="url(#wave)"
@@ -103,7 +105,12 @@ export default function ManageFaculty() {
             fill="url(#node1)"
             initial={{ scale: 0.8, opacity: 0.5 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 2.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
           />
           <motion.circle
             cx="90%"
@@ -112,7 +119,13 @@ export default function ManageFaculty() {
             fill="url(#node2)"
             initial={{ scale: 0.8, opacity: 0.5 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 2.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 0.5 }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: 0.5,
+            }}
           />
           <defs>
             <linearGradient id="wave" x1="0" y1="0" x2="0" y2="600">
@@ -134,7 +147,12 @@ export default function ManageFaculty() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", type: "spring", stiffness: 100 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+            type: "spring",
+            stiffness: 100,
+          }}
         >
           <div className="border-2 border-gray-200/20 bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-xl hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow duration-300">
             <div className="flex justify-between items-center mb-6">
@@ -147,13 +165,36 @@ export default function ManageFaculty() {
                 asChild
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none hover:from-blue-700 hover:to-purple-700 transition-all duration-300 rounded-lg animate-pulse-slow"
               >
-                <motion.div whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05 }}>
+                <motion.div
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                >
                   <Link href="/admin/dashboard/add-advisor">Add Faculty</Link>
                 </motion.div>
               </Button>
             </div>
             {loading ? (
-              <div className="text-center text-gray-200">Loading...</div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center h-96 bg-gradient-to-b from-blue-50/50 to-purple-50/50 rounded-xl p-8 backdrop-blur-sm border border-gray-200/20"
+              >
+                <motion.div
+                  className="relative"
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  <div className="w-16 h-16 border-4 border-blue-600/30 border-t-blue-600 rounded-full"></div>
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-purple-600/30 border-t-purple-600 rounded-full animate-ping"></div>
+                </motion.div>
+                <p className="mt-4 text-lg font-medium text-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+                  Loading Advisors...
+                </p>
+              </motion.div>
             ) : faculties.length === 0 ? (
               <div className="text-center text-gray-200">No faculty found.</div>
             ) : (
@@ -166,19 +207,24 @@ export default function ManageFaculty() {
                           className="cursor-pointer "
                           onClick={() => handleSort("id")}
                         >
-                          ID {sortBy === "id" && (sortOrder === "asc" ? "↑" : "↓")}
+                          ID{" "}
+                          {sortBy === "id" && (sortOrder === "asc" ? "↑" : "↓")}
                         </TableHead>
                         <TableHead
                           className="cursor-pointer "
                           onClick={() => handleSort("designation")}
                         >
-                          Designation {sortBy === "designation" && (sortOrder === "asc" ? "↑" : "↓")}
+                          Designation{" "}
+                          {sortBy === "designation" &&
+                            (sortOrder === "asc" ? "↑" : "↓")}
                         </TableHead>
                         <TableHead
                           className="cursor-pointer "
                           onClick={() => handleSort("name")}
                         >
-                          Name {sortBy === "name" && (sortOrder === "asc" ? "↑" : "↓")}
+                          Name{" "}
+                          {sortBy === "name" &&
+                            (sortOrder === "asc" ? "↑" : "↓")}
                         </TableHead>
                         <TableHead className="">Image</TableHead>
                         <TableHead className="">Gender</TableHead>
@@ -215,18 +261,24 @@ export default function ManageFaculty() {
                               <span className="text-gray-400">No image</span>
                             )}
                           </TableCell>
-                          <TableCell className="capitalize">{faculty.gender}</TableCell>
+                          <TableCell className="capitalize">
+                            {faculty.gender}
+                          </TableCell>
                           <TableCell>{faculty.email}</TableCell>
                           <TableCell>{faculty.contactNo}</TableCell>
                           <TableCell>{faculty.nid}</TableCell>
                           <TableCell>{faculty.bloodGroup || "N/A"}</TableCell>
-                          <TableCell>{faculty.academicDepartment.name}</TableCell>
+                          <TableCell>
+                            {faculty.academicDepartment.name}
+                          </TableCell>
                           <TableCell className="flex gap-2">
                             <Button
                               variant="ghost"
                               size="sm"
                               className="text-blue-400 hover:text-blue-300 hover:bg-blue-600/20"
-                              onClick={() => toast.info("Edit functionality coming soon!")}
+                              onClick={() =>
+                                toast.info("Edit functionality coming soon!")
+                              }
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
@@ -234,7 +286,9 @@ export default function ManageFaculty() {
                               variant="ghost"
                               size="sm"
                               className="text-red-400 hover:text-red-300 hover:bg-red-600/20"
-                              onClick={() => toast.info("Delete functionality coming soon!")}
+                              onClick={() =>
+                                toast.info("Delete functionality coming soon!")
+                              }
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

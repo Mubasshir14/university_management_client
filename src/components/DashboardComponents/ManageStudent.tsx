@@ -53,7 +53,27 @@ const ManageStudent = () => {
   const totalPages = Math.ceil(students.length / itemsPerPage);
 
   if (loading) {
-    return <div className="text-center text-gray-200">Loading...</div>;
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex flex-col items-center justify-center h-96 bg-gradient-to-b from-blue-50/50 to-purple-50/50 rounded-xl p-8 backdrop-blur-sm border border-gray-200/20"
+    >
+      <motion.div
+        className="relative"
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      >
+        <div className="w-16 h-16 border-4 border-blue-600/30 border-t-blue-600 rounded-full"></div>
+        <div className="absolute inset-0 w-16 h-16 border-4 border-purple-600/30 border-t-purple-600 rounded-full animate-ping"></div>
+      </motion.div>
+      <p className="mt-4 text-lg font-medium text-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+        Loading Students...
+      </p>
+    </motion.div>;
   }
 
   if (students.length === 0) {

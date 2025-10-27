@@ -58,7 +58,8 @@ export default function Student() {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [sessions, setSessions] = useState<academicSession[]>([]);
   const [year, setYears] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     image: null as File | null,
@@ -76,7 +77,7 @@ export default function Student() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        setIsInitialLoading(true);
         const [deptRes, semRes] = await Promise.all([
           getAllDepartment(),
           getAllsession(),
@@ -94,7 +95,7 @@ export default function Student() {
       } catch (err: any) {
         toast.error(err.message || "Failed to fetch data");
       } finally {
-        setLoading(false);
+        setIsInitialLoading(false);
       }
     };
     fetchData();
@@ -132,6 +133,7 @@ export default function Student() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const submitData = new FormData();
     const dataPayload = {
       name: `${formData.firstName} ${formData.lastName}`,
@@ -182,6 +184,8 @@ export default function Student() {
       toast.error(err.message || "Failed to add student. Please try again.", {
         id: toastId,
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -258,8 +262,26 @@ export default function Student() {
               Student Registration Form
               <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
             </h1>
-            {loading ? (
-              <div className="text-center text-gray-200">Loading...</div>
+            {isInitialLoading ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center h-96 bg-gradient-to-b from-blue-50/50 to-purple-50/50 rounded-xl p-8 backdrop-blur-sm border border-gray-200/20"
+              >
+                <motion.div
+                  className="relative"
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  <div className="w-16 h-16 border-4 border-blue-600/30 border-t-blue-600 rounded-full"></div>
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-purple-600/30 border-t-purple-600 rounded-full animate-ping"></div>
+                </motion.div>
+                <p className="mt-4 text-lg font-medium text-gray-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></p>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <motion.div
@@ -276,6 +298,7 @@ export default function Student() {
                     accept="image/*"
                     onChange={handleChange}
                     className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg "
+                    disabled={isSubmitting}
                   />
                   {imagePreview && (
                     <motion.div
@@ -311,6 +334,7 @@ export default function Student() {
                       required
                       className="bg-white/5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg "
                       placeholder="e.g., John"
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -324,6 +348,7 @@ export default function Student() {
                       required
                       className="bg-white/5 border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
                       placeholder="e.g., Doe"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </motion.div>
@@ -378,6 +403,7 @@ export default function Student() {
                         handleSelectChange("bloodGroup", val)
                       }
                       value={formData.bloodGroup}
+                      disabled={isSubmitting}
                     >
                       <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                         <SelectValue placeholder="Select Blood Group" />
@@ -398,6 +424,7 @@ export default function Student() {
                     <Select
                       onValueChange={(val) => handleSelectChange("gender", val)}
                       value={formData.gender}
+                      disabled={isSubmitting}
                     >
                       <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                         <SelectValue placeholder="Select Gender" />
@@ -420,6 +447,7 @@ export default function Student() {
                         handleSelectChange("academicSession", val)
                       }
                       value={formData.academicSession}
+                      disabled={isSubmitting}
                     >
                       <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                         <SelectValue placeholder="Select Session" />
@@ -447,6 +475,7 @@ export default function Student() {
                       handleSelectChange("academicDepartment", val)
                     }
                     value={formData.academicDepartment}
+                    disabled={isSubmitting}
                   >
                     <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
                       <SelectValue placeholder="Select Department" />
@@ -472,9 +501,10 @@ export default function Student() {
                   <Select
                     onValueChange={(val) => handleSelectChange("year", val)}
                     value={formData.year}
+                    disabled={isSubmitting}
                   >
                     <SelectTrigger className="bg-white/5 border-gray-600 focus:ring-2 focus:ring-blue-600 rounded-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                      <SelectValue placeholder="Select Department" />
+                      <SelectValue placeholder="Select Semester" />
                     </SelectTrigger>
                     <SelectContent>
                       {academicYear.map((year: any) => (
@@ -485,30 +515,29 @@ export default function Student() {
                     </SelectContent>
                   </Select>
                 </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.6 }}
+
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none hover:from-blue-700 hover:to-purple-700 transition-all duration-300 rounded-lg flex items-center justify-center gap-2 w-full animate-pulse-slow"
+                  disabled={isSubmitting}
                 >
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white border-none hover:from-blue-700 hover:to-purple-700 transition-all duration-300 rounded-lg animate-pulse-slow"
-                    disabled={loading}
-                  >
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {loading ? "Submitting..." : "Submit"}
-                    </motion.button>
-                  </Button>
-                  {/* <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-                    {" "}
-                    <small>
-                      Please Login Agin After Submitted Successfully
-                    </small>{" "}
-                  </span> */}
-                </motion.div>
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        className="rounded-full h-5 w-5 border-b-2 border-white"
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                      />
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    <span>Submit</span>
+                  )}
+                </Button>
               </form>
             )}
           </div>
