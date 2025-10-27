@@ -15,7 +15,6 @@ import {
 } from "../ui/select";
 import { toast } from "sonner";
 import { getAllDepartment } from "../Services/Department";
-
 import { BloodGroup, Gender } from "../Types/student";
 import { updateImformationByAdmin } from "../Services/Student";
 import { useRouter } from "next/navigation";
@@ -39,6 +38,7 @@ interface AcademicSesion {
 
 const UpdateStudent = ({ student }: { student: any }) => {
   const studentData = student.student || student;
+  console.log(studentData);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [sessions, setSessions] = useState<AcademicSesion[]>([]);
   const [loading, setLoading] = useState(false);
