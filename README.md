@@ -1,5 +1,11 @@
 ## University Course Registration System
 
+### Live 
+
+🚀 **Try it Live!**
+
+- [Live](https://university-management-client.vercel.app)
+
 ### Overview
 
 The **University Course Registration System** is a robust, full-stack backend application designed to manage the academic lifecycle of a university. Built with modern technologies, it facilitates seamless student admissions, course registrations, result generation, and administrative tasks. This system ensures efficient handling of student data, course assignments, and faculty management while enforcing credit limits, preventing duplicate registrations, and providing insightful dashboards for admins. It supports role-based access control for admins, students, and users, making it scalable for educational institutions.
@@ -251,101 +257,111 @@ Example: Start dev server → `npm run dev` (runs on `http://localhost:3000`).
 All endpoints are prefixed with `/api` (e.g., `/api/auth/login`). Authentication is required for most routes (via JWT in headers). Methods, paths, and roles are noted where applicable.
 
 #### Auth (`/auth`)
-| Method | Path                  | Description                  | Auth Required |
-|--------|-----------------------|------------------------------|---------------|
-| POST   | `/login`              | User login                   | No            |
-| POST   | `/register`           | User registration            | No            |
-| POST   | `/refresh-token`      | Refresh JWT token            | Yes           |
-| POST   | `/logout`             | User logout                  | Yes           |
-| POST   | `/change-password`    | Change user password         | Yes           |
+
+| Method | Path               | Description          | Auth Required |
+| ------ | ------------------ | -------------------- | ------------- |
+| POST   | `/login`           | User login           | No            |
+| POST   | `/register`        | User registration    | No            |
+| POST   | `/refresh-token`   | Refresh JWT token    | Yes           |
+| POST   | `/logout`          | User logout          | Yes           |
+| POST   | `/change-password` | Change user password | Yes           |
 
 #### Users (`/users`)
-| Method | Path                  | Description                  | Auth Required |
-|--------|-----------------------|------------------------------|---------------|
-| POST   | `/register`           | Register new user            | No            |
-| GET    | `/verify-email`       | Verify email token           | No            |
+
+| Method | Path            | Description        | Auth Required |
+| ------ | --------------- | ------------------ | ------------- |
+| POST   | `/register`     | Register new user  | No            |
+| GET    | `/verify-email` | Verify email token | No            |
 
 #### Students (`/students`)
-| Method | Path                                      | Description                                      | Auth Required     |
-|--------|-------------------------------------------|--------------------------------------------------|-------------------|
-| POST   | `/create-student`                         | Create student profile                           | Yes (USER)        |
-| PATCH  | `/make-approval/:id`                      | Approve single student                           | Yes (ADMIN)       |
-| PATCH  | `/make-approval-many`                     | Approve multiple students                        | Yes (ADMIN)       |
-| GET    | `/`                                       | Get all students                                 | Yes (ADMIN)       |
-| GET    | `/single-student/:id`                     | Get single student                               | Yes (ADMIN)       |
-| GET    | `/db`                                     | Dashboard: Students by department                | Yes (ADMIN)       |
-| GET    | `/session`                                | Dashboard: Students by session                   | Yes (ADMIN)       |
-| GET    | `/not-approved-student`                   | Get unapproved students                          | Yes (ADMIN)       |
-| GET    | `/approved-student`                       | Get approved students                            | Yes (ADMIN)       |
-| GET    | `/get-me-as-a-student`                    | Get current user as student                      | Yes (STUDENT/ADMIN)|
-| POST   | `/get-student-according-to-department`    | Filter students by department                    | Yes (ADMIN)       |
-| POST   | `/get-student-according-to-session`       | Filter students by session                       | Yes (ADMIN)       |
-| POST   | `/get-student-according-to-semester`      | Filter students by semester                      | Yes (ADMIN)       |
-| DELETE | `/delete-student/:id`                     | Delete student                                   | Yes (ADMIN)       |
-| PATCH  | `/update-student/:id`                     | Update student by admin                          | Yes (ADMIN)       |
+
+| Method | Path                                   | Description                       | Auth Required       |
+| ------ | -------------------------------------- | --------------------------------- | ------------------- |
+| POST   | `/create-student`                      | Create student profile            | Yes (USER)          |
+| PATCH  | `/make-approval/:id`                   | Approve single student            | Yes (ADMIN)         |
+| PATCH  | `/make-approval-many`                  | Approve multiple students         | Yes (ADMIN)         |
+| GET    | `/`                                    | Get all students                  | Yes (ADMIN)         |
+| GET    | `/single-student/:id`                  | Get single student                | Yes (ADMIN)         |
+| GET    | `/db`                                  | Dashboard: Students by department | Yes (ADMIN)         |
+| GET    | `/session`                             | Dashboard: Students by session    | Yes (ADMIN)         |
+| GET    | `/not-approved-student`                | Get unapproved students           | Yes (ADMIN)         |
+| GET    | `/approved-student`                    | Get approved students             | Yes (ADMIN)         |
+| GET    | `/get-me-as-a-student`                 | Get current user as student       | Yes (STUDENT/ADMIN) |
+| POST   | `/get-student-according-to-department` | Filter students by department     | Yes (ADMIN)         |
+| POST   | `/get-student-according-to-session`    | Filter students by session        | Yes (ADMIN)         |
+| POST   | `/get-student-according-to-semester`   | Filter students by semester       | Yes (ADMIN)         |
+| DELETE | `/delete-student/:id`                  | Delete student                    | Yes (ADMIN)         |
+| PATCH  | `/update-student/:id`                  | Update student by admin           | Yes (ADMIN)         |
 
 #### Student IDs (`/student-ids`)
-| Method | Path                  | Description                  | Auth Required |
-|--------|-----------------------|------------------------------|---------------|
-| POST   | `/`                   | Create student ID card       | Yes (ADMIN)   |
-| GET    | `/`                   | Get all student IDs          | No            |
-| GET    | `/:id`                | Get single student ID        | No            |
-| DELETE | `/:id`                | Delete student ID            | Yes (ADMIN)   |
+
+| Method | Path   | Description            | Auth Required |
+| ------ | ------ | ---------------------- | ------------- |
+| POST   | `/`    | Create student ID card | Yes (ADMIN)   |
+| GET    | `/`    | Get all student IDs    | No            |
+| GET    | `/:id` | Get single student ID  | No            |
+| DELETE | `/:id` | Delete student ID      | Yes (ADMIN)   |
 
 #### Courses (`/courses`)
-| Method | Path                                      | Description                                      | Auth Required     |
-|--------|-------------------------------------------|--------------------------------------------------|-------------------|
-| POST   | `/create-course`                          | Create new course                                | Yes (ADMIN)       |
-| GET    | `/:id`                                    | Get single course                                | No                |
-| DELETE | `/:id`                                    | Delete course                                    | Yes (ADMIN)       |
-| GET    | `/student/:id`                            | Get courses for student academic session         | Yes (STUDENT)     |
-| PATCH  | `/update-course/:id`                      | Update course                                    | Yes (ADMIN)       |
-| GET    | `/`                                       | Get all courses                                  | No                |
+
+| Method | Path                 | Description                              | Auth Required |
+| ------ | -------------------- | ---------------------------------------- | ------------- |
+| POST   | `/create-course`     | Create new course                        | Yes (ADMIN)   |
+| GET    | `/:id`               | Get single course                        | No            |
+| DELETE | `/:id`               | Delete course                            | Yes (ADMIN)   |
+| GET    | `/student/:id`       | Get courses for student academic session | Yes (STUDENT) |
+| PATCH  | `/update-course/:id` | Update course                            | Yes (ADMIN)   |
+| GET    | `/`                  | Get all courses                          | No            |
 
 #### Registrations (`/registrations`)
-| Method | Path                                      | Description                                      | Auth Required     |
-|--------|-------------------------------------------|--------------------------------------------------|-------------------|
-| POST   | `/create-registration`                    | Create course registration                       | Yes (STUDENT)     |
-| POST   | `/my-registration-info`                   | Get my registration info                         | Yes (STUDENT/ADMIN)|
-| POST   | `/get-student-according-to-course`        | Filter students by course                        | Yes (ADMIN)       |
-| PATCH  | `/make-approval/:id`                      | Approve single registration                      | Yes (ADMIN)       |
-| PATCH  | `/make-approval-many`                     | Approve multiple registrations                   | Yes (ADMIN)       |
-| GET    | `/not-approved-registration`              | Get unapproved registrations                     | Yes (ADMIN)       |
-| GET    | `/approved-registration`                  | Get approved registrations                       | Yes (ADMIN)       |
-| GET    | `/:id`                                    | Get single registration                          | Yes (ADMIN/STUDENT)|
-| PATCH  | `/drop-and-update-course-by-student`      | Student drops/updates courses                    | Yes (STUDENT)     |
-| PATCH  | `/drop-and-update-course-by-admin`        | Admin drops/updates courses                      | Yes (ADMIN)       |
+
+| Method | Path                                 | Description                    | Auth Required       |
+| ------ | ------------------------------------ | ------------------------------ | ------------------- |
+| POST   | `/create-registration`               | Create course registration     | Yes (STUDENT)       |
+| POST   | `/my-registration-info`              | Get my registration info       | Yes (STUDENT/ADMIN) |
+| POST   | `/get-student-according-to-course`   | Filter students by course      | Yes (ADMIN)         |
+| PATCH  | `/make-approval/:id`                 | Approve single registration    | Yes (ADMIN)         |
+| PATCH  | `/make-approval-many`                | Approve multiple registrations | Yes (ADMIN)         |
+| GET    | `/not-approved-registration`         | Get unapproved registrations   | Yes (ADMIN)         |
+| GET    | `/approved-registration`             | Get approved registrations     | Yes (ADMIN)         |
+| GET    | `/:id`                               | Get single registration        | Yes (ADMIN/STUDENT) |
+| PATCH  | `/drop-and-update-course-by-student` | Student drops/updates courses  | Yes (STUDENT)       |
+| PATCH  | `/drop-and-update-course-by-admin`   | Admin drops/updates courses    | Yes (ADMIN)         |
 
 #### Results (`/results`)
-| Method | Path                          | Description                          | Auth Required     |
-|--------|-------------------------------|--------------------------------------|-------------------|
-| POST   | `/generate/:registrationId`   | Generate student result              | Yes (ADMIN)       |
-| GET    | `/`                           | Get all student results              | Yes (ADMIN)       |
-| POST   | `/my-result`                  | Get my result                        | Yes (STUDENT/ADMIN)|
+
+| Method | Path                        | Description             | Auth Required       |
+| ------ | --------------------------- | ----------------------- | ------------------- |
+| POST   | `/generate/:registrationId` | Generate student result | Yes (ADMIN)         |
+| GET    | `/`                         | Get all student results | Yes (ADMIN)         |
+| POST   | `/my-result`                | Get my result           | Yes (STUDENT/ADMIN) |
 
 #### Faculties (`/faculties`)
-| Method | Path                  | Description                  | Auth Required |
-|--------|-----------------------|------------------------------|---------------|
-| POST   | `/create-faculty`     | Create faculty                | Yes (ADMIN)   |
-| GET    | `/:id`                | Get single faculty            | No            |
-| PATCH  | `/:id`                | Update faculty                | Yes (ADMIN)   |
-| GET    | `/`                   | Get all faculties             | No            |
+
+| Method | Path              | Description        | Auth Required |
+| ------ | ----------------- | ------------------ | ------------- |
+| POST   | `/create-faculty` | Create faculty     | Yes (ADMIN)   |
+| GET    | `/:id`            | Get single faculty | No            |
+| PATCH  | `/:id`            | Update faculty     | Yes (ADMIN)   |
+| GET    | `/`               | Get all faculties  | No            |
 
 #### Academic Departments (`/academic-departments`)
-| Method | Path                              | Description                          | Auth Required |
-|--------|-----------------------------------|--------------------------------------|---------------|
-| POST   | `/create-academic-department`     | Create department                    | Yes (ADMIN)   |
-| PATCH  | `/update-department/:departmentId`| Update department                    | Yes (ADMIN)   |
-| GET    | `/:departmentId`                  | Get single department                | No            |
-| GET    | `/`                               | Get all departments                  | No            |
+
+| Method | Path                               | Description           | Auth Required |
+| ------ | ---------------------------------- | --------------------- | ------------- |
+| POST   | `/create-academic-department`      | Create department     | Yes (ADMIN)   |
+| PATCH  | `/update-department/:departmentId` | Update department     | Yes (ADMIN)   |
+| GET    | `/:departmentId`                   | Get single department | No            |
+| GET    | `/`                                | Get all departments   | No            |
 
 #### Academic Sessions (`/academic-sessions`)
-| Method | Path                      | Description                      | Auth Required             |
-|--------|---------------------------|----------------------------------|---------------------------|
-| POST   | `/create-academic-session`| Create academic session          | Yes (ADMIN)               |
-| GET    | `/:courseId`              | Get single academic session      | Yes (ADMIN/ADVISOR/STUDENT)|
-| PATCH  | `/:courseId`              | Update academic session          | Yes (ADMIN)               |
-| GET    | `/`                       | Get all academic sessions        | Yes (ADMIN/ADVISOR/STUDENT/USER)
+
+| Method | Path                       | Description                 | Auth Required                    |
+| ------ | -------------------------- | --------------------------- | -------------------------------- |
+| POST   | `/create-academic-session` | Create academic session     | Yes (ADMIN)                      |
+| GET    | `/:courseId`               | Get single academic session | Yes (ADMIN/ADVISOR/STUDENT)      |
+| PATCH  | `/:courseId`               | Update academic session     | Yes (ADMIN)                      |
+| GET    | `/`                        | Get all academic sessions   | Yes (ADMIN/ADVISOR/STUDENT/USER) |
 
 For full routes, see the `src/modules/*/route.ts` files.
 
@@ -471,6 +487,7 @@ university_management_server/
 ├── tsconfig.json
 └── .env (example)
 ```
+
 ```bash
 university_management_client/
 ├── src/
